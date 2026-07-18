@@ -1,0 +1,6 @@
+{
+  "name": "Yube",
+  "description": "Algerian COD landing page builder for e-commerce stores",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

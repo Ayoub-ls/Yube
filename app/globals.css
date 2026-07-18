@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Theme color tokens for public-page templates (PairDZ, Rita).
+     These MUST live here rather than in each theme's own CSS file:
+     Next.js compiles every imported .css file as its own separate
+     PostCSS/Tailwind pass, so a @theme block in pairdz.css or rita.css
+     is invisible to the single unified build that actually scans the
+     whole project for class usage (app/globals.css's build). Utility
+     classes like bg-algeria-green or bg-gold-500 would silently
+     generate no CSS at all if the token lived only in the theme's own
+     file — confirmed by inspecting the compiled build output. */
+  --color-algeria-green: #006233;
+  --color-algeria-red: #D21034;
+  --color-algeria-gold: #B48C3A;
+
+  --color-gold-50: #fdfaf2;
+  --color-gold-100: #fdf6e2;
+  --color-gold-200: #f9eabf;
+  --color-gold-300: #f4d994;
+  --color-gold-400: #eebf63;
+  --color-gold-500: #cf9b32;
+  --color-gold-600: #b48c3a;
+  --color-gold-700: #8c6a28;
+  --color-gold-800: #654c1b;
+  --color-gold-900: #423110;
+  --color-gold-950: #2b2009;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  color: #0f172a;
+}

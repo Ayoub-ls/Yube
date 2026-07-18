@@ -1,0 +1,50 @@
+/* Gold color tokens live in app/globals.css, not here — see the
+   comment there for why. This file only holds plain, hand-written CSS
+   that doesn't depend on Tailwind's utility generator.
+
+   Font: Cairo is loaded and scoped to .rita-theme specifically, rather
+   than overriding the shared --font-sans token in globals.css, which
+   would have changed the font across the entire app (dashboard, admin,
+   marketing pages) instead of just this one theme's public page. */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+.rita-theme {
+  font-family: 'Cairo', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #b8860b 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f1d592 0%, #cf9b32 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shadow-inner-gold {
+  box-shadow: inset 0 1px 1px 0 rgba(212, 175, 55, 0.15), 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.border-slate-850 {
+  border-color: rgba(30, 29, 36, 0.85);
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+}
+
+.animate-pulse-gold {
+  animation: pulse-ring 2.2s infinite;
+}

@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+@import "tailwindcss";
+
+.premium-theme {
+    --font-sans: "Cairo", "Tajawal", ui-sans-serif, system-ui, sans-serif;
+    --color-gold-light: #F6F1E5;
+    --color-gold-accent: #C9A227;
+    --color-gold-dark: #A57E1A;
+    --color-luxury-bg: #FAF8F5;
+    background-color: var(--color-luxury-bg);
+    font-family: var(--font-sans);
+    color: #1F2937;
+}
