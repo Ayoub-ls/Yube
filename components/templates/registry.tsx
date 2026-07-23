@@ -1,4 +1,4 @@
-import { SimpleTemplate } from './SimpleTemplate';
+import { SimpleTemplate } from './simple/SimpleTemplate';
 import { PremiumTemplate } from './premium/PremiumTemplate';
 import { ChelqaTemplate } from './chelqa/ChelqaTemplate';
 import { PairDZTemplate } from './pairdz/PairDZTemplate';

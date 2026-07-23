@@ -62,31 +62,31 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-1 -mb-px">
+        <div className="max-w-7xl mx-auto px-4 flex items-center gap-1 -mb-px overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth">
           <Link
             href="/dashboard"
-            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition"
+            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0"
           >
             <LayoutGrid className="w-3.5 h-3.5" />
             <span>لوحة التحكم</span>
           </Link>
           <Link
             href="/dashboard/pages"
-            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition"
+            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>صفحاتي</span>
           </Link>
           <Link
             href="/dashboard/orders"
-            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition"
+            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0"
           >
             <ShoppingCart className="w-3.5 h-3.5" />
             <span>الطلبيات</span>
           </Link>
           <Link
             href="/dashboard/settings"
-            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition"
+            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0"
           >
             <Settings className="w-3.5 h-3.5" />
             <span>الإعدادات</span>

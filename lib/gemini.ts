@@ -46,7 +46,18 @@ ${description ? `وصف المنتج: ${description}` : ''}
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      // Using the "latest" alias rather than a pinned version like
+      // "gemini-2.5-flash" on purpose: Google has been retiring Gemini
+      // generations every few months (1.5 -> 2.0 -> 2.5 -> 3.x), and a
+      // pinned model string breaks with a 404 the moment it's retired
+      // for new API keys — exactly what happened here. This alias is
+      // documented by Google to auto-update to whatever their current
+      // default Flash model is, so this shouldn't need manual updates
+      // every time they ship a new generation. Worth knowing: behavior
+      // can shift slightly when Google swaps what's behind the alias,
+      // but for a simple headline/subheadline generation task that's a
+      // fine trade-off against this integration silently breaking again.
+      model: 'gemini-flash-latest',
       contents: prompt,
       config: {
         responseMimeType: 'application/json',

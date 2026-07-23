@@ -18,7 +18,7 @@ export function TemplateStep({ data, update }: { data: WizardData; update: (patc
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {templates.map((t) => {
           const Icon = t.icon;
           const selected = data.templateId === t.id;

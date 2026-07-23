@@ -50,7 +50,7 @@ export default async function AdminPagesReview() {
 
                   {clientInfo?.slug && (
                     <a
-                      href={`/${clientInfo.slug}/${page.slug}`}
+                      href={`/${encodeURIComponent(clientInfo.slug)}/${encodeURIComponent(page.slug)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 px-3 py-2 rounded-xl transition shrink-0"
@@ -61,7 +61,7 @@ export default async function AdminPagesReview() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100">
                   <ApproveButton pageId={page.id} />
                   <RejectForm pageId={page.id} />
                 </div>

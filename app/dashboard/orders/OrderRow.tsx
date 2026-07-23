@@ -64,7 +64,7 @@ export function OrderRow({ order }: { order: any }) {
           value={order.status}
           disabled={pending}
           onChange={(e) => handleChange(e.target.value)}
-          className={`text-[10px] font-bold px-2 py-1 rounded-lg border-0 focus:outline-none ${STATUS_COLORS[order.status] || 'bg-slate-50'}`}
+          className={`text-xs font-bold px-3 py-2 sm:text-[10px] sm:px-2 sm:py-1 rounded-lg border border-slate-100 focus:outline-none cursor-pointer max-w-[100px] sm:max-w-none truncate ${STATUS_COLORS[order.status] || 'bg-slate-50'}`}
         >
           {Object.entries(STATUS_LABELS).map(([value, label]) => (
             <option key={value} value={value}>{label}</option>

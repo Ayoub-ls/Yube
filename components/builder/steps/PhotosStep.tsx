@@ -76,7 +76,7 @@ export function PhotosStep({ data, update, updateImages, showColorLabels }: Phot
           : 'من صورة واحدة إلى 8 صور — الصورة الأولى هي الرئيسية'}
       </p>
 
-      <div className={showColorLabels ? 'grid grid-cols-3 gap-3' : 'grid grid-cols-4 gap-2'}>
+      <div className={showColorLabels ? 'grid grid-cols-2 xs:grid-cols-3 gap-3' : 'grid grid-cols-2 xs:grid-cols-4 gap-2'}>
         {data.images.map((img, index) => (
           <div key={img.id} className="space-y-1.5">
             <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200 group">

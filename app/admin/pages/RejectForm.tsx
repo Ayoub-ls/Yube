@@ -44,7 +44,7 @@ export function RejectForm({ pageId }: { pageId: string }) {
   }
 
   return (
-    <form action={formAction} className="flex-1 flex items-center gap-2">
+    <form action={formAction} className="flex-1 flex flex-wrap sm:flex-nowrap items-center gap-2">
       <input type="hidden" name="page_id" value={pageId} />
       <input
         type="text"

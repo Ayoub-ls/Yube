@@ -128,7 +128,15 @@ export default async function DashboardPagesList({
           {pages.map((page) => {
             const statusInfo = STATUS_LABELS[page.status] || STATUS_LABELS.draft;
             const StatusIcon = statusInfo.icon;
-            const publicUrl = `${appUrl}/${client.slug}/${page.slug}`;
+            // Each segment is encoded separately (not the whole URL at
+            // once) so the "/" separators stay intact. Raw Arabic slugs
+            // work fine when tapped directly in-page (browsers encode on
+            // click automatically), but the "copy link" button below
+            // copies this as plain text — and apps like WhatsApp/SMS
+            // don't reliably handle raw Unicode in a pasted link when
+            // detecting it as tappable, which is what was causing the
+            // 404 specifically when opening a shared link on a phone.
+            const publicUrl = `${appUrl}/${encodeURIComponent(client.slug)}/${encodeURIComponent(page.slug)}`;
 
             return (
               <div key={page.id} className="bg-white border border-slate-100 rounded-2xl p-5 space-y-3">

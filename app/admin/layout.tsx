@@ -42,16 +42,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 flex items-center gap-1 -mb-px">
-          <Link href="/admin" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition">
+        <div className="max-w-7xl mx-auto px-4 flex items-center gap-1 -mb-px overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth">
+          <Link href="/admin" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
             <LayoutGrid className="w-3.5 h-3.5" />
             <span>نظرة عامة</span>
           </Link>
-          <Link href="/admin/pages" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition">
+          <Link href="/admin/pages" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
             <FileText className="w-3.5 h-3.5" />
             <span>مراجعة الصفحات</span>
           </Link>
-          <Link href="/admin/clients" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition">
+          <Link href="/admin/clients" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
             <Users className="w-3.5 h-3.5" />
             <span>العملاء</span>
           </Link>
