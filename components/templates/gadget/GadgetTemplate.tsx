@@ -223,7 +223,7 @@ export function GadgetTemplate({ page, client, theme }: TemplateProps) {
               <img 
                 src={getOptimizedImageUrl(activeImage, 800)} 
                 alt={page.product_name} 
-                className="max-h-[350px] w-auto object-contain transition-all duration-500 hover:scale-[1.03]"
+                className="max-h-[350px] w-full max-w-full object-contain transition-all duration-500 hover:scale-[1.03]"
               />
             ) : (
               <div className="text-slate-400 text-sm">لا توجد صورة للمنتج</div>
@@ -482,21 +482,21 @@ export function GadgetTemplate({ page, client, theme }: TemplateProps) {
       </footer>
 
       {/* 10. Sticky Footer CTA (Mobile & Desktop) */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-t border-[#eeedf3] py-3 px-4 shadow-[0_-5px_25px_rgba(0,0,0,0.03)]">
-        <div className="max-w-[480px] mx-auto flex items-center justify-between gap-4">
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-t border-[#eeedf3] py-2.5 px-3 shadow-[0_-5px_25px_rgba(0,0,0,0.03)]">
+        <div className="max-w-[480px] mx-auto flex items-center justify-between gap-3">
           <a 
             href="#checkout-form"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById('checkout-form')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="flex-1 btn-electric-gradient text-white text-center font-bold py-3 px-4 rounded-xl text-sm cursor-pointer shadow-ambient"
+            className="flex-1 btn-electric-gradient text-white text-center font-bold py-3 px-3 rounded-xl text-xs xs:text-sm cursor-pointer shadow-ambient"
           >
             اطلب الآن
           </a>
-          <div className="text-left">
-            <div className="text-[10px] text-[#414755] font-semibold text-right">السعر الكلي</div>
-            <div className="text-base font-extrabold text-[#0058bc] whitespace-nowrap">
+          <div className="text-left shrink-0">
+            <div className="text-[9px] xs:text-[10px] text-[#414755] font-semibold text-right">السعر الكلي</div>
+            <div className="text-sm xs:text-base font-extrabold text-[#0058bc] whitespace-nowrap">
               {page.price.toLocaleString('ar-DZ')} دج
             </div>
           </div>

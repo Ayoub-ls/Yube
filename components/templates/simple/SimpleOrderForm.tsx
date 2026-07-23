@@ -97,7 +97,7 @@ export function SimpleOrderForm({
       {sizes.length > 0 && (
         <div className="mb-4">
           <span className="text-xs font-bold text-slate-600 block mb-2">المقاس المتوفر:</span>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="flex flex-wrap gap-2">
             {sizes.map((size) => {
               const selected = selectedSize === size;
               return (
@@ -105,7 +105,7 @@ export function SimpleOrderForm({
                   key={size}
                   type="button"
                   onClick={() => onSizeChange(size)}
-                  className={`py-2 rounded-xl text-center font-bold text-sm border-2 transition-all ${
+                  className={`flex-1 min-w-[50px] sm:min-w-[60px] py-2 rounded-xl text-center font-bold text-sm border-2 transition-all ${
                     selected 
                       ? 'text-white' 
                       : 'border-slate-200 bg-white text-slate-700 hover:border-slate-350'

@@ -344,7 +344,7 @@ export function SimpleTemplate({ page, client, theme }: TemplateProps) {
                   transition={{ duration: 0.3 }}
                   src={getOptimizedImageUrl(activeImage, 800)} 
                   alt={page.product_name} 
-                  className="max-h-[350px] w-auto object-contain sm:max-h-[450px]"
+                  className="max-h-[350px] w-full max-w-full object-contain sm:max-h-[450px]"
                 />
               ) : (
                 <div className="text-slate-350 text-sm py-12">لا توجد صورة للمنتج</div>
@@ -374,7 +374,7 @@ export function SimpleTemplate({ page, client, theme }: TemplateProps) {
             </div>
 
             {/* Pricing block */}
-            <div className="flex items-baseline gap-4 rounded-xl bg-[#F9FAFB] p-4 border border-[#E5E7EB] w-fit">
+            <div className="flex flex-wrap items-baseline gap-2 sm:gap-4 rounded-xl bg-[#F9FAFB] p-4 border border-[#E5E7EB] w-full sm:w-fit">
               <span className="text-3xl font-black" style={{ color: theme.primary }}>
                 {page.price.toLocaleString('ar-DZ')} دج
               </span>
@@ -453,7 +453,7 @@ export function SimpleTemplate({ page, client, theme }: TemplateProps) {
                   transition={{ duration: 0.3 }}
                   src={getOptimizedImageUrl(images[activeImageIndex], 800)} 
                   alt="تفاصيل المنتج" 
-                  className="max-h-[300px] w-auto object-contain sm:max-h-[380px]"
+                  className="max-h-[300px] w-full max-w-full object-contain sm:max-h-[380px]"
                 />
               </div>
 
@@ -768,21 +768,21 @@ export function SimpleTemplate({ page, client, theme }: TemplateProps) {
       </footer>
 
       {/* Sticky Mobile Footer CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-3 sm:hidden z-45 shadow-lg flex items-center justify-between gap-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-3 py-2.5 sm:hidden z-45 shadow-lg flex items-center justify-between gap-3">
         <a
           href="#checkout-form"
           onClick={(e) => {
             e.preventDefault();
             scrollToSection("checkout-form");
           }}
-          className="flex-1 text-center text-white font-black text-sm py-3.5 rounded-xl block cursor-pointer"
+          className="flex-1 text-center text-white font-black text-xs xs:text-sm py-3 rounded-lg xs:py-3.5 xs:rounded-xl block cursor-pointer"
           style={{ backgroundColor: theme.primary }}
         >
           اطلب الآن
         </a>
         <div className="text-left shrink-0">
-          <div className="text-[10px] text-slate-500 font-semibold text-right">السعر:</div>
-          <div className="text-base font-black" style={{ color: theme.primary }}>
+          <div className="text-[9px] xs:text-[10px] text-slate-500 font-semibold text-right">السعر:</div>
+          <div className="text-sm xs:text-base font-black whitespace-nowrap" style={{ color: theme.primary }}>
             {page.price.toLocaleString('ar-DZ')} دج
           </div>
         </div>

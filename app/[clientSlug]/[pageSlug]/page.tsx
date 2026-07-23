@@ -13,7 +13,9 @@ interface PublicLandingPageProps {
 }
 
 export default async function PublicPage({ params }: PublicLandingPageProps) {
-  const { clientSlug, pageSlug } = params;
+  const clientSlug = decodeURIComponent(params.clientSlug);
+  const pageSlug = decodeURIComponent(params.pageSlug);
+
   const supabase = createClient();
 
   // 1. Resolve the client by slug

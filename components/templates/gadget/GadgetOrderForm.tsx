@@ -92,13 +92,13 @@ export function GadgetOrderForm({
       {sizes.length > 0 && (
         <div className="mb-4.5">
           <span className="text-xs font-bold text-[#414755] block mb-2">اختر المقاس المناسب:</span>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="flex flex-wrap gap-2">
             {sizes.map((size) => (
               <button
                 key={size}
                 type="button"
                 onClick={() => onSizeChange(size)}
-                className={`py-2 rounded-xl text-center font-bold text-sm border transition-all cursor-pointer ${
+                className={`flex-1 min-w-[50px] sm:min-w-[60px] py-2 rounded-xl text-center font-bold text-sm border transition-all cursor-pointer ${
                   selectedSize === size ? 'border-[#0058bc] bg-[#0058bc] text-white' : 'border-[#c1c6d7] bg-[#f4f3f8] text-[#1a1b1f] hover:border-[#717786]'
                 }`}
               >

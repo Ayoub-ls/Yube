@@ -318,19 +318,19 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
       />
 
       {/* Mobile sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-100 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] p-4 flex sm:hidden gap-3 items-center justify-between">
-        <div className="space-y-0.5">
-          <span className="text-[10px] text-slate-400 font-bold block leading-none">السعر الإجمالي:</span>
-          <span className="text-2xl font-black text-algeria-green block">
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-100 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] px-3 py-2.5 flex sm:hidden gap-2.5 items-center justify-between">
+        <div className="space-y-0.5 shrink-0">
+          <span className="text-[9px] xs:text-[10px] text-slate-400 font-bold block leading-none">السعر الإجمالي:</span>
+          <span className="text-lg xs:text-2xl font-black text-algeria-green block">
             {totalPrice.toLocaleString('ar-DZ')}
-            <span className="text-xs font-semibold text-slate-500 mr-1">د.ج</span>
+            <span className="text-[10px] xs:text-xs font-semibold text-slate-500 mr-0.5 xs:mr-1">د.ج</span>
           </span>
         </div>
         <button
           onClick={handleOpenOrderModal}
-          className="flex-1 bg-algeria-green hover:bg-emerald-800 text-white py-4 px-6 rounded-2xl font-extrabold text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
+          className="flex-1 bg-algeria-green hover:bg-emerald-800 text-white py-3 px-4 rounded-xl xs:py-4 xs:px-6 xs:rounded-2xl font-extrabold text-xs xs:text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
         >
-          <Zap className="w-4.5 h-4.5 fill-amber-300 text-amber-300" />
+          <Zap className="w-4 h-4 xs:w-4.5 xs:h-4.5 fill-amber-300 text-amber-300" />
           <span>اطلب الآن</span>
         </button>
       </div>

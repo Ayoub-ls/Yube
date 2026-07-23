@@ -713,7 +713,8 @@
 .chelqa-theme .sp-actions {
     display: flex;
     gap: 16px;
-    margin-top: 20px
+    margin-top: 20px;
+    flex-wrap: wrap
 }
 
 .chelqa-theme .size-label {
@@ -1211,7 +1212,8 @@
 
 .chelqa-theme .form-sizes {
     display: flex;
-    gap: 12px
+    gap: 12px;
+    flex-wrap: wrap
 }
 
 .chelqa-theme .form-size-btn {
@@ -1566,6 +1568,10 @@
 
 @media (max-width:640px) {
     .chelqa-theme .nav-links {
+        display: none
+    }
+
+    .chelqa-theme .header-actions {
         display: none
     }
 
