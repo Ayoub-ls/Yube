@@ -28,7 +28,7 @@ export function OrderRow({ order }: { order: any }) {
     // order actually delivered — not on order submission (see
     // OrderForm.tsx, which fires InitiateCheckout instead). For a COD
     // business, "delivered" is the point money has actually changed
-    // hands, which is the signal ad platforms need.
+    // hands, which is the signal ad platforms needs.
     if (newStatus === 'delivered' && order.status !== 'delivered') {
       const price = order.landing_pages?.price || 0;
       const value = price * (order.quantity || 1);
