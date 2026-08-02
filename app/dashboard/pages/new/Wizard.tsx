@@ -24,12 +24,12 @@ import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 
 // Templates that use the headline/subheadline/sizes step. Add a
 // template_id here when a new theme wants that step to appear for it.
-const THEMES_WITH_CUSTOM_HERO = ['premium', 'chelqa', 'pairdz', 'rita', 'gadget'];
+const THEMES_WITH_CUSTOM_HERO = ['chelqa', 'pairdz', 'rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion'];
 
 // Templates with color-variant image switching (a color name assigned
 // to a specific uploaded photo, which swaps the hero image when
 // selected). Adds a small color-label input to the Photos step.
-const THEMES_WITH_COLOR_VARIANTS = ['premium', 'rita', 'gadget'];
+const THEMES_WITH_COLOR_VARIANTS = ['rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion'];
 
 type StepId =
   | 'niche' | 'template' | 'productName' | 'price' | 'description' | 'photos'
@@ -147,12 +147,10 @@ export function NewLandingPageWizard({ clientId }: { clientId?: string }) {
           .map((s) => ({ type: s.type, url: s.url, caption: s.caption }))
       )
     );
-    // Only sent (and only meaningful) for templates that show the
-    // custom-hero step — see THEMES_WITH_CUSTOM_HERO above. Stored in
-    // page_config, which is otherwise unused today.
-    const colorVariants = data.images
-      .filter((i) => !i.uploading && i.uploadedUrl && i.colorLabel?.trim())
-      .map((i) => ({ name: i.colorLabel!.trim(), url: i.uploadedUrl }));
+    const uniqueColors = Array.from(new Set([
+      ...data.colors,
+      ...data.images.map((i) => i.colorLabel?.trim()).filter((l): l is string => !!l)
+    ]));
 
     formData.set(
       'page_config',
@@ -160,7 +158,7 @@ export function NewLandingPageWizard({ clientId }: { clientId?: string }) {
         headline: data.headline || undefined,
         subheadline: data.subheadline || undefined,
         sizes: data.sizes.length > 0 ? data.sizes : undefined,
-        colors: colorVariants.length > 0 ? colorVariants : undefined,
+        colors: uniqueColors.length > 0 ? uniqueColors : undefined,
       })
     );
 

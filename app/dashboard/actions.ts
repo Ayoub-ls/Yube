@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { generateUniquePageSlug } from '../../lib/data';
 import { checkPlanAllowsNewPage } from '../../lib/plans';
 import { revalidatePath } from 'next/cache';
+import { TEMPLATES } from '@/components/builder/templateCatalog';
 
 export async function createLandingPage(prevState: any, formData: FormData) {
   const supabase = createClient();
@@ -113,9 +114,9 @@ export async function createLandingPage(prevState: any, formData: FormData) {
       }
       if (Array.isArray(parsed.colors)) {
         const cleanColors = parsed.colors
-          .filter((c: any) => c && typeof c.name === 'string' && typeof c.url === 'string')
-          .map((c: any) => ({ name: String(c.name).trim().slice(0, 30), url: c.url }))
-          .slice(0, 8);
+          .filter((c: any) => typeof c === 'string' && c.trim())
+          .map((c: string) => c.trim().slice(0, 30))
+          .slice(0, 15);
         if (cleanColors.length > 0) pageConfig.colors = cleanColors;
       }
     }
@@ -186,6 +187,46 @@ export async function deleteLandingPage(pageId: string) {
     .in('status', ['draft', 'rejected']);
 
   revalidatePath('/dashboard/pages');
+}
+
+export async function updateLandingPageTemplate(pageId: string, newTemplateId: string) {
+  // Validate against the real catalog rather than trusting an arbitrary
+  // string from the client — same reasoning as updateClientPlan's plan
+  // validation elsewhere in this file.
+  if (!TEMPLATES.some((t) => t.id === newTemplateId)) return;
+
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/auth/login');
+
+  const { data: client } = await supabase
+    .from('clients')
+    .select('id, slug')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (!client) return;
+
+  // Switching template_id is non-destructive by design: every template
+  // reads from the exact same TemplateProps shape (page/client/theme),
+  // so product data, images, reviews, and page_config all carry over
+  // untouched. A template that doesn't use a given page_config field
+  // (e.g. Rita's `colors` on a page switched to a theme without color
+  // variants) just won't render it — nothing is deleted.
+  const { data: updated } = await supabase
+    .from('landing_pages')
+    .update({ template_id: newTemplateId })
+    .eq('id', pageId)
+    .eq('client_id', client.id)
+    .select('slug')
+    .maybeSingle();
+
+  if (!updated) return;
+
+  revalidatePath('/dashboard/pages');
+  // Busts the specific public page's cache too, so the new template
+  // shows up immediately on the live link rather than after whatever
+  // Next.js's default cache window would otherwise be.
+  revalidatePath(`/${client.slug}/${updated.slug}`);
 }
 
 const VALID_ORDER_STATUSES = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];

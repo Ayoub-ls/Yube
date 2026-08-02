@@ -26,7 +26,6 @@ export default async function DashboardOrdersPage() {
   const totalRevenue = orderList
     .filter((o) => o.status === 'delivered')
     .reduce((sum, o) => sum + (o.quantity || 1), 0);
-
   return (
     <div className="space-y-6">
       <div>
@@ -47,6 +46,7 @@ export default async function DashboardOrdersPage() {
                 <tr>
                   <th className="px-4 py-3">الزبون</th>
                   <th className="px-4 py-3">الهاتف</th>
+                  <th className="px-4 py-3">الحجم و اللون</th>
                   <th className="px-4 py-3">المنتج</th>
                   <th className="px-4 py-3">الولاية</th>
                   <th className="px-4 py-3">الكمية</th>

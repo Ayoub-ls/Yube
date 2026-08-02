@@ -18,7 +18,7 @@ export interface TemplateProps {
     product_images: string[];
     social_proof: Array<{ type: 'image' | 'audio' | 'video'; url?: string; caption?: string }>;
     reviews: Array<{ name: string; location?: string; rating: number; text: string }>;
-    page_config?: { sizes?: string[]; headline?: string; subheadline?: string; colors?: Array<{ name: string; url: string }>; [key: string]: any } | null;
+    page_config?: { sizes?: string[]; headline?: string; subheadline?: string; colors?: string[];[key: string]: any } | null;
   };
   client: {
     id: string;

@@ -54,10 +54,10 @@ export function PairDZOrderModal({
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="relative bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl border border-slate-100 min-h-[500px] flex flex-col"
+        className="relative bg-white rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-gradient-to-l from-algeria-green to-emerald-800 p-5 text-white flex justify-between items-center shrink-0">
+        <div className="bg-gradient-to-l from-algeria-green to-emerald-800 p-5 text-white flex justify-between items-center shrink-0 sticky top-0 z-10">
           <div className="space-y-1">
             <h3 className="font-extrabold text-xl flex items-center gap-2">
               <span>تأكيد الطلب السريع 🇩🇿</span>

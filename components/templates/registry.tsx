@@ -1,10 +1,15 @@
-import { SimpleTemplate } from './simple/SimpleTemplate';
-import { PremiumTemplate } from './premium/PremiumTemplate';
+
+import AbayaFashion from './abayafashion/AbayaFashion';
 import { ChelqaTemplate } from './chelqa/ChelqaTemplate';
+import Gadget from './gadget/Gadget';
+import LuxuryFashion from './luxaryfashion/LuxuryFashion';
+import MensFashion from './mensfashion/MensFashion';
 import { PairDZTemplate } from './pairdz/PairDZTemplate';
 import { RitaTemplate } from './rita/RitaTemplate';
-import { GadgetTemplate } from './gadget/GadgetTemplate';
+import SneakerDrop from './sneakerdrop/SneakerDrop';
 import type { TemplateProps } from './types';
+import WomansFashion from './womansfashion/WomansFashion';
+import WomensBags from './womensbags/WomensBags';
 
 /**
  * TEMPLATE REGISTRY
@@ -27,15 +32,19 @@ import type { TemplateProps } from './types';
  * left broken, but it doesn't yet look any different from 'simple'.
  */
 export const TEMPLATE_REGISTRY: Record<string, React.ComponentType<TemplateProps>> = {
-  simple: SimpleTemplate,
-  premium: PremiumTemplate,
+  luxury: LuxuryFashion,
+  mensfashion: MensFashion,
+  womansfashion: WomansFashion,
+  abayafashion: AbayaFashion,
   chelqa: ChelqaTemplate,
   pairdz: PairDZTemplate,
   rita: RitaTemplate,
-  gadget: GadgetTemplate,
+  sneakerdrop: SneakerDrop,
+  gadget: Gadget,
+  womensbags: WomensBags,
 };
 
-export const DEFAULT_TEMPLATE_ID = 'simple';
+export const DEFAULT_TEMPLATE_ID = 'luxury';
 
 export function getTemplateComponent(templateId: string): React.ComponentType<TemplateProps> {
   return TEMPLATE_REGISTRY[templateId] || TEMPLATE_REGISTRY[DEFAULT_TEMPLATE_ID];

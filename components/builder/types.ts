@@ -46,6 +46,7 @@ export interface WizardData {
   headline: string;
   subheadline: string;
   sizes: string[];
+  colors: string[];
 }
 
 // Sensible starting point for themes with a size selector — editable,
@@ -58,11 +59,18 @@ export const DEFAULT_SIZES = ['6', '8', '10', '12', '14', '16'];
 // theme gets its own reasonable starting suggestions instead of one
 // generic list).
 export const SIZE_SUGGESTIONS: Record<string, string[]> = {
-  premium: ['7', '8', '9', '10', '11', '12', '13'],
-  chelqa: ['6', '8', '10', '12', '14', '16'],
-  pairdz: ['2', '4', '6', '8', '10', '12', '14', '16'],
-  rita: ['36', '37', '38', '39', '40', '41'],
-  gadget: ['S', 'M', 'L', 'XL'],
+  womansfashion: ['S', 'M', 'L', 'XL', 'XXL'],
+  luxury: ['S', 'M', 'L', 'XL', 'XXL'],
+  chelqa: ['6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL'],
+  pairdz: ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL'],
+  rita: ['36', '37', '38', '39', '40', '41']
+};
+export const COLORS_SUGGESTIONS: Record<string, string[]> = {
+  womansfashion: ['أسود', 'أبيض', 'أزرق', 'أخضر', 'أحمر', 'وردي'],
+  luxury: ['أسود', 'أبيض', 'ذهبي', 'فضي', 'رمادي', 'بيج'],
+  chelqa: ['أسود', 'أبيض', 'أزرق', 'أخضر', 'أحمر', 'وردي'],
+  pairdz: ['أسود', 'أبيض', 'أزرق', 'أخضر', 'أحمر', 'وردي'],
+  rita: ['أسود', 'أبيض', 'أزرق', 'أخضر', 'أحمر', 'وردي']
 };
 
 export const initialWizardData: WizardData = {
@@ -80,6 +88,7 @@ export const initialWizardData: WizardData = {
   headline: '',
   subheadline: '',
   sizes: [],
+  colors: [],
 };
 
 import { THEME_COLORS } from '../../lib/themeColors';

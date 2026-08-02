@@ -52,11 +52,12 @@ export function OrderRow({ order }: { order: any }) {
   return (
     <tr className={pending ? 'opacity-50' : ''}>
       <td className="px-4 py-3 font-bold text-slate-800">{order.name}</td>
-      <td className="px-4 py-3 text-slate-500" dir="ltr">{order.phone}</td>
-      <td className="px-4 py-3 text-slate-600">{order.product_name}</td>
-      <td className="px-4 py-3 text-slate-500">{order.city || '—'}</td>
-      <td className="px-4 py-3 text-slate-600">{order.quantity}</td>
-      <td className="px-4 py-3 text-slate-400">
+      <td className="px-4 py-3 font-bold text-green-700" dir="ltr">{order.phone}</td>
+      <td className="px-4 py-3 font-bold text-purple-700">{order.size || '—'}</td>
+      <td className="px-4 py-3 font-bold text-slate-600">{order.product_name}</td>
+      <td className="px-4 py-3 font-bold text-slate-500">{order.city || '—'}</td>
+      <td className="px-4 py-3 font-bold text-blue-500">{order.quantity}</td>
+      <td className="px-4 py-3 font-bold text-slate-400">
         {new Date(order.created_at).toLocaleDateString('ar-DZ')}
       </td>
       <td className="px-4 py-3">

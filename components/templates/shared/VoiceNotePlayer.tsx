@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import './VoiceNotePlayer.css';
 
 interface VoiceNotePlayerProps {
   src: string;
@@ -67,16 +68,50 @@ export function VoiceNotePlayer({ src, playingAudioSrc, onPlay, onPause }: Voice
     <div className="voice-note">
       <button
         type="button"
-        className={`vn-play-btn ${isPlaying ? 'playing' : ''}`}
+        className={`vn-play-btn ${isPlaying ? "playing" : ""}`}
         onClick={handlePlayPause}
         aria-label="تشغيل التسجيل الصوتي"
       >
-        {isPlaying ? '⏸' : '▶'}
+        {isPlaying ? "⏸" : "▶"}
       </button>
-      <div className="vn-progress">
-        <div className="vn-progress-bar" style={{ width: `${progressPercent}%` }}></div>
+
+      <div className="vn-waveform">
+        {/* Background bars */}
+        <div className="vn-wave-bg">
+          {[
+            20, 35, 50, 28, 45, 70, 40, 60, 32, 75,
+            50, 38, 65, 25, 48, 70, 42, 55, 30, 45,
+            68, 40, 60, 35, 50, 72, 45, 30, 58, 40
+          ].map((height, i) => (
+            <span
+              key={i}
+              className="vn-bar"
+              style={{ height: `${height}%` }}
+            />
+          ))}
+        </div>
+
+        {/* Played overlay */}
+        <div
+          className="vn-wave-played"
+          style={{ width: `${progressPercent}%` }}
+        >
+          {[
+            20, 35, 50, 28, 45, 70, 40, 60, 32, 75,
+            50, 38, 65, 25, 48, 70, 42, 55, 30, 45,
+            68, 40, 60, 35, 50, 72, 45, 30, 58, 40
+          ].map((height, i) => (
+            <span
+              key={i}
+              className="vn-bar played"
+              style={{ height: `${height}%` }}
+            />
+          ))}
+        </div>
       </div>
+
       <span className="vn-time">{formatTime(currentTime)}</span>
+
       <audio
         ref={audioRef}
         className="vn-audio"

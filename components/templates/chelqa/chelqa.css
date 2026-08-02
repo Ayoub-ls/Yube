@@ -92,7 +92,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     height: 72px
+}
+
+.chelqa-theme .logo {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1
 }
 
 .chelqa-theme .logo {
@@ -593,6 +602,7 @@
 
 .chelqa-theme .sp-thumb {
     width: calc(33.33% - 6px);
+    flex-shrink: 0;
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 8px;
@@ -1552,6 +1562,10 @@
         gap: 40px
     }
 
+    .chelqa-theme .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
     .chelqa-theme .footer-top {
         grid-template-columns: 1fr 1fr
     }
@@ -1564,9 +1578,11 @@
     .chelqa-theme .promo-sub {
         margin: 0 auto
     }
-}
 
-@media (max-width:640px) {
+    /* Below 1024px there isn't enough room in the fixed-height header for
+       the logo, all nav links, and the CTA button without wrapping or
+       overflowing — hide the inline nav here instead of waiting for the
+       640px breakpoint. The hero and sticky bar CTAs remain reachable. */
     .chelqa-theme .nav-links {
         display: none
     }
@@ -1574,6 +1590,9 @@
     .chelqa-theme .header-actions {
         display: none
     }
+}
+
+@media (max-width:640px) {
 
     .chelqa-theme .hero {
         padding: 40px 5vw;
@@ -1617,6 +1636,20 @@
 
     .chelqa-theme .sticky-bar {
         display: flex
+    }
+
+    /* The sticky order bar already includes a WhatsApp button when one is
+       configured, so the separate floating WhatsApp bubble would sit right
+       on top of it at this width — hide the float and let the bar's own
+       WhatsApp button take over. */
+    .chelqa-theme .wa-float {
+        display: none
+    }
+
+    /* Reserve room at the bottom of the page so the fixed sticky order bar
+       never covers the last of the footer's content. */
+    .chelqa-theme footer {
+        padding-bottom: 90px
     }
 
     .chelqa-theme .footer-bottom {

@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 import { X, Plus, Sparkles, Loader2, RotateCcw } from 'lucide-react';
-import { SIZE_SUGGESTIONS } from '../types';
+import { SIZE_SUGGESTIONS, COLORS_SUGGESTIONS } from '../types';
 import { generateHeroCopyAction } from '../../../app/dashboard/pages/new/ai-actions';
 import type { WizardData } from '../types';
 
 export function CustomHeroStep({ data, update }: { data: WizardData; update: (patch: Partial<WizardData>) => void }) {
   const [newSize, setNewSize] = useState('');
+  const [newColor, setNewColor] = useState('');
   const [generating, setGenerating] = useState(false);
   const [genError, setGenError] = useState<string | undefined>();
   const hasGenerated = !!(data.headline || data.subheadline);
-  const suggestions = (SIZE_SUGGESTIONS[data.templateId] || []).filter((s) => !data.sizes.includes(s));
+  const sizeSuggestions = (SIZE_SUGGESTIONS[data.templateId] || []).filter((s) => !data.sizes.includes(s));
+  const colorSuggestions = (COLORS_SUGGESTIONS[data.templateId] || []).filter((c) => !data.colors.includes(c));
 
   const addSize = () => {
     const trimmed = newSize.trim();
@@ -27,6 +29,22 @@ export function CustomHeroStep({ data, update }: { data: WizardData; update: (pa
 
   const removeSize = (size: string) => {
     update({ sizes: data.sizes.filter((s) => s !== size) });
+  };
+
+  const addColor = () => {
+    const trimmed = newColor.trim();
+    if (!trimmed) return;
+    if (data.colors.includes(trimmed)) {
+      setNewColor('');
+      return;
+    }
+    if (data.colors.length >= 15) return; // sanity cap
+    update({ colors: [...data.colors, trimmed] });
+    setNewColor('');
+  };
+
+  const removeColor = (color: string) => {
+    update({ colors: data.colors.filter((c) => c !== color) });
   };
 
   const handleGenerate = async () => {
@@ -148,11 +166,11 @@ export function CustomHeroStep({ data, update }: { data: WizardData; update: (pa
           )}
         </div>
 
-        {suggestions.length > 0 && (
+        {sizeSuggestions.length > 0 && (
           <div className="space-y-1.5 pt-1">
             <p className="text-[10px] text-slate-400">اقتراحات سريعة:</p>
             <div className="flex flex-wrap gap-1.5">
-              {suggestions.map((size) => (
+              {sizeSuggestions.map((size) => (
                 <button
                   key={size}
                   type="button"
@@ -190,6 +208,74 @@ export function CustomHeroStep({ data, update }: { data: WizardData; update: (pa
         </div>
         <p className="text-[10px] text-slate-400">
           احذفي كل المقاسات إذا كان منتجك لا يحتاج اختيار مقاس
+        </p>
+      </div>
+      {/* colors */}
+      <div className="space-y-2">
+        <label className="text-xs font-bold text-slate-700">الألوان المتوفرة</label>
+        <div className="flex flex-wrap gap-2">
+          {data.colors.map((color) => (
+            <span
+              key={color}
+              className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold pl-2 pr-3 py-1.5 rounded-full"
+            >
+              {color}
+              <button
+                type="button"
+                onClick={() => removeColor(color)}
+                className="hover:text-red-500 transition"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          ))}
+          {data.colors.length === 0 && (
+            <span className="text-[11px] text-slate-400">لا توجد ألوان — سيتم إخفاء اختيار اللون في الصفحة</span>
+          )}
+        </div>
+
+        {colorSuggestions.length > 0 && (
+          <div className="space-y-1.5 pt-1">
+            <p className="text-[10px] text-slate-400">اقتراحات سريعة:</p>
+            <div className="flex flex-wrap gap-1.5">
+              {colorSuggestions.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => update({ colors: [...data.colors, color] })}
+                  className="text-[11px] font-bold text-slate-500 bg-slate-100 hover:bg-emerald-100 hover:text-emerald-700 px-2.5 py-1 rounded-full transition"
+                >
+                  + {color}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex gap-2 pt-1">
+          <input
+            value={newColor}
+            onChange={(e) => setNewColor(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                addColor();
+              }
+            }}
+            placeholder="أضف لون (مثال: أحمر أو أزرق أو أخضر)"
+            className="flex-1 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-400"
+          />
+          <button
+            type="button"
+            onClick={addColor}
+            className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold px-4 rounded-xl transition"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>إضافة</span>
+          </button>
+        </div>
+        <p className="text-[10px] text-slate-400">
+          احذفي كل الألوان إذا كان منتجك لا يحتاج اختيار لون
         </p>
       </div>
     </div>

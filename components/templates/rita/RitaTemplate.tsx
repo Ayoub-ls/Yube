@@ -7,11 +7,13 @@ import { VoiceNotePlayer } from '../shared/VoiceNotePlayer';
 import { RitaOrderForm } from './RitaOrderForm';
 import './rita.css';
 import type { TemplateProps } from '../types';
+import { FashionOrderForm } from '../shared/FashionOrderForm';
 
-const DEFAULT_SIZES = ['36', '37', '38', '39', '40', '41'];
+const DEFAULT_SIZES = ['standard'];
 
 export function RitaTemplate({ page, client, theme }: TemplateProps) {
   const colors = page.page_config?.colors || [];
+  const normalizedColors = colors.map((c: any) => typeof c === 'string' ? { name: c, url: '' } : { name: c?.name || '', url: c?.url || '' });
   const sizes = page.page_config?.sizes || DEFAULT_SIZES;
   const audioProofs = page.social_proof.filter((p) => p.type === 'audio' && p.url);
   const fallbackImage = page.product_images[0] || '';
@@ -19,8 +21,9 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
   const [selectedSize, setSelectedSize] = useState(sizes[Math.floor(sizes.length / 2)] || '');
 
-  const activeImage = colors.length > 0 ? colors[selectedColorIdx]?.url : fallbackImage;
-  const activeColorName = colors.length > 0 ? colors[selectedColorIdx]?.name : '';
+  const activeImage = normalizedColors.length > 0 && normalizedColors[selectedColorIdx]?.url ? normalizedColors[selectedColorIdx].url : fallbackImage;
+  const activeColorName = normalizedColors.length > 0 ? normalizedColors[selectedColorIdx]?.name : '';
+  const hasColorImages = normalizedColors.some((c) => c.url);
   const hasDiscount = !!(page.original_price && page.original_price > page.price);
 
   const headline = page.page_config?.headline || `تألقي بأناقة استثنائية مع ${page.product_name}`;
@@ -87,15 +90,14 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
             )}
           </div>
 
-          {colors.length > 1 && (
+          {normalizedColors.length > 1 && hasColorImages && (
             <div className="grid grid-cols-3 gap-2 mt-3.5 px-1">
-              {colors.map((color, idx) => (
+              {normalizedColors.map((color, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedColorIdx(idx)}
-                  className={`border-2 rounded-xl overflow-hidden transition-all duration-300 aspect-square ${
-                    selectedColorIdx === idx ? 'border-[#cf9b32] ring-2 ring-[#cf9b32]/30' : 'border-slate-850 bg-slate-950'
-                  }`}
+                  className={`border-2 rounded-xl overflow-hidden transition-all duration-300 aspect-square ${selectedColorIdx === idx ? 'border-[#cf9b32] ring-2 ring-[#cf9b32]/30' : 'border-slate-850 bg-slate-950'
+                    }`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={getOptimizedImageUrl(color.url, 200)} className="w-full h-full object-cover" alt={color.name} />
@@ -112,7 +114,7 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
         </section>
 
         {/* Color selector spec board (text list, mirrors the thumbnail selector above for clarity) */}
-        {colors.length > 0 && (
+        {normalizedColors.length > 0 && (
           <section className="px-4 mb-6">
             <div className="bg-[#15141c] border border-gold-900/20 rounded-3xl p-4.5 shadow-sm">
               <div className="flex justify-between items-center mb-2.5">
@@ -122,14 +124,13 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row gap-2.5">
-                {colors.map((color, idx) => (
+                {normalizedColors.map((color, idx) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => setSelectedColorIdx(idx)}
-                    className={`flex-1 flex items-center justify-between p-2 px-3 rounded-2xl border-2 transition-all text-right ${
-                      selectedColorIdx === idx ? 'border-[#cf9b32] bg-gold-950/30 text-[#cf9b32]' : 'border-slate-850 bg-[#1e1d24] text-slate-200 hover:border-slate-700'
-                    }`}
+                    className={`flex-1 flex items-center justify-between p-2 px-3 rounded-2xl border-2 transition-all text-right ${selectedColorIdx === idx ? 'border-[#cf9b32] bg-gold-950/30 text-[#cf9b32]' : 'border-slate-850 bg-[#1e1d24] text-slate-200 hover:border-slate-700'
+                      }`}
                   >
                     <span className="text-[11px] font-bold">{color.name}</span>
                     {selectedColorIdx === idx && <Check className="w-3.5 h-3.5 text-[#cf9b32]" />}
@@ -164,8 +165,8 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
                   <VoiceNotePlayer
                     src={proof.url!}
                     playingAudioSrc={null}
-                    onPlay={() => {}}
-                    onPause={() => {}}
+                    onPlay={() => { }}
+                    onPause={() => { }}
                   />
                 </div>
               ))}
@@ -202,16 +203,22 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
 
         {/* Order form */}
         <section className="px-4 py-3 bg-[#0f0f13]">
-          <RitaOrderForm
+          <FashionOrderForm
             pageId={page.id}
             clientId={client.id}
             pageSlug={page.slug}
             productName={page.product_name}
             price={page.price}
             selectedColorName={activeColorName || ''}
+            colors={normalizedColors.map((c) => c.name)}
+            onColorChange={(colorName) => {
+              const idx = normalizedColors.findIndex((c) => c.name === colorName);
+              if (idx !== -1) setSelectedColorIdx(idx);
+            }}
             selectedSize={selectedSize}
             sizes={sizes}
             onSizeChange={setSelectedSize}
+            primaryColor={'#cf9b32'}
           />
         </section>
 

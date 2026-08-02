@@ -7,7 +7,7 @@ import { submitOrder, type OrderState } from '../../../app/[clientSlug]/[pageSlu
 import { WILAYAS } from '../../../lib/wilayas';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 
-interface PremiumOrderFormProps {
+interface FashionOrderFormProps {
   pageId: string;
   clientId: string;
   pageSlug: string;
@@ -16,7 +16,9 @@ interface PremiumOrderFormProps {
   selectedColorName: string;
   selectedSize: string;
   sizes: string[];
+  colors: string[];
   onSizeChange: (size: string) => void;
+  onColorChange: (color: string) => void;
   primaryColor: string;
 }
 
@@ -37,10 +39,10 @@ function SubmitButton({ primaryColor }: { primaryColor: string }) {
   );
 }
 
-export function PremiumOrderForm({
+export function FashionOrderForm({
   pageId, clientId, pageSlug, productName, price,
-  selectedColorName, selectedSize, sizes, onSizeChange, primaryColor
-}: PremiumOrderFormProps) {
+  selectedColorName, selectedSize, sizes, colors, onSizeChange, onColorChange, primaryColor
+}: FashionOrderFormProps) {
   const [state, formAction] = useFormState(submitOrder, initialState);
   const [city, setCity] = useState(WILAYAS[15]?.nameAr || 'الجزائر');
   const [quantity, setQuantity] = useState(1);
@@ -92,6 +94,30 @@ export function PremiumOrderForm({
         <p className="text-xs font-semibold mt-1" style={{ color: primaryColor }}>الدفع عند الاستلام بعد معاينة المنتج وتأكيده</p>
       </div>
 
+      {colors && colors?.length > 0 && (
+        <div className="mb-5">
+          <span className="text-xs font-bold text-gray-500 block mb-2">اختر المقاس المناسب:</span>
+          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+            {colors?.map((color) => {
+              const isSelected = selectedColorName === color;
+              return (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => onColorChange(color)}
+                  className={`py-2 px-1 rounded-xl text-center font-bold text-sm border transition-all cursor-pointer ${isSelected
+                    ? 'bg-gray-900 border-gray-900 text-white shadow-sm'
+                    : 'bg-[var(--color-luxury-bg)] border-[#EAE6E1] text-gray-900 hover:border-gray-400'
+                    }`}
+                >
+                  {color}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {sizes.length > 0 && (
         <div className="mb-5">
           <span className="text-xs font-bold text-gray-500 block mb-2">اختر المقاس المناسب:</span>
@@ -103,11 +129,10 @@ export function PremiumOrderForm({
                   key={size}
                   type="button"
                   onClick={() => onSizeChange(size)}
-                  className={`py-2 px-1 rounded-xl text-center font-bold text-sm border transition-all cursor-pointer ${
-                    isSelected
-                      ? 'bg-gray-900 border-gray-900 text-white shadow-sm'
-                      : 'bg-[var(--color-luxury-bg)] border-[#EAE6E1] text-gray-900 hover:border-gray-400'
-                  }`}
+                  className={`py-2 px-1 rounded-xl text-center font-bold text-sm border transition-all cursor-pointer ${isSelected
+                    ? 'bg-gray-900 border-gray-900 text-white shadow-sm'
+                    : 'bg-[var(--color-luxury-bg)] border-[#EAE6E1] text-gray-900 hover:border-gray-400'
+                    }`}
                 >
                   {size}
                 </button>
@@ -189,7 +214,7 @@ export function PremiumOrderForm({
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full bg-[var(--color-luxury-bg)] border border-[#EAE6E1] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gray-400 transition-colors appearance-none cursor-pointer"
+              className="w-full bg-[var(--color-luxury-bg)] text-black border border-[#EAE6E1] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gray-400 transition-colors appearance-none cursor-pointer"
             >
               {WILAYAS.map((w) => (
                 <option key={w.id} value={w.nameAr}>{w.code} - {w.nameAr}</option>

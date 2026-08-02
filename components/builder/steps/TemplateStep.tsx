@@ -30,8 +30,8 @@ export function TemplateStep({ data, update }: { data: WizardData; update: (patc
               className={`text-right p-2 rounded-2xl border-2 transition flex flex-col items-center gap-2 justify-center ${selected ? 'border-emerald-500 bg-emerald-50/50' : 'border-slate-100 hover:border-slate-200'
                 }`}
             >
-              <div className={`w-full  rounded-xl flex items-center justify-center shrink-0 ${selected ? 'bg-emerald-500 text-white' : 'bg-slate-50 text-slate-400'}`}>
-                <img className='object-fill w-full h-full' src={t.image} alt="" />
+              <div className={`w-full h-24 rounded-xl flex items-center justify-center shrink-0 ${selected ? 'bg-emerald-500 text-white' : 'bg-slate-50 text-slate-400'}`}>
+                <Icon size={24} />
               </div>
               <div className="flex flex-col items-center justify-center">
                 <p className="text-sm font-bold text-slate-800">{t.name}</p>

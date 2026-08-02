@@ -4,7 +4,7 @@ import { logout } from '../auth/actions';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
-import { User, LogOut, LayoutGrid, FileText, ShoppingCart, Settings } from 'lucide-react';
+import { User, LogOut, LayoutGrid, FileText, ShoppingCart, Settings, Users } from 'lucide-react';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -83,6 +83,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
           >
             <ShoppingCart className="w-3.5 h-3.5" />
             <span>الطلبيات</span>
+          </Link>
+          <Link
+            href="/dashboard/crm"
+            className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-300"
+          >
+            <Users className="w-3.5 h-3.5" />
+            <span>CRM</span>
           </Link>
           <Link
             href="/dashboard/settings"

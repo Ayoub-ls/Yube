@@ -1,10 +1,11 @@
-import { createClient } from '../../../lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { getClientPages } from '../../../lib/data';
+import { getClientPages } from '@/lib/data';
 import { deleteLandingPage } from '../actions';
-import { CopyLinkButton } from '../../../components/CopyLinkButton';
-import { getPlanConfig, checkPlanAllowsNewPage } from '../../../lib/plans';
+import { CopyLinkButton } from '@/components/CopyLinkButton';
+import { TemplateSwitcher } from '@/components/TemplateSwitcher';
+import { getPlanConfig, checkPlanAllowsNewPage } from '@/lib/plans';
 import { Plus, ExternalLink, Trash2, Clock, CheckCircle2, XCircle, FileEdit, Zap, Lock } from 'lucide-react';
 
 const STATUS_LABELS: Record<string, { label: string; className: string; icon: any }> = {
@@ -12,12 +13,6 @@ const STATUS_LABELS: Record<string, { label: string; className: string; icon: an
   live: { label: 'منشورة', className: 'bg-emerald-50 text-emerald-600 border-emerald-100', icon: CheckCircle2 },
   rejected: { label: 'مرفوضة', className: 'bg-red-50 text-red-600 border-red-100', icon: XCircle },
   draft: { label: 'مسودة', className: 'bg-slate-100 text-slate-500 border-slate-200', icon: FileEdit },
-};
-
-const TEMPLATE_LABELS: Record<string, string> = {
-  simple: 'صفحة بسيطة',
-  multivariant: 'منتج بخيارات',
-  premium: 'صفحة متميزة',
 };
 
 export default async function DashboardPagesList({
@@ -149,9 +144,10 @@ export default async function DashboardPagesList({
                         {statusInfo.label}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400">
-                      {TEMPLATE_LABELS[page.template_id] || page.template_id} · {page.price?.toLocaleString('ar-DZ')} دج
-                    </p>
+                    <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                      <TemplateSwitcher pageId={page.id} currentTemplateId={page.template_id} />
+                      <span>· {page.price?.toLocaleString('ar-DZ')} دج</span>
+                    </div>
                   </div>
 
                   {(page.status === 'draft' || page.status === 'rejected') && (

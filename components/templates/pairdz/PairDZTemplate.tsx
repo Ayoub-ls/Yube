@@ -248,7 +248,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
       {isSizeChartOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setIsSizeChartOpen(false)}>
           <div
-            className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-100"
+            className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-gradient-to-l from-algeria-green to-emerald-800 p-5 text-white flex justify-between items-center">
@@ -264,8 +264,8 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
               <p className="text-sm text-slate-500 leading-relaxed">
                 نوصي باختيار المقاس المعتاد لطفلك. إذا كان طفلك أطول قليلاً، يرجى اختيار مقاس واحد أكبر لراحة أفضل.
               </p>
-              <div className="overflow-hidden border border-slate-100 rounded-2xl shadow-sm">
-                <table className="w-full text-right text-sm">
+              <div className="overflow-x-auto border border-slate-100 rounded-2xl shadow-sm">
+                <table className="w-full min-w-[420px] text-right text-sm">
                   <thead className="bg-slate-50 text-slate-500 font-bold">
                     <tr>
                       <th className="px-4 py-3">المقاس</th>
