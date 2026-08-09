@@ -76,7 +76,6 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
   const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || "M");
   const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
-  const [showSizeGuide, setShowSizeGuide] = useState<boolean>(false);
   const [playingAudioSrc, setPlayingAudioSrc] = useState<string | null>(null);
 
   const orderFormRef = useRef<HTMLDivElement>(null);
@@ -168,7 +167,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                 <span className="text-3xl md:text-4xl font-serif text-[#0B0B0B] font-normal tracking-tight">
                   {formatPrice(price)}
                 </span>
-                {originalPrice && (
+                {originalPrice && discountPercentage && discountPercentage > 50 && (
                   <span className="text-xl font-serif text-[#8C8275] line-through opacity-70">
                     {formatPrice(originalPrice)}
                   </span>
@@ -337,136 +336,6 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   )}
                 </button>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4 & 5. SELECTORS: COLOR & SIZE SPECIFICATIONS */}
-      <section className="py-16 bg-[#FDFBF7] border-b border-[#EAE6DF]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#F5F0EB] rounded-3xl p-8 md:p-12 border border-[#EAE6DF] shadow-sm space-y-10">
-            {/* COLOR SELECTOR */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-serif text-[#0B0B0B] font-medium">
-                  اللون المختار • Couleur Sélectionnée:
-                </span>
-                <span className="text-xs font-mono text-[#C5A059] font-medium">
-                  {colors && colors[selectedColor] || "اللون الأساسي"}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                {colors && colors.map((color, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedColor(color)}
-                    className={`group relative flex items-center space-x-3 space-x-reverse px-4 py-2.5 rounded-full border transition-all duration-300 ${selectedColor === color
-                      ? "bg-[#0B0B0B] text-white border-[#0B0B0B] shadow-md"
-                      : "bg-white text-[#0B0B0B] border-[#E0D8CE] hover:border-[#0B0B0B]"
-                      }`}
-                  >
-                    <span className="relative w-6 h-6 rounded-full overflow-hidden border border-gray-300 flex-shrink-0" style={{ backgroundColor: color }}>
-
-                    </span>
-                    <span className="text-xs font-medium dir-rtl">
-                      {color}
-                    </span>
-                    {selectedColor === color && (
-                      <Check className="w-3.5 h-3.5 text-[#C5A059]" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* SIZE SELECTOR */}
-            <div className="space-y-4 pt-6 border-t border-[#EAE6DF]">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-serif text-[#0B0B0B] font-medium">
-                  المقاس المتوفر • Taille Disponible:
-                </span>
-                <button
-                  onClick={() => setShowSizeGuide(true)}
-                  className="inline-flex items-center space-x-1 space-x-reverse text-xs text-[#C5A059] hover:underline font-mono"
-                >
-                  <Ruler className="w-3.5 h-3.5" />
-                  <span>دليل المقاسات • Guide des Tailles</span>
-                </button>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                {sizes.map((sz, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedSize(sz)}
-                    className={`w-14 h-12 rounded-xl text-xs font-mono font-medium transition-all duration-200 flex items-center justify-center ${selectedSize === sz
-                      ? "bg-[#0B0B0B] text-[#C5A059] border-2 border-[#C5A059] shadow-md scale-105"
-                      : "bg-white text-[#0B0B0B] border border-[#E0D8CE] hover:border-[#0B0B0B]"
-                      }`}
-                  >
-                    {sz}
-                  </button>
-                ))}
-              </div>
-
-              <p className="text-xs text-[#8C8275] italic pt-2">
-                * جميع المقاسات مطابقة للمعايير القياسية الباريسية (Standard Européen)
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. FASHION STORY & CRAFTSMANSHIP */}
-      <section className="py-24 bg-[#0B0B0B] text-[#FDFBF7] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Story Text */}
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-mono tracking-[0.4em] uppercase text-[#C5A059]">
-                L'ART DE LA HAUTE COUTURE
-              </span>
-              <h2 className="text-3xl md:text-5xl font-serif leading-tight font-light text-white">
-                قصة الإتقان والفخامة الباريسية
-              </h2>
-              <p className="text-base md:text-lg text-[#D4C5B3] font-serif leading-relaxed">
-                {description}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 text-xs text-[#E6D7C3]">
-                <div className="p-4 rounded-xl bg-[#171717] border border-[#2C2C2A] space-y-2">
-                  <Scissors className="w-5 h-5 text-[#C5A059]" />
-                  <h4 className="font-serif text-sm font-semibold text-white">
-                    قصة وتفصيل يدوية
-                  </h4>
-                  <p className="text-[#A3998E]">
-                    تمت الخياطة بدقة متناهية تحت إشراف خبراً الأزياء في الجزائر وباريس.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#171717] border border-[#2C2C2A] space-y-2">
-                  <Box className="w-5 h-5 text-[#C5A059]" />
-                  <h4 className="font-serif text-sm font-semibold text-white">
-                    تغليف فاخر إهداء
-                  </h4>
-                  <p className="text-[#A3998E]">
-                    تأتي القطعة داخل علبة حماية فاخرة توقيع الدار مجهزة للإهداء المباشر.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Story Editorial Portrait */}
-            <div className="lg:col-span-5 relative">
-              <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-[#2C2C2A] shadow-2xl">
-                <img
-                  src={images[1] || images[0]}
-                  alt="Craftsmanship"
-                  className="w-full h-full object-cover"
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -738,80 +607,6 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               alt="Fullscreen detail view"
               className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
             />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* SIZE GUIDE MODAL */}
-      <AnimatePresence>
-        {showSizeGuide && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-[#FDFBF7] text-[#0B0B0B] p-8 rounded-3xl max-w-lg w-full space-y-6 shadow-2xl border border-[#EAE6DF]"
-            >
-              <div className="flex items-center justify-between border-b border-[#EAE6DF] pb-4">
-                <h3 className="font-serif text-xl font-semibold">
-                  دليل المقاسات • Guide des Tailles
-                </h3>
-                <button
-                  onClick={() => setShowSizeGuide(false)}
-                  className="p-1 rounded-full hover:bg-gray-200"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="overflow-x-auto text-xs font-mono">
-                <table className="w-full text-right border-collapse">
-                  <thead>
-                    <tr className="bg-[#F5F0EB] text-[#0B0B0B]">
-                      <th className="p-2 border border-[#EAE6DF]">المقاس</th>
-                      <th className="p-2 border border-[#EAE6DF]">الصدر (cm)</th>
-                      <th className="p-2 border border-[#EAE6DF]">الخصر (cm)</th>
-                      <th className="p-2 border border-[#EAE6DF]">الأوراك (cm)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="p-2 border border-[#EAE6DF] font-bold">S / 36</td>
-                      <td className="p-2 border border-[#EAE6DF]">82 - 86</td>
-                      <td className="p-2 border border-[#EAE6DF]">62 - 66</td>
-                      <td className="p-2 border border-[#EAE6DF]">88 - 92</td>
-                    </tr>
-                    <tr className="bg-[#F9F7F3]">
-                      <td className="p-2 border border-[#EAE6DF] font-bold">M / 38</td>
-                      <td className="p-2 border border-[#EAE6DF]">86 - 90</td>
-                      <td className="p-2 border border-[#EAE6DF]">66 - 70</td>
-                      <td className="p-2 border border-[#EAE6DF]">92 - 96</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 border border-[#EAE6DF] font-bold">L / 40</td>
-                      <td className="p-2 border border-[#EAE6DF]">90 - 94</td>
-                      <td className="p-2 border border-[#EAE6DF]">70 - 74</td>
-                      <td className="p-2 border border-[#EAE6DF]">96 - 100</td>
-                    </tr>
-                    <tr className="bg-[#F9F7F3]">
-                      <td className="p-2 border border-[#EAE6DF] font-bold">XL / 42</td>
-                      <td className="p-2 border border-[#EAE6DF]">94 - 98</td>
-                      <td className="p-2 border border-[#EAE6DF]">74 - 78</td>
-                      <td className="p-2 border border-[#EAE6DF]">100 - 104</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <p className="text-xs text-[#8C8275] italic leading-relaxed">
-                * في حال محتارة بين مقاسين، نوصي باختيار المقاس الأكبر، كما يمكنك تجربة القطعة أثناء التوصيل قبل دفع المبلغ.
-              </p>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

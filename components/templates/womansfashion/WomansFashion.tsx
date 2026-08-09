@@ -67,33 +67,24 @@ export default function WomansFashion({ page, client }: TemplateProps) {
 
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState(sizes[1] || 'M (38)');
-  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [activeTab, setActiveTab] = useState<'desc' | 'fabric' | 'shipping'>('desc');
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   // Calculated Pricing
-  const price = page?.price || 8900;
+  const price = page?.price || 0;
   const originalPrice = page?.original_price || Math.round(price * 1.35);
   const discountPercent = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 35;
   const primaryColor = page?.page_config?.primaryColor || '#b48c3a';
 
   // Headlines
   const headline = page?.page_config?.headline || (
-    lang === 'ar'
-      ? 'فستان السهرة الملكي من الحرير الفاخر'
-      : 'Robe de Soirée Royale en Soie Luxe'
+    page?.product_name
   );
 
   const subheadline = page?.page_config?.subheadline || (
-    lang === 'ar'
-      ? 'تصميم أنيق مستوحى من كبرى دور الأزياء العالمية مع لمسة أنثوية راقية تبرز جمالك'
-      : 'Une création élégante inspirée des plus grandes maisons de couture avec une touche féminine raffinée'
+    page?.description
   );
 
-  const productName = page?.product_name || (
-    lang === 'ar' ? 'فستان سهرة حريري فاخر - Tendance Haute Couture' : 'Robe de Soirée Silk Luxe - Édition Limitée'
-  );
+  const productName = page?.product_name || "";
 
   const reviewsList = page?.reviews && page.reviews.length > 0 ? page.reviews : null;
   const socialProofList = page?.social_proof && page.social_proof.length > 0 ? page.social_proof : null;
@@ -346,11 +337,13 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                   <span className="font-serif text-3xl font-black text-[#1e293b]">
                     {price.toLocaleString('fr-DZ')} <span className="text-base font-sans font-bold text-[#8a6528]">د.ج / DA</span>
                   </span>
-                  {originalPrice && (
+                  {originalPrice && originalPrice >= price * 2 ? (
                     <span className="text-sm font-semibold text-gray-400 line-through">
                       {originalPrice.toLocaleString('fr-DZ')} د.ج
                     </span>
-                  )}
+                  ) : <span className="text-sm font-semibold text-red-600 ">
+                    -{discountPercent}% {lang === 'ar' ? 'خصم ' : 'RÉDUCTION'}
+                  </span>}
                 </div>
               </div>
 
@@ -406,14 +399,6 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                   {lang === 'ar' ? 'المقاس المتوفر:' : 'Taille Disponible:'}{' '}
                   <span className="text-[#8a6528] font-semibold">{selectedSize}</span>
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setIsSizeGuideOpen(true)}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-[#8a6528] hover:underline"
-                >
-                  <Ruler className="h-3.5 w-3.5" />
-                  {lang === 'ar' ? 'جدول المقاسات بالسنتمتر' : 'Guide des Tailles en cm'}
-                </button>
               </div>
 
               <div className="grid grid-cols-5 gap-2">
@@ -513,114 +498,6 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             onSizeChange={(sz) => setSelectedSize(sz)}
             primaryColor={primaryColor || '#1e293b'}
           />
-        </section>
-
-        {/* 5. TABS: DESCRIPTION, FABRIC & CARE, SHIPPING TIMELINE */}
-        <section className="mt-16 sm:mt-24 rounded-3xl bg-white p-6 sm:p-10 border border-[#e8decb]/80 shadow-lg shadow-amber-950/5">
-          <div className="flex border-b border-gray-100 overflow-x-auto gap-4 sm:gap-8 pb-3">
-            <button
-              type="button"
-              onClick={() => setActiveTab('desc')}
-              className={`font-serif text-base sm:text-lg font-bold pb-2 transition-all border-b-2 whitespace-nowrap ${activeTab === 'desc'
-                ? 'border-[#1e293b] text-[#1e293b]'
-                : 'border-transparent text-gray-400 hover:text-gray-600'
-                }`}
-            >
-              {lang === 'ar' ? 'تفاصيل الفستان والقصة' : 'Description & Coupe'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('fabric')}
-              className={`font-serif text-base sm:text-lg font-bold pb-2 transition-all border-b-2 whitespace-nowrap ${activeTab === 'fabric'
-                ? 'border-[#1e293b] text-[#1e293b]'
-                : 'border-transparent text-gray-400 hover:text-gray-600'
-                }`}
-            >
-              {lang === 'ar' ? 'نوع القماش والعناية' : 'Tissu & Entretien'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('shipping')}
-              className={`font-serif text-base sm:text-lg font-bold pb-2 transition-all border-b-2 whitespace-nowrap ${activeTab === 'shipping'
-                ? 'border-[#1e293b] text-[#1e293b]'
-                : 'border-transparent text-gray-400 hover:text-gray-600'
-                }`}
-            >
-              {lang === 'ar' ? 'الشحن لـ 58 ولاية' : 'Livraison 58 Wilayas'}
-            </button>
-          </div>
-
-          <div className="mt-6 text-sm leading-relaxed text-gray-700">
-            {activeTab === 'desc' && (
-              <div className="space-y-4">
-                <p>
-                  {page?.description || (
-                    lang === 'ar'
-                      ? 'صُمم هذا الفستان خصيصاً للمرأة الجزائرية البحثة عن الفخامة والأناقة في المناسبات الكبيرة والأعراس. يتميز بقماش الحرير الفاخر ذو الانسيابية العالية مع تطريز دقيق وقصة تبرز الجمال الطبيعي بقالب عصري راقي مستوحى من كبرى الدور الفرنسية.'
-                      : 'Créée spécialement pour la femme moderne à la recherche de glamour et d\'élégance. Confectionnée dans un satin de soie fluide de première qualité avec des finitions impeccables faites à la main.'
-                  )}
-                </p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-[#8a6528]" />
-                    <span>{lang === 'ar' ? 'قماش حريري فاخر غير شفاف' : 'Soie lourde non transparente'}</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-[#8a6528]" />
-                    <span>{lang === 'ar' ? 'سحاب مخفي مرن من الخلف' : 'Fermeture éclair invisible'}</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-[#8a6528]" />
-                    <span>{lang === 'ar' ? 'قصة مريحة تناسب جسم المرأة' : 'Coupe flatteuse et confortable'}</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-[#8a6528]" />
-                    <span>{lang === 'ar' ? 'إنهاء يدوي عالي الدقة' : 'Finitions haute couture'}</span>
-                  </li>
-                </ul>
-              </div>
-            )}
-
-            {activeTab === 'fabric' && (
-              <div className="space-y-4">
-                <div className="rounded-2xl bg-[#faf7f2] p-4 border border-amber-900/10">
-                  <h4 className="font-bold text-[#1e293b] mb-1">
-                    {lang === 'ar' ? 'تركيبة التخيط:' : 'Composition du tissu:'}
-                  </h4>
-                  <p className="text-xs text-gray-600">
-                    {lang === 'ar' ? '95% حرير ساتان ناعم + 5% إيلاستين للتمدد الخفيف والراحة' : '95% Soie Satinée + 5% Élasthanne'}
-                  </p>
-                </div>
-                <div className="space-y-2 text-xs text-gray-600">
-                  <p>• {lang === 'ar' ? 'غسيل يدوي بماء بارد أو غسيل جاف (Dry Clean)' : 'Lavage à la main à l\'eau froide ou nettoyage à sec'}</p>
-                  <p>• {lang === 'ar' ? 'كي بدرجة حرارة منخفضة جداً مع قطعة قماش عازلة' : 'Repassage à basse température avec pattemouille'}</p>
-                  <p>• {lang === 'ar' ? 'تجنب استخدام المبيضات أو التجفيف الحراري' : 'Ne pas utiliser d\'eau de javel'}</p>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'shipping' && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="rounded-2xl bg-[#faf7f2] p-4 text-center">
-                    <MapPin className="h-6 w-6 text-[#8a6528] mx-auto mb-2" />
-                    <h5 className="font-bold text-xs text-[#1e293b]">{lang === 'ar' ? 'العاصمة والمحيط' : 'Alger & Environs'}</h5>
-                    <p className="text-xs text-gray-500 mt-1">24 ساعة (توصيل مجاني)</p>
-                  </div>
-                  <div className="rounded-2xl bg-[#faf7f2] p-4 text-center">
-                    <Truck className="h-6 w-6 text-[#8a6528] mx-auto mb-2" />
-                    <h5 className="font-bold text-xs text-[#1e293b]">{lang === 'ar' ? 'الولايات الكبرى (وهران، قسنطينة)' : 'Grandes Wilayas'}</h5>
-                    <p className="text-xs text-gray-500 mt-1">48 - 72 ساعة</p>
-                  </div>
-                  <div className="rounded-2xl bg-[#faf7f2] p-4 text-center">
-                    <Clock className="h-6 w-6 text-[#8a6528] mx-auto mb-2" />
-                    <h5 className="font-bold text-xs text-[#1e293b]">{lang === 'ar' ? 'ولايات الجنوب والشمال' : 'Toutes les Wilayas'}</h5>
-                    <p className="text-xs text-gray-500 mt-1">3 - 4 أيام عمل</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
         </section>
 
         {/* 7. SOCIAL PROOF & ALGERIAN BUYER AUDIOS/VIDEOS */}
@@ -807,80 +684,6 @@ export default function WomansFashion({ page, client }: TemplateProps) {
           © {new Date().getFullYear()} {client?.business_name || 'Maison de Luxe'}. Tous droits réservés. Designed for Algerian Market.
         </div>
       </footer>
-
-      {/* SIZE GUIDE MODAL */}
-      <AnimatePresence>
-        {isSizeGuideOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="relative w-full max-w-lg overflow-hidden rounded-3xl bg-white p-6 shadow-2xl border border-gray-200"
-            >
-              <button
-                type="button"
-                onClick={() => setIsSizeGuideOpen(false)}
-                className="absolute top-4 left-4 rounded-full bg-gray-100 p-2 text-gray-500 hover:bg-gray-200"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <div className="flex items-center gap-2 mb-4">
-                <Ruler className="h-5 w-5 text-[#8a6528]" />
-                <h3 className="font-serif text-lg font-bold text-[#1e293b]">
-                  {lang === 'ar' ? 'جدول القياسات بالسنتمتر (cm)' : 'Guide des Tailles (cm)'}
-                </h3>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-center text-xs border-collapse">
-                  <thead>
-                    <tr className="bg-[#faf7f2] text-[#1e293b]">
-                      <th className="p-2.5 border border-gray-200 font-bold">{lang === 'ar' ? 'المقاس' : 'Taille'}</th>
-                      <th className="p-2.5 border border-gray-200 font-bold">{lang === 'ar' ? 'الصدر' : 'Poitrine'}</th>
-                      <th className="p-2.5 border border-gray-200 font-bold">{lang === 'ar' ? 'الخصر' : 'Taille'}</th>
-                      <th className="p-2.5 border border-gray-200 font-bold">{lang === 'ar' ? 'الورك' : 'Hanches'}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 text-gray-700">
-                    <tr>
-                      <td className="p-2.5 border font-bold bg-[#faf7f2]/50">S (36)</td>
-                      <td className="p-2.5 border">84 - 88 cm</td>
-                      <td className="p-2.5 border">64 - 68 cm</td>
-                      <td className="p-2.5 border">90 - 94 cm</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2.5 border font-bold bg-[#faf7f2]/50">M (38)</td>
-                      <td className="p-2.5 border">88 - 92 cm</td>
-                      <td className="p-2.5 border">68 - 72 cm</td>
-                      <td className="p-2.5 border">94 - 98 cm</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2.5 border font-bold bg-[#faf7f2]/50">L (40)</td>
-                      <td className="p-2.5 border">92 - 96 cm</td>
-                      <td className="p-2.5 border">72 - 76 cm</td>
-                      <td className="p-2.5 border">98 - 102 cm</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2.5 border font-bold bg-[#faf7f2]/50">XL (42)</td>
-                      <td className="p-2.5 border">96 - 102 cm</td>
-                      <td className="p-2.5 border">76 - 82 cm</td>
-                      <td className="p-2.5 border">102 - 108 cm</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <p className="mt-4 text-[11px] text-gray-500 text-center">
-                {lang === 'ar'
-                  ? 'ملاحظة: القياسات مضبوطة بدقة. إذا كنت بين مقاسين ننصح باختيار المقاس الأكبر.'
-                  : 'Si vous hésitez entre deux tailles, nous vous conseillons d\'opter pour la taille supérieure.'}
-              </p>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* LIGHTBOX ZOOM MODAL */}
       <AnimatePresence>

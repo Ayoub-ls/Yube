@@ -88,66 +88,12 @@ export default function WomensBags({ page, client }: TemplateProps) {
   // Social Proof Data
   const socialProofItems = page.social_proof && page.social_proof.length > 0
     ? page.social_proof
-    : [
-      {
-        type: 'image' as const,
-        url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
-        caption: lang === 'ar' ? 'أجمل حقيبة استلمتها! الجودة فوق الخيال والشحن كان سريع بزاف إلى وهران 😍' : 'La plus belle pochette reçue! Qualité exceptionnelle et livraison très rapide à Oran 😍'
-      },
-      {
-        type: 'image' as const,
-        url: 'https://images.unsplash.com/photo-1594223274512-ad48027321b2?auto=format&fit=crop&w=800&q=80',
-        caption: lang === 'ar' ? 'التغليف فاخر والجلد عالي الجودة. شكراً لكم على المصدقية والتوصيل للعاصمة' : 'Emballage de luxe et cuir de haute qualité. Merci pour la crédibilité et la livraison à Alger'
-      },
-      {
-        type: 'audio' as const,
-        url: '#',
-        caption: lang === 'ar' ? 'تسجيل صوتی من الزبونة ياسمين من قسنطينة تشكر جودة الحقيبة والمعاملة' : 'Note vocale de Yasmine (Constantine) louant la finition et le service'
-      },
-      {
-        type: 'image' as const,
-        url: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=800&q=80',
-        caption: lang === 'ar' ? 'إطلالة اليوم مع حقيبتي الفاخرة الجديدة. تناسب جميع المناسبات!' : 'Look du jour avec mon nouveau sac à main chic. Idéal pour toutes les occasions!'
-      }
-    ];
+    : null;
 
   // Reviews Data
   const reviewItems = page.reviews && page.reviews.length > 0
     ? page.reviews
-    : [
-      {
-        name: 'أميرة بن شريف',
-        location: 'الجزائر العاصمة (Alger)',
-        rating: 5,
-        text: lang === 'ar'
-          ? 'الحقيبة رائعة جداً! التفاصيل دقيقة والجلد ملمسه ناعم وفاخر. وصلتني في أقل من 48 ساعة وتمكنت من معاينتها قبل الدفع. أنصح بشدة!'
-          : 'Sac magnifique! Les détails sont d\'une précision rare et le cuir est d\'une douceur incomparable. Reçu en 48h avec possibilité d\'inspecter avant de payer.'
-      },
-      {
-        name: 'سارة مرابط',
-        location: 'وهران (Oran)',
-        rating: 5,
-        text: lang === 'ar'
-          ? 'اشتريت اللون البيج الذهبي وكان مطابقاً تماماً للصور. التغليف أنيق جداً يصلح كهدية فاخرة. تعامل راقي وسريع.'
-          : 'J\'ai acheté la couleur Beige Doré et c\'était exactement comme sur les photos. Emballage très raffiné, parfait pour un cadeau.'
-      },
-      {
-        name: 'مريم بولخراص',
-        location: 'قسنطينة (Constantine)',
-        rating: 5,
-        text: lang === 'ar'
-          ? 'نوعية ممتازة وحجم مثالي يسع كل أغراضي اليومية. التوصيل كان محترماً جداً وعامل التوصيل انتظر حتى تفحصت الحقيبة.'
-          : 'Qualité supérieure et taille idéale pour tous mes effets personnels. Livreur très professionnel et respectueux.'
-      },
-      {
-        name: 'فايزة حداد',
-        location: 'عنابة (Annaba)',
-        rating: 5,
-        text: lang === 'ar'
-          ? 'تصميم عصري وأنيق يضاهي الماركات العالمية مثل زارا وميشكي. فرحت بزاف بالطلب وستكون لي طلبات أخرى قريباً.'
-          : 'Un design moderne et élégant comparable aux plus grandes marques internationales. Je suis ravie de mon achat.'
-      }
-    ];
+    : null;
 
   // FAQ Items
   const faqItems = [
@@ -468,33 +414,6 @@ export default function WomensBags({ page, client }: TemplateProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="rounded-3xl bg-[#FAF9F6] p-6 border border-[#D4A373]/20 text-right hover:shadow-md transition-all">
-              <div className="h-12 w-12 rounded-2xl bg-white border border-[#D4A373]/30 flex items-center justify-center text-[#D4A373] shadow-sm mb-4">
-                <Sparkles className="h-6 w-6" />
-              </div>
-              <h4 className="font-serif font-bold text-[#1A1A1A] text-base mb-1 italic">
-                {lang === 'ar' ? 'جلد فاخر مقاوم للخدش' : 'Cuir Haute Résistance'}
-              </h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {lang === 'ar'
-                  ? 'مصنوعة من خامات راقية تحافظ على لميعها وشكلها الخارجي حتى مع الاستعمال اليومي المتكرر.'
-                  : 'Matériau résistant aux rayures et à l\'eau, conserve son éclat au fil du temps.'}
-              </p>
-            </div>
-
-            <div className="rounded-3xl bg-[#FAF9F6] p-6 border border-[#D4A373]/20 text-right hover:shadow-md transition-all">
-              <div className="h-12 w-12 rounded-2xl bg-white border border-[#D4A373]/30 flex items-center justify-center text-[#D4A373] shadow-sm mb-4">
-                <Lock className="h-6 w-6" />
-              </div>
-              <h4 className="font-serif font-bold text-[#1A1A1A] text-base mb-1 italic">
-                {lang === 'ar' ? 'إغلاق مغناطيسي ذهبي' : 'Fermeture Magnétique Dorée'}
-              </h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {lang === 'ar'
-                  ? 'قفل ذهبي متين وعصري يمنح الحقيبة لمسة من الفخامة الأنيقة ويحمي أغراضك بأمان.'
-                  : 'Serrure métallique dorée élégante et sécurisée pour protéger vos effets personnels.'}
-              </p>
-            </div>
 
             <div className="rounded-3xl bg-[#FAF9F6] p-6 border border-[#D4A373]/20 text-right hover:shadow-md transition-all">
               <div className="h-12 w-12 rounded-2xl bg-white border border-[#D4A373]/30 flex items-center justify-center text-[#D4A373] shadow-sm mb-4">
@@ -507,20 +426,6 @@ export default function WomensBags({ page, client }: TemplateProps) {
                 {lang === 'ar'
                   ? 'نوصل طردك إلى باب المنزل أو المكتب في جميع 58 ولاية مع إمكانية المعاينة قبل الدفع.'
                   : 'Livraison sécurisée à domicile sur les 58 wilayas d\'Algérie avec inspection.'}
-              </p>
-            </div>
-
-            <div className="rounded-3xl bg-[#FAF9F6] p-6 border border-[#D4A373]/20 text-right hover:shadow-md transition-all">
-              <div className="h-12 w-12 rounded-2xl bg-white border border-[#D4A373]/30 flex items-center justify-center text-[#D4A373] shadow-sm mb-4">
-                <Gift className="h-6 w-6" />
-              </div>
-              <h4 className="font-serif font-bold text-[#1A1A1A] text-base mb-1 italic">
-                {lang === 'ar' ? 'تغليف هدية راقي' : 'Coffret Cadeau Élégant'}
-              </h4>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {lang === 'ar'
-                  ? 'تصلك الحقيبة في صندوق فاخر ومحمي، مما يجعلها هدية مثالية لنفسكِ أو لمن تحبين.'
-                  : 'Chaque sac est soigneusement emballé dans un coffret de présentation haut de gamme.'}
               </p>
             </div>
           </div>
@@ -562,130 +467,134 @@ export default function WomensBags({ page, client }: TemplateProps) {
       </section>
 
       {/* 6. INSTAGRAM STYLE SOCIAL PROOF & LOOKS */}
-      <section className="py-12 bg-gradient-to-b from-white via-[#FCEEE9]/20 to-white border-t border-[#D4A373]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-xs font-bold text-[#D4A373] bg-[#FAF9F6] px-3.5 py-1 rounded-full border border-[#D4A373]/30">
-              {lang === 'ar' ? 'إطلالات الزبونات' : 'Avis & Style Clients'}
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1A1A1A] mt-2 italic">
-              {lang === 'ar' ? 'صور وتسجيلات حقيقية لزبوناتنا' : 'Photos et Note Vocale Réelles'}
-            </h3>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">
-              {lang === 'ar'
-                ? 'شاركي إطلالتكِ مع حقيبتنا الجديدة عبر انستغرام للحصول على خصومات حصرية.'
-                : 'Découvrez les photos authentiques de nos clientes en Algérie.'}
-            </p>
-          </div>
+      {socialProofItems && socialProofItems.length > 0 &&
+        <section className="py-12 bg-gradient-to-b from-white via-[#FCEEE9]/20 to-white border-t border-[#D4A373]/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8">
+            <div className="text-center max-w-xl mx-auto mb-10">
+              <span className="text-xs font-bold text-[#D4A373] bg-[#FAF9F6] px-3.5 py-1 rounded-full border border-[#D4A373]/30">
+                {lang === 'ar' ? 'إطلالات الزبونات' : 'Avis & Style Clients'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1A1A1A] mt-2 italic">
+                {lang === 'ar' ? 'صور وتسجيلات حقيقية لزبوناتنا' : 'Photos et Note Vocale Réelles'}
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                {lang === 'ar'
+                  ? 'شاركي إطلالتكِ مع حقيبتنا الجديدة عبر انستغرام للحصول على خصومات حصرية.'
+                  : 'Découvrez les photos authentiques de nos clientes en Algérie.'}
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {socialProofItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="rounded-3xl bg-white border border-[#D4A373]/20 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all group"
-              >
-                {item.type === 'image' && item.url ? (
-                  <div className="aspect-square relative overflow-hidden bg-[#FAF9F6]">
-                    <img
-                      src={item.url}
-                      alt="Social proof"
-                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3 bg-[#1A1A1A]/80 backdrop-blur-md text-[#D4A373] text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 border border-[#D4A373]/30">
-                      <Star className="h-3 w-3 fill-[#D4A373] text-[#D4A373]" />
-                      <span>{lang === 'ar' ? 'زبونة موثوقة' : 'Vérifié'}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {socialProofItems?.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl bg-white border border-[#D4A373]/20 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-all group"
+                >
+                  {item.type === 'image' && item.url ? (
+                    <div className="aspect-square relative overflow-hidden bg-[#FAF9F6]">
+                      <img
+                        src={item.url}
+                        alt="Social proof"
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-3 right-3 bg-[#1A1A1A]/80 backdrop-blur-md text-[#D4A373] text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 border border-[#D4A373]/30">
+                        <Star className="h-3 w-3 fill-[#D4A373] text-[#D4A373]" />
+                        <span>{lang === 'ar' ? 'زبونة موثوقة' : 'Vérifié'}</span>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="p-6 bg-gradient-to-br from-[#FCEEE9] to-[#FAF9F6] flex flex-col items-center justify-center text-center min-h-[220px]">
-                    <div className="h-14 w-14 rounded-full bg-[#1A1A1A] text-[#D4A373] flex items-center justify-center shadow-md mb-3 border border-[#D4A373]/30">
-                      <Volume2 className="h-7 w-7 animate-pulse" />
+                  ) : (
+                    <div className="p-6 bg-gradient-to-br from-[#FCEEE9] to-[#FAF9F6] flex flex-col items-center justify-center text-center min-h-[220px]">
+                      <div className="h-14 w-14 rounded-full bg-[#1A1A1A] text-[#D4A373] flex items-center justify-center shadow-md mb-3 border border-[#D4A373]/30">
+                        <Volume2 className="h-7 w-7 animate-pulse" />
+                      </div>
+                      <span className="text-xs font-bold text-[#1A1A1A] mb-1">
+                        {lang === 'ar' ? 'تسجيل صوتي من زبونة' : 'Note vocale cliente'}
+                      </span>
+                      <span className="text-[11px] text-gray-600">
+                        {lang === 'ar' ? 'انقري للاستماع للتقييم' : 'Écouter l\'avis vocal'}
+                      </span>
                     </div>
-                    <span className="text-xs font-bold text-[#1A1A1A] mb-1">
-                      {lang === 'ar' ? 'تسجيل صوتي من زبونة' : 'Note vocale cliente'}
-                    </span>
-                    <span className="text-[11px] text-gray-600">
-                      {lang === 'ar' ? 'انقري للاستماع للتقييم' : 'Écouter l\'avis vocal'}
-                    </span>
-                  </div>
-                )}
+                  )}
 
-                <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-                  <p className="text-xs text-gray-700 leading-relaxed font-medium">
-                    "{item.caption}"
-                  </p>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-700 leading-relaxed font-medium">
+                      "{item.caption}"
+                    </p>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                    <button
-                      onClick={() => toggleLike(idx)}
-                      className={`flex items-center gap-1.5 text-xs font-semibold transition-colors cursor-pointer ${likedProofs[idx] ? 'text-[#D4A373]' : 'text-gray-400 hover:text-[#D4A373]'
-                        }`}
-                    >
-                      <Heart className={`h-4 w-4 ${likedProofs[idx] ? 'fill-[#D4A373]' : ''}`} />
-                      <span>{likedProofs[idx] ? '129' : '128'}</span>
-                    </button>
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                      <button
+                        onClick={() => toggleLike(idx)}
+                        className={`flex items-center gap-1.5 text-xs font-semibold transition-colors cursor-pointer ${likedProofs[idx] ? 'text-[#D4A373]' : 'text-gray-400 hover:text-[#D4A373]'
+                          }`}
+                      >
+                        <Heart className={`h-4 w-4 ${likedProofs[idx] ? 'fill-[#D4A373]' : ''}`} />
+                        <span>{likedProofs[idx] ? '129' : '128'}</span>
+                      </button>
 
-                    <span className="text-[10px] font-bold text-[#D4A373] bg-[#FCEEE9] px-2 py-0.5 rounded-full border border-[#D4A373]/20">
-                      #AlgeriaBoutique
-                    </span>
+                      <span className="text-[10px] font-bold text-[#D4A373] bg-[#FCEEE9] px-2 py-0.5 rounded-full border border-[#D4A373]/20">
+                        #AlgeriaBoutique
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      }
 
       {/* 7. CUSTOMER REVIEWS & TESTIMONIALS */}
-      <section className="py-12 sm:py-16 bg-[#FAF9F6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-xs font-bold text-[#D4A373] bg-white px-3.5 py-1 rounded-full border border-[#D4A373]/30 shadow-sm">
-              {lang === 'ar' ? 'آراء العملاء' : 'Avis Clients'}
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1A1A1A] mt-2 italic">
-              {lang === 'ar' ? 'ماذا تقول زبوناتنا في مختلف الولايات؟' : 'Ce que disent nos clientes en Algérie'}
-            </h3>
-          </div>
+      {reviewItems && reviewItems?.length > 0 &&
+        <section className="py-12 sm:py-16 bg-[#FAF9F6]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8">
+            <div className="text-center max-w-xl mx-auto mb-10">
+              <span className="text-xs font-bold text-[#D4A373] bg-white px-3.5 py-1 rounded-full border border-[#D4A373]/30 shadow-sm">
+                {lang === 'ar' ? 'آراء العملاء' : 'Avis Clients'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1A1A1A] mt-2 italic">
+                {lang === 'ar' ? 'ماذا تقول زبوناتنا في مختلف الولايات؟' : 'Ce que disent nos clientes en Algérie'}
+              </h3>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {reviewItems.map((rev, idx) => (
-              <div
-                key={idx}
-                className="rounded-3xl bg-white p-6 border border-[#D4A373]/20 shadow-sm hover:shadow-md transition-all space-y-3 text-right"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-bold text-[#1A1A1A] text-sm sm:text-base">
-                      {rev.name}
-                    </h4>
-                    {rev.location && (
-                      <span className="text-xs text-[#D4A373] font-medium block">
-                        📍 {rev.location}
-                      </span>
-                    )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {reviewItems?.map((rev, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-3xl bg-white p-6 border border-[#D4A373]/20 shadow-sm hover:shadow-md transition-all space-y-3 text-right"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-[#1A1A1A] text-sm sm:text-base">
+                        {rev.name}
+                      </h4>
+                      {rev.location && (
+                        <span className="text-xs text-[#D4A373] font-medium block">
+                          📍 {rev.location}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex text-[#D4A373]">
+                      {[...Array(rev.rating || 5)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-[#D4A373] text-[#D4A373]" />
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="flex text-[#D4A373]">
-                    {[...Array(rev.rating || 5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-[#D4A373] text-[#D4A373]" />
-                    ))}
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-serif italic">
+                    "{rev.text}"
+                  </p>
+
+                  <div className="pt-2 flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>{lang === 'ar' ? 'شراء مؤكد والدفع عند الاستلام' : 'Achat vérifié'}</span>
                   </div>
                 </div>
-
-                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-serif italic">
-                  "{rev.text}"
-                </p>
-
-                <div className="pt-2 flex items-center gap-1.5 text-[11px] text-emerald-800 font-semibold">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                  <span>{lang === 'ar' ? 'شراء مؤكد والدفع عند الاستلام' : 'Achat vérifié'}</span>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      }
 
       {/* 8. ALGERIAN FAQ ACCORDION */}
       <section className="py-12 bg-white border-t border-[#D4A373]/20">

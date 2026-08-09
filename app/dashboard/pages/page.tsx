@@ -2,11 +2,11 @@ import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getClientPages } from '@/lib/data';
-import { deleteLandingPage } from '../actions';
 import { CopyLinkButton } from '@/components/CopyLinkButton';
 import { TemplateSwitcher } from '@/components/TemplateSwitcher';
+import { DeletePageButton } from '@/components/DeletePageButton';
 import { getPlanConfig, checkPlanAllowsNewPage } from '@/lib/plans';
-import { Plus, ExternalLink, Trash2, Clock, CheckCircle2, XCircle, FileEdit, Zap, Lock } from 'lucide-react';
+import { Plus, ExternalLink, Pencil, Clock, CheckCircle2, XCircle, FileEdit, Zap, Lock } from 'lucide-react';
 
 const STATUS_LABELS: Record<string, { label: string; className: string; icon: any }> = {
   pending_review: { label: 'قيد المراجعة', className: 'bg-amber-50 text-amber-600 border-amber-100', icon: Clock },
@@ -18,7 +18,7 @@ const STATUS_LABELS: Record<string, { label: string; className: string; icon: an
 export default async function DashboardPagesList({
   searchParams,
 }: {
-  searchParams: { created?: string };
+  searchParams: { created?: string; edited?: string };
 }) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -43,6 +43,12 @@ export default async function DashboardPagesList({
       {searchParams.created && (
         <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-bold px-4 py-3 rounded-2xl">
           تم نشر صفحتك بنجاح ✅ يمكنك مشاركة رابطها الآن مباشرة.
+        </div>
+      )}
+
+      {searchParams.edited && (
+        <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-bold px-4 py-3 rounded-2xl">
+          تم حفظ التعديلات بنجاح ✅
         </div>
       )}
 
@@ -123,14 +129,6 @@ export default async function DashboardPagesList({
           {pages.map((page) => {
             const statusInfo = STATUS_LABELS[page.status] || STATUS_LABELS.draft;
             const StatusIcon = statusInfo.icon;
-            // Each segment is encoded separately (not the whole URL at
-            // once) so the "/" separators stay intact. Raw Arabic slugs
-            // work fine when tapped directly in-page (browsers encode on
-            // click automatically), but the "copy link" button below
-            // copies this as plain text — and apps like WhatsApp/SMS
-            // don't reliably handle raw Unicode in a pasted link when
-            // detecting it as tappable, which is what was causing the
-            // 404 specifically when opening a shared link on a phone.
             const publicUrl = `${appUrl}/${encodeURIComponent(client.slug)}/${encodeURIComponent(page.slug)}`;
 
             return (
@@ -150,25 +148,17 @@ export default async function DashboardPagesList({
                     </div>
                   </div>
 
-                  {(page.status === 'draft' || page.status === 'rejected') && (
-                    <form action={deleteLandingPage.bind(null, page.id)}>
-                      <button
-                        type="submit"
-                        className="text-slate-300 hover:text-red-500 transition p-1.5"
-                        title="حذف الصفحة"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </form>
-                  )}
-                </div>
-
-                {page.status === 'rejected' && page.rejection_reason && (
-                  <div className="bg-red-50 border border-red-100 rounded-xl p-3 text-[11px] text-red-600">
-                    <span className="font-bold">سبب الرفض: </span>
-                    {page.rejection_reason}
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Link
+                      href={`/dashboard/pages/${page.id}`}
+                      className="text-slate-300 hover:text-emerald-500 transition p-1.5"
+                      title="تعديل الصفحة"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </Link>
+                    <DeletePageButton pageId={page.id} productName={page.product_name} />
                   </div>
-                )}
+                </div>
 
                 {page.status === 'live' && (
                   <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex items-center justify-between gap-2">

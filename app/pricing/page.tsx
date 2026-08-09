@@ -51,7 +51,7 @@ export default function PricingPage() {
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
             <h3 className="font-bold text-gray-400 text-xs xs:text-sm">الخطة الأساسية (Basic)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">3,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">80$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
@@ -66,22 +66,22 @@ export default function PricingPage() {
             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-slate-950 font-black text-[8px] xs:text-[9px] px-2.5 py-0.5 xs:px-3 xs:py-1 rounded-full uppercase tracking-wider">الأكثر طلباً</span>
             <h3 className="font-bold text-emerald-400 text-xs xs:text-sm">الخطة الاحترافية (Pro)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">5,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">90$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>صفحات بيع غير محدودة</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إحصائيات تفصيلية كاملة</span></li>
-              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تكامل بكسل فيسبوك وتيك توك</span></li>
+              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تكامل بكسل فيسبوك</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>دعم فني ذو أولوية 24/7</span></li>
             </ul>
             <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs block cursor-pointer">ابدأ مع الخطة الاحترافية</Link>
           </div>
 
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
-            <h3 className="font-bold text-gray-400 text-xs xs:text-sm">الوكالات (Agency)</h3>
+            <h3 className="font-bold text-gray-400 text-xs xs:text-sm"></h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">15,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">200$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">

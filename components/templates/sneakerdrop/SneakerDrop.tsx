@@ -54,7 +54,6 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
   const [selectedSize, setSelectedSize] = useState<string>(sizes[1] || sizes[0]);
   const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
-  const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [activeSpecTab, setActiveSpecTab] = useState<'materials' | 'cushion' | 'shipping' | 'guarantee'>('materials');
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState<number | null>(null);
@@ -343,7 +342,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                       {page.price.toLocaleString()} <span className="text-lime-400 text-xl font-bold">د.ج</span>
                     </span>
 
-                    {page.original_price && page.original_price > page.price && (
+                    {page.original_price && page.original_price > (page.price * 2) && (
                       <span className="text-base text-zinc-500 line-through font-mono">
                         {page.original_price.toLocaleString()} د.ج
                       </span>
@@ -366,53 +365,6 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                   الدفع عند الاستلام بعد المعاينة
                 </span>
                 <span className="text-lime-400 font-mono font-bold">شحن لـ 58 ولاية</span>
-              </div>
-            </div>
-
-            {/* LIVE STOCK & COUNTDOWN TIMER */}
-            <div className="bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-900 border border-zinc-800/90 rounded-3xl p-4 space-y-3">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
-                  </span>
-                  <span className="text-red-400 font-bold">باقي {stockRemaining} قطع فقط في المخزون!</span>
-                </div>
-                <div className="flex items-center gap-1 text-zinc-400">
-                  <Clock className="h-3.5 w-3.5 text-zinc-400" />
-                  <span>تنتهي الكمية خلال:</span>
-                </div>
-              </div>
-
-              {/* Progress bar */}
-              <div className="w-full h-2.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
-                <div
-                  className="h-full rounded-full transition-all duration-1000"
-                  style={{ width: '82%', backgroundColor: primaryColor }}
-                />
-              </div>
-
-              {/* Countdown timer numbers */}
-              <div className="flex justify-between items-center text-center font-mono text-xs pt-1">
-                <div className="flex gap-2 mx-auto text-zinc-200">
-                  <div className="bg-zinc-950 px-3 py-1.5 rounded-xl border border-zinc-800">
-                    <span className="text-base font-black font-mono block text-white">{String(timer.hours).padStart(2, '0')}</span>
-                    <span className="text-[10px] text-zinc-500">ساعة</span>
-                  </div>
-                  <span className="text-xl font-bold self-center text-zinc-600">:</span>
-                  <div className="bg-zinc-950 px-3 py-1.5 rounded-xl border border-zinc-800">
-                    <span className="text-base font-black font-mono block text-white">{String(timer.minutes).padStart(2, '0')}</span>
-                    <span className="text-[10px] text-zinc-500">دقيقة</span>
-                  </div>
-                  <span className="text-xl font-bold self-center text-zinc-600">:</span>
-                  <div className="bg-zinc-950 px-3 py-1.5 rounded-xl border border-zinc-800">
-                    <span className="text-base font-black font-mono block text-white" style={{ color: primaryColor }}>
-                      {String(timer.seconds).padStart(2, '0')}
-                    </span>
-                    <span className="text-[10px] text-zinc-500">ثانية</span>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -452,14 +404,6 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                   <Ruler className="h-4 w-4 text-lime-400" />
                   <span>المقاس / Pointure (EU)</span>
                 </span>
-
-                <button
-                  onClick={() => setShowSizeGuide(true)}
-                  className="text-xs text-lime-400 hover:underline font-mono flex items-center gap-1"
-                >
-                  <Info className="h-3.5 w-3.5" />
-                  <span>دليل المقاسات</span>
-                </button>
               </div>
 
               {/* Sizing Grid */}
@@ -569,119 +513,23 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
 
           {/* Specs Navigation Tabs */}
           <div className="flex justify-center gap-2 overflow-x-auto pb-2">
-            {[
-              { id: 'materials', label: 'المواد والخامات / Matériaux' },
-              { id: 'cushion', label: 'النعل الهوائي / Semelle Air' },
-              { id: 'shipping', label: 'التوصيل والشحن / Livraison' },
-              { id: 'guarantee', label: 'الضمان والمعاينة / Garantie' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSpecTab(tab.id as any)}
-                className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap ${activeSpecTab === tab.id
-                  ? 'bg-zinc-100 text-black shadow-lg scale-105'
-                  : 'bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white'
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Tab Contents */}
-          <div className="max-w-4xl mx-auto bg-zinc-900/60 border border-zinc-800 rounded-3xl p-6 md:p-8 backdrop-blur-md">
-            {activeSpecTab === 'materials' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div className="space-y-3 dir-rtl">
-                  <h3 className="text-xl font-black text-white">جلد ومواد عالية الجودة 100%</h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    تم تصميم الجزء العلوي من الحذاء باستعمال طبقات متينة مقاومة للتآكل والخدش، مع فتحات تهوية دقيقة تضمن جفاف القدمين طوال اليوم.
-                  </p>
-                  <ul className="text-xs text-zinc-300 space-y-2 font-mono">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-lime-400" />
-                      <span>جلد طبيعي معزز بطبقات بريميوم</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-lime-400" />
-                      <span>خياطة مزدوجة متينة للحواف</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-lime-400" />
-                      <span>رباط حذاء متين مضاد للتمدد</span>
-                    </li>
-                  </ul>
+            <div className="space-y-4 dir-rtl">
+              <h3 className="text-xl font-black text-white">التوصيل إلى 58 ولاية جزائرية</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
+                  <span className="text-xs text-lime-400 font-bold font-mono">العاصمة والولايات المجاورة</span>
+                  <span className="text-sm font-bold block text-white">خلال 24 ساعة فقط</span>
                 </div>
-                <div className="rounded-2xl overflow-hidden border border-zinc-800 aspect-video">
-                  <img
-                    src={images[1] || images[0]}
-                    alt="تفاصيل الخامات"
-                    className="w-full h-full object-cover"
-                  />
+                <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
+                  <span className="text-xs text-lime-400 font-bold font-mono">باقي الولايات الشمالية والشرق والغرب</span>
+                  <span className="text-sm font-bold block text-white">خلال 48 ساعة</span>
+                </div>
+                <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
+                  <span className="text-xs text-lime-400 font-bold font-mono">ولايات الجنوب الكبير</span>
+                  <span className="text-sm font-bold block text-white">من 3 إلى 4 أيام</span>
                 </div>
               </div>
-            )}
-
-            {activeSpecTab === 'cushion' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div className="space-y-3 dir-rtl">
-                  <h3 className="text-xl font-black text-white">تقنية امتصاص الصدمات Air Cushion</h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    نعل كوتشوك مطاطي مرن ومزود بنظام وسائد هوائية لامتصاص الصدمات أثناء المشي لمسافات طويلة أو ممارسة الرياضة.
-                  </p>
-                  <ul className="text-xs text-zinc-300 space-y-2 font-mono">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                      <span>راحه تامة لأسفل القدم والظهر</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                      <span>نعل سفلي مضاد للانزلاق على السطوح المبللة</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="rounded-2xl overflow-hidden border border-zinc-800 aspect-video">
-                  <img
-                    src={images[2] || images[0]}
-                    alt="تفاصيل النعل"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            )}
-
-            {activeSpecTab === 'shipping' && (
-              <div className="space-y-4 dir-rtl">
-                <h3 className="text-xl font-black text-white">التوصيل إلى 58 ولاية جزائرية</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                    <span className="text-xs text-lime-400 font-bold font-mono">العاصمة والولايات المجاورة</span>
-                    <span className="text-sm font-bold block text-white">خلال 24 ساعة فقط</span>
-                  </div>
-                  <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                    <span className="text-xs text-lime-400 font-bold font-mono">باقي الولايات الشمالية والشرق والغرب</span>
-                    <span className="text-sm font-bold block text-white">خلال 48 ساعة</span>
-                  </div>
-                  <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                    <span className="text-xs text-lime-400 font-bold font-mono">ولايات الجنوب الكبير</span>
-                    <span className="text-sm font-bold block text-white">من 3 إلى 4 أيام</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeSpecTab === 'guarantee' && (
-              <div className="space-y-4 dir-rtl">
-                <h3 className="text-xl font-black text-white">سياسة المعاينة والضمان الذهبي</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  نحن نضمن لك حق تجربة الحذاء وفحصه كاملاً أمام موزع التوصيل قبل دفع أي سنتيم. وفي حال وجود أي مشكلة في المقاس يتم استبداله مجاناً.
-                </p>
-                <div className="flex items-center gap-3 bg-zinc-950 p-4 rounded-2xl border border-zinc-800 text-xs font-mono text-emerald-400">
-                  <ShieldCheck className="h-6 w-6 shrink-0" />
-                  <span>ضمان الرضا 100% • 100% Satisfait ou Remboursé</span>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </section>
 
@@ -897,75 +745,6 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                 إغلاق (إلغاء التكبير)
               </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 11. SIZE GUIDE MODAL */}
-      <AnimatePresence>
-        {showSizeGuide && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 dir-rtl"
-            onClick={() => setShowSizeGuide(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 max-w-lg w-full space-y-4 text-white shadow-2xl"
-            >
-              <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-                <h3 className="text-lg font-black uppercase flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-lime-400" />
-                  دليل المقاسات (Guide des Tailles)
-                </h3>
-                <button
-                  onClick={() => setShowSizeGuide(false)}
-                  className="text-xs text-zinc-400 hover:text-white"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <p className="text-xs text-zinc-400">
-                جدول قياس طول القدم بالسنتيمتر مقارنة بمقاسات الحذاء الأوروبية (EU):
-              </p>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs text-center border-collapse font-mono">
-                  <thead>
-                    <tr className="bg-zinc-950 text-zinc-400 border-b border-zinc-800">
-                      <th className="p-2 border border-zinc-800">المقاس (EU)</th>
-                      <th className="p-2 border border-zinc-800">طول القدم (cm)</th>
-                      <th className="p-2 border border-zinc-800">المقاس الأمريكي (US)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-800 text-zinc-300">
-                    <tr><td className="p-2 font-bold text-lime-400">40</td><td className="p-2">25.0 cm</td><td className="p-2">7.0</td></tr>
-                    <tr><td className="p-2 font-bold text-lime-400">41</td><td className="p-2">25.5 cm</td><td className="p-2">8.0</td></tr>
-                    <tr><td className="p-2 font-bold text-lime-400">42</td><td className="p-2">26.5 cm</td><td className="p-2">8.5</td></tr>
-                    <tr><td className="p-2 font-bold text-lime-400">43</td><td className="p-2">27.5 cm</td><td className="p-2">9.5</td></tr>
-                    <tr><td className="p-2 font-bold text-lime-400">44</td><td className="p-2">28.0 cm</td><td className="p-2">10.0</td></tr>
-                    <tr><td className="p-2 font-bold text-lime-400">45</td><td className="p-2">29.0 cm</td><td className="p-2">11.0</td></tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="bg-zinc-950 p-3 rounded-2xl border border-zinc-800 text-[11px] text-zinc-400 font-sans">
-                💡 نصيحة: إذا كنت بين مقاسين، ننصح دائماً بطلب المقاس الأكبر لضمان أفضل راحة للقدم.
-              </div>
-
-              <button
-                onClick={() => setShowSizeGuide(false)}
-                className="w-full py-2.5 bg-zinc-100 text-black font-bold text-xs rounded-xl"
-              >
-                فهمت، العودة للاختيار
-              </button>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -176,17 +176,15 @@ export async function deleteLandingPage(pageId: string) {
     .maybeSingle();
   if (!client) return;
 
-  // Only allow deleting draft/rejected pages, and only the owner's own
-  // page (RLS also enforces this, but checking here gives a clean no-op
-  // instead of relying solely on the database to silently reject it).
+  // Previously restricted to .in('status', ['draft', 'rejected']) — but
+  // pages now auto-publish straight to 'live' (no more admin-review
+  // step), so that filter matched zero rows for virtually every real
+  // page. Scoped only to client_id now (RLS also enforces this).
   await supabase
     .from('landing_pages')
     .delete()
     .eq('id', pageId)
-    .eq('client_id', client.id)
-    .in('status', ['draft', 'rejected']);
-
-  revalidatePath('/dashboard/pages');
+    .eq('client_id', client.id);
 }
 
 export async function updateLandingPageTemplate(pageId: string, newTemplateId: string) {
@@ -227,6 +225,71 @@ export async function updateLandingPageTemplate(pageId: string, newTemplateId: s
   // shows up immediately on the live link rather than after whatever
   // Next.js's default cache window would otherwise be.
   revalidatePath(`/${client.slug}/${updated.slug}`);
+}
+
+export async function updateLandingPageInfo(prevState: any, formData: FormData) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/auth/login');
+
+  const { data: client } = await supabase
+    .from('clients')
+    .select('id, slug')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  if (!client) {
+    return { error: 'لم يتم العثور على متجرك، يرجى تسجيل الدخول من جديد' };
+  }
+
+  const pageId = formData.get('page_id') as string;
+  const productName = (formData.get('product_name') as string || '').trim();
+  const priceRaw = formData.get('price') as string;
+  const originalPriceRaw = formData.get('original_price') as string;
+  const description = (formData.get('description') as string || '').trim();
+  const whatsapp = (formData.get('whatsapp') as string || '').trim();
+
+  if (!pageId) {
+    return { error: 'صفحة غير صالحة' };
+  }
+
+  if (!productName) {
+    return { error: 'يرجى إدخال اسم المنتج' };
+  }
+
+  const price = parseInt(priceRaw, 10);
+  if (isNaN(price) || price <= 0) {
+    return { error: 'يرجى إدخال سعر صحيح' };
+  }
+
+  const originalPrice = originalPriceRaw ? parseInt(originalPriceRaw, 10) : null;
+
+  const { data: updated, error: updateError } = await supabase
+    .from('landing_pages')
+    .update({
+      product_name: productName,
+      price,
+      original_price: originalPrice || null,
+      description: description || null,
+      whatsapp: whatsapp || null,
+    })
+    .eq('id', pageId)
+    .eq('client_id', client.id)
+    .select('slug')
+    .maybeSingle();
+
+  if (updateError) {
+    console.error('Error updating landing page:', updateError);
+    return { error: 'فشل حفظ التعديلات: ' + updateError.message };
+  }
+
+  if (!updated) {
+    return { error: 'لم يتم العثور على الصفحة أو ليست ملكاً لك' };
+  }
+
+  revalidatePath('/dashboard/pages');
+  revalidatePath(`/${client.slug}/${updated.slug}`);
+  redirect('/dashboard/pages?edited=1');
 }
 
 const VALID_ORDER_STATUSES = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Truck, ShieldCheck, RotateCcw, Check } from 'lucide-react';
+import { Truck, ShieldCheck, Check, Clock } from 'lucide-react';
 import { getOptimizedImageUrl } from '../../../lib/upload';
 import { VoiceNotePlayer } from '../shared/VoiceNotePlayer';
 import { RitaOrderForm } from './RitaOrderForm';
@@ -15,11 +15,14 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
   const colors = page.page_config?.colors || [];
   const normalizedColors = colors.map((c: any) => typeof c === 'string' ? { name: c, url: '' } : { name: c?.name || '', url: c?.url || '' });
   const sizes = page.page_config?.sizes || DEFAULT_SIZES;
-  const audioProofs = page.social_proof.filter((p) => p.type === 'audio' && p.url);
+  const audioProofs = page.social_proof?.filter((p) => p.type === 'audio' && p.url);
+  const imageProofs = page.social_proof?.filter((p) => p.type === 'image' && p.url);
+  const videoProofs = page.social_proof?.filter((p) => p.type === 'video' && p.url);
   const fallbackImage = page.product_images[0] || '';
 
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
   const [selectedSize, setSelectedSize] = useState(sizes[Math.floor(sizes.length / 2)] || '');
+  const [playingAudioSrc, setPlayingAudioSrc] = useState<string | null>(null);
 
   const activeImage = normalizedColors.length > 0 && normalizedColors[selectedColorIdx]?.url ? normalizedColors[selectedColorIdx].url : fallbackImage;
   const activeColorName = normalizedColors.length > 0 ? normalizedColors[selectedColorIdx]?.name : '';
@@ -142,7 +145,7 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
         )}
 
         {/* Real testimonials only — text reviews + real uploaded audio */}
-        {(page.reviews.length > 0 || audioProofs.length > 0) && (
+        {(page.reviews.length > 0 || audioProofs.length > 0 || imageProofs.length > 0 || videoProofs.length > 0) && (
           <section className="px-4 py-6 bg-[#131218] border-y border-gold-900/10">
             <h3 className="text-base font-extrabold text-white text-center mb-4">آراء زبوناتنا 💬</h3>
             <div className="space-y-4">
@@ -163,11 +166,24 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
                 <div key={`a-${i}`} className="bg-[#1a1922] rounded-3xl p-3.5 border border-gold-900/10">
                   {proof.caption && <p className="text-slate-300 text-xs italic mb-2">"{proof.caption}"</p>}
                   <VoiceNotePlayer
-                    src={proof.url!}
-                    playingAudioSrc={null}
-                    onPlay={() => { }}
-                    onPause={() => { }}
+                    src={proof.url || ""}
+                    playingAudioSrc={playingAudioSrc}
+                    onPlay={setPlayingAudioSrc}
+                    onPause={() => setPlayingAudioSrc(null)}
                   />
+                </div>
+              ))}
+              {imageProofs.map((proof, i) => (
+                <div key={`i-${i}`} className="bg-[#1a1922] rounded-3xl p-3.5 border border-gold-900/10">
+                  {proof.caption && <p className="text-slate-300 text-xs italic mb-2">"{proof.caption}"</p>}
+
+                  <img src={proof.url} className="w-full h-auto object-cover rounded-xl" alt={proof.caption} />
+                </div>
+              ))}
+              {videoProofs.map((proof, i) => (
+                <div key={`v-${i}`} className="bg-[#1a1922] rounded-3xl p-3.5 border border-gold-900/10">
+                  {proof.caption && <p className="text-slate-300 text-xs italic mb-2">"{proof.caption}"</p>}
+                  <video src={proof.url} controls className="w-full h-auto object-cover rounded-xl"></video>
                 </div>
               ))}
             </div>
@@ -193,10 +209,10 @@ export function RitaTemplate({ page, client, theme }: TemplateProps) {
             </div>
             <div className="flex flex-col items-center p-2.5 bg-[#1a1922] rounded-2xl border border-gold-900/5">
               <div className="w-10 h-10 rounded-full bg-gold-950/40 border border-gold-800/30 flex items-center justify-center mb-2">
-                <RotateCcw className="w-5 h-5 text-[#cf9b32]" />
+                <Clock className="w-5 h-5 text-[#cf9b32]" />
               </div>
-              <h5 className="text-[11px] font-bold text-white leading-tight">ضمان الاستبدال</h5>
-              <p className="text-[9px] text-slate-400 mt-1 leading-normal">تواصلي معنا للاستبدال</p>
+              <h5 className="text-[11px] font-bold text-white leading-tight">خدمة 16/24h</h5>
+              <p className="text-[9px] text-slate-400 mt-1 leading-normal">خدمة متوفرة 16/24h</p>
             </div>
           </div>
         </section>

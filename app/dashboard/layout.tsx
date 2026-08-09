@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
 import { User, LogOut, LayoutGrid, FileText, ShoppingCart, Settings, Users } from 'lucide-react';
+import SupportBubble from '@/components/support/SupportBubble';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -40,8 +41,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <header className="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/logo-icon.png" alt="Yube" width={28} height={28} priority />
-            <span className="text-lg font-black tracking-tight text-slate-900">Yube Dashboard</span>
+            <Image src="/logo-full.png" alt="Yube" width={100} height={54.5} className="" priority />
+            <span className="text-lg font-black tracking-tight text-slate-900">Dashboard</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -104,6 +105,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
         {children}
       </main>
+      <SupportBubble />
     </div>
   );
 }

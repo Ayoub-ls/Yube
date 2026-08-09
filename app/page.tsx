@@ -2,7 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   ArrowLeft, Check, Layout, Sparkles, Award,
+  Users,
 } from 'lucide-react';
+import RevenueCalculator from './leadmagnet/RevenueCalculator';
 
 export default function MarketingHome() {
   return (
@@ -11,13 +13,13 @@ export default function MarketingHome() {
       <header className="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-1.5 xs:gap-2">
-            <Image src="/logo-icon.png" alt="Yube" width={28} height={28} className="xs:w-8 xs:h-8" priority />
-            <span className="text-base xs:text-lg sm:text-xl font-black text-white tracking-tight">Yube</span>
+            <Image src="/logo-full.png" alt="Yube" width={100} height={54.5} className="" priority />
           </div>
 
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-400">
             <a href="#features" className="hover:text-white transition">المميزات</a>
             <a href="#templates" className="hover:text-white transition">القوالب</a>
+            <a href="#crm" className="hover:text-white transition">CRM</a>
             <Link href="/pricing" className="hover:text-white transition">الأسعار</Link>
           </nav>
 
@@ -41,13 +43,13 @@ export default function MarketingHome() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-emerald-500/10 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none"></div>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 xs:space-y-6 relative z-10">
           <span className="inline-block bg-emerald-500/10 text-emerald-400 text-[10px] xs:text-xs font-bold px-2.5 py-1 xs:px-3 xs:py-1.5 rounded-full border border-emerald-500/20 max-w-full text-center leading-normal">
-            🚀 منصة إنشاء صفحات الهبوط مخصصة للتجارة الإلكترونية في الجزائر
+            👗 منصة صفحات البيع المتخصصة في تجارة الملابس والأزياء بالجزائر
           </span>
           <h1 className="text-2xl xs:text-4xl sm:text-6xl font-black text-white leading-tight">
             أنشئ صفحة بيع احترافية عالية التحويل في <span className="text-emerald-400">5 دقائق</span> 🇩🇿
           </h1>
           <p className="text-slate-400 text-xs xs:text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-2">
-            منصة <strong className="text-white">Yube</strong> تحوّل زوار إعلاناتك (فيسبوك، تيك توك، انستغرام) إلى زبائن حقيقيين عن طريق تبسيط عملية ملء استمارات الشراء والدفع عند الاستلام.
+            منصة <strong className="text-white">Yube</strong> مصممة خصيصاً لأصحاب متاجر الملابس والأزياء في الجزائر — قوالب جاهزة لكل الأنماط (رجالي، نسائي، أطفال، أحذية، عبايات) تحوّل زوار إعلاناتك إلى زبائن حقيقيين بالدفع عند الاستلام.
           </p>
 
           <div className="flex justify-center gap-4 pt-2 xs:pt-4">
@@ -55,7 +57,7 @@ export default function MarketingHome() {
               href="/auth/signup"
               className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-[11px] xs:text-sm sm:text-base px-4 py-2.5 xs:px-8 xs:py-4 rounded-xl xs:rounded-2xl shadow-lg shadow-emerald-500/20 transition transform active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2"
             >
-              <span>جرّب المنصة مجاناً لمدة 14 يوم</span>
+              <span>جرّب المنصة مجاناً لمدة شهر كامل</span>
               <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
             </Link>
           </div>
@@ -69,13 +71,13 @@ export default function MarketingHome() {
             <h3 className="text-2xl sm:text-4xl font-black text-emerald-400">+6%</h3>
             <p className="text-xs sm:text-sm text-slate-400 font-bold">متوسط معدل تحويل المبيعات الحالي</p>
           </div>
-          <div className="space-y-1 py-4 border-b border-slate-800/40 sm:border-b-0 sm:py-0 border-r-0 sm:border-r border-slate-800/40">
-            <h3 className="text-2xl sm:text-4xl font-black text-white">+500,000</h3>
-            <p className="text-xs sm:text-sm text-slate-400 font-bold">طلبية تم توليدها وتأكيدها عبر صفحاتنا</p>
-          </div>
           <div className="space-y-1 pt-4 sm:pt-0 border-r-0 sm:border-r border-slate-800/40">
             <h3 className="text-2xl sm:text-4xl font-black text-white">58 ولاية</h3>
             <p className="text-xs sm:text-sm text-slate-400 font-bold">شحن وتوصيل كامل مدمج في الاستمارة</p>
+          </div>
+          <div className="space-y-1 pt-4 sm:pt-0 border-r-0 sm:border-r border-slate-800/40">
+            <h3 className="text-2xl sm:text-4xl font-black text-emerald-400">CRM مجاني</h3>
+            <p className="text-xs sm:text-sm text-slate-400 font-bold">لإدارة المبيعات</p>
           </div>
         </div>
       </section>
@@ -106,7 +108,7 @@ export default function MarketingHome() {
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-6.5 space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-black text-lg">3</div>
             <h3 className="text-lg font-bold text-white">ابدأ استقبال الطلبيات</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">بمجرد موافقة المشرف، انشر رابط الصفحة وابدأ حملتك الإعلانية. ستتلقى معلومات الزبائن في لوحتك فوراً.</p>
+            <p className="text-slate-400 text-sm leading-relaxed">انشر رابط الصفحة وابدأ حملتك الإعلانية. ستتلقى معلومات الزبائن في لوحتك فوراً.</p>
           </div>
         </div>
       </section>
@@ -115,46 +117,106 @@ export default function MarketingHome() {
       <section id="templates" className="py-16 bg-slate-900/10 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center space-y-3">
-            <h2 className="text-3xl font-black text-white">قوالب فائقة السرعة وعالية الإقناع 📱</h2>
-            <p className="text-slate-400 text-sm max-w-md mx-auto">مصممة خصيصاً لتناسب سرعة تصفح الهواتف وشبكات الجيل الرابع في الجزائر</p>
+            <h2 className="text-3xl font-black text-white">قوالب مصممة خصيصاً لكل نمط ملابس 👗👔</h2>
+            <p className="text-slate-400 text-sm max-w-md mx-auto">من الأزياء الفاخرة إلى الستريت وير — قالب مناسب لهوية متجرك</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1 */}
-            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
-              <div className="aspect-video bg-emerald-950/20 relative flex items-center justify-center overflow-hidden">
-                <img src="../public/chelqa_preview.png" width={600} height={400} />
-              </div>
-              <div className="p-5 space-y-2 text-right">
-                <h3 className="font-extrabold text-white text-base">قالب صفحة "صفحة بسيطة"</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">مصمم لمنتج واحد لضمان تسريع ملء البيانات بأقل نقرات ممكنة.</p>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
-              <div className="aspect-video bg-blue-950/20 relative flex items-center justify-center overflow-hidden">
-                <Sparkles className="w-12 h-12 text-blue-500" />
-                <span className="absolute bottom-2 right-2 bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full">الخيارات المتقدمة</span>
-              </div>
-              <div className="p-5 space-y-2 text-right">
-                <h3 className="font-extrabold text-white text-base">قالب "منتج بخيارات"</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">يمنح الزبائن إمكانية اختيار المقاسات، الألوان أو الأحجام المتوفرة بلمسة سريعة.</p>
-              </div>
-            </div>
-
-            {/* Card 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Card 2 — Luxury Fashion */}
             <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
               <div className="aspect-video bg-amber-950/20 relative flex items-center justify-center overflow-hidden">
-                <Award className="w-12 h-12 text-amber-500" />
-                <span className="absolute bottom-2 right-2 bg-amber-500/20 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full">بريميوم راقٍ</span>
+                <Image src="/temp/luxary.png" alt="قالب أزياء فاخرة" width={600} height={400} className="object-cover w-full h-full" />
               </div>
               <div className="p-5 space-y-2 text-right">
-                <h3 className="font-extrabold text-white text-base">قالب "صفحة متميزة"</h3>
-                <p className="text-slate-400 text-xs leading-relaxed">يتضمن ميزات للمنتجات الراقية، الهدايا ليعزز الثقة ويزيد رغبة الشراء.</p>
+                <h3 className="font-extrabold text-white text-base">أزياء فاخرة</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">اختيار المقاس واللون بسهولة لكل قطعة.</p>
+              </div>
+            </div>
+            {/* Card 2 — Luxury Fashion */}
+            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
+              <div className="aspect-video bg-amber-950/20 relative flex items-center justify-center overflow-hidden">
+                <Image src="/temp/men.png" alt="قالب رجال" width={600} height={400} className="object-cover w-full h-full" />
+              </div>
+              <div className="p-5 space-y-2 text-right">
+                <h3 className="font-extrabold text-white text-base">أزياء رجال</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">تصميم راقٍ يعزز الثقة للمنتجات عالية القيمة.</p>
+              </div>
+            </div>
+
+            {/* Card 3 — Kids Fashion */}
+            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
+              <div className="aspect-video bg-rose-950/20 relative flex items-center justify-center overflow-hidden">
+                <Image src="/temp/child.png" alt="قالب أزياء أطفال" width={600} height={400} className="object-cover w-full h-full" />
+              </div>
+              <div className="p-5 space-y-2 text-right">
+                <h3 className="font-extrabold text-white text-base">أزياء الأطفال</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">ألوان دافئة ومقاسات مرنة، مثالي لملابس الأطفال.</p>
+              </div>
+            </div>
+
+            {/* Card 4 — Footwear */}
+            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl overflow-hidden hover:border-slate-800 transition">
+              <div className="aspect-video bg-blue-950/20 relative flex items-center justify-center overflow-hidden">
+                <Image src="/temp/bag.png" alt="قالب أحذية" width={600} height={400} className="object-cover w-full h-full" />
+              </div>
+              <div className="p-5 space-y-2 text-right">
+                <h3 className="font-extrabold text-white text-base">حقائب نسائية</h3>
+                <p className="text-slate-400 text-xs leading-relaxed">اختيار الموديل واللون بسهولة لكل قطعة.</p>
               </div>
             </div>
           </div>
+
+          <p className="text-center text-slate-500 text-xs">
+            + قوالب إضافية لملابس الرجال، النساء، العبايات، والأحذية الرياضية
+          </p>
+        </div>
+      </section>
+
+      {/* CRM Bonus Section */}
+      <section id="crm" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-emerald-500/10 to-slate-900/40 border border-emerald-500/20 rounded-3xl p-6 xs:p-10 sm:p-12 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4 text-right">
+              <span className="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-400 text-[10px] xs:text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500/20">
+                🎁 مُضمّن مجاناً مع اشتراكك
+              </span>
+              <h2 className="text-2xl xs:text-3xl font-black text-white">نظام CRM لإدارة زبائنك — بدون أي تكلفة إضافية</h2>
+              <p className="text-slate-400 text-sm xs:text-base leading-relaxed">
+                تتبّع طلبياتك، تواصل مع زبائنك، وراقب أداء مبيعاتك من مكان واحد — كل هذا مُدمج مباشرة في لوحة تحكمك دون الحاجة لأي أداة خارجية أو اشتراك منفصل.
+              </p>
+              <ul className="space-y-2 text-xs xs:text-sm text-slate-300 pt-2">
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-400 shrink-0" /><span>متابعة حالة كل طلبية لحظة بلحظة</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-400 shrink-0" /><span>سجل كامل لكل زبون وطلبياته السابقة</span></li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-400 shrink-0" /><span>لا حاجة لأي اشتراك أو أداة إضافية</span></li>
+              </ul>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-20 h-20 xs:w-28 xs:h-28 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                <Users className="w-10 h-10 xs:w-14 xs:h-14 text-emerald-400" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <RevenueCalculator />
+
+      {/* Support Section */}
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-3xl font-black text-white">جاهز للارتقاء بمبيعاتك؟ 🚀</h2>
+          <p className="text-slate-400 text-sm max-w-md mx-auto">انضم إلى التجار الجزائريين الذين يوسعون نطاق أعمالهم مع Yube</p>
+        </div>
+
+        <div className="flex justify-center gap-4 pt-2 xs:pt-4">
+          <Link
+            href="/auth/signup"
+            className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-[11px] xs:text-sm sm:text-base px-4 py-2.5 xs:px-8 xs:py-4 rounded-xl xs:rounded-2xl shadow-lg shadow-emerald-500/20 transition transform active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2"
+          >
+            <span>ابدأ الآن - 30 يوم مجاناً</span>
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          </Link>
         </div>
       </section>
 
@@ -171,12 +233,13 @@ export default function MarketingHome() {
             <h3 className="font-bold text-gray-400 text-xs xs:text-sm">التجربة المجانية (Trial)</h3>
             <div className="space-y-1">
               <span className="text-2xl xs:text-3xl font-black text-white">مجاني</span>
-              <span className="text-slate-400 text-[10px] xs:text-xs block">لمدة 14 يوم كاملة</span>
+              <span className="text-slate-400 text-[10px] xs:text-xs block">لمدة شهر كامل</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إنشاء صفحة بيع واحدة</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>توصيل 58 ولاية مدمج</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>لوحة تحكم لإدارة الطلبيات</span></li>
+              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>نظام إدارة المبيعات</span></li>
             </ul>
             <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs block cursor-pointer">ابدأ التجربة المجانية</Link>
           </div>
@@ -185,13 +248,14 @@ export default function MarketingHome() {
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
             <h3 className="font-bold text-gray-400 text-xs xs:text-sm">الخطة الأساسية (Basic)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">3,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">80$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إنشاء حتى 5 صفحات بيع</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>مساحة تخزين صور مجانية</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تأكيدات سريعة وموثوقة</span></li>
+              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>نظام</span></li>
             </ul>
             <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs block cursor-pointer">اختر هذه الخطة</Link>
           </div>
@@ -201,13 +265,13 @@ export default function MarketingHome() {
             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-slate-950 font-black text-[8px] xs:text-[9px] px-2.5 py-0.5 xs:px-3 xs:py-1 rounded-full uppercase tracking-wider">الأكثر طلباً</span>
             <h3 className="font-bold text-emerald-400 text-xs xs:text-sm">الخطة الاحترافية (Pro)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">5,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">90$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>صفحات بيع غير محدودة</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إحصائيات تفصيلية كاملة</span></li>
-              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تكامل بكسل فيسبوك وتيك توك</span></li>
+              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تكامل بكسل فيسبوك</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>دعم فني ذو أولوية 24/7</span></li>
             </ul>
             <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black rounded-xl text-xs block cursor-pointer">ابدأ مع الخطة الاحترافية</Link>
@@ -215,9 +279,9 @@ export default function MarketingHome() {
 
           {/* Plan 4 */}
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
-            <h3 className="font-bold text-gray-400 text-xs xs:text-sm">الوكالات (Agency)</h3>
+            <h3 className="font-bold text-gray-400 text-xs xs:text-sm">coming soon</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">15,000 DA</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">200$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">

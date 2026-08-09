@@ -24,12 +24,12 @@ import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 
 // Templates that use the headline/subheadline/sizes step. Add a
 // template_id here when a new theme wants that step to appear for it.
-const THEMES_WITH_CUSTOM_HERO = ['chelqa', 'pairdz', 'rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion'];
+const THEMES_WITH_CUSTOM_HERO = ['chelqa', 'pairdz', 'rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion', 'womensbags'];
 
 // Templates with color-variant image switching (a color name assigned
 // to a specific uploaded photo, which swaps the hero image when
 // selected). Adds a small color-label input to the Photos step.
-const THEMES_WITH_COLOR_VARIANTS = ['rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion'];
+const THEMES_WITH_COLOR_VARIANTS = ['rita', 'womansfashion', 'luxury', 'mensfashion', 'abayafashion', 'womensbags'];
 
 type StepId =
   | 'niche' | 'template' | 'productName' | 'price' | 'description' | 'photos'
