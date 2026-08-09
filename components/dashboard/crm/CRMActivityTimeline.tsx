@@ -10,7 +10,8 @@ import {
   Truck,
   FileText,
   Bell,
-  Clock
+  Clock,
+  Import
 } from 'lucide-react';
 
 interface CRMActivityTimelineProps {
