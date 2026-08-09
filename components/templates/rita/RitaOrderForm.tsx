@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { ShoppingBag, User, Phone, MapPin, AlertCircle, Check } from 'lucide-react';
 import { submitOrder, type OrderState } from '../../../app/[clientSlug]/[pageSlug]/actions';
 import { WILAYAS } from '../../../lib/wilayas';
+import { useShipping } from '../../../lib/shipping/use-shipping';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 
 interface RitaOrderFormProps {
@@ -40,11 +41,17 @@ export function RitaOrderForm({
   selectedColorName, selectedSize, sizes, onSizeChange,
 }: RitaOrderFormProps) {
   const [state, formAction] = useFormState(submitOrder, initialState);
-  const [city, setCity] = useState(WILAYAS[15]?.nameAr || 'الجزائر');
-  const [quantity, setQuantity] = useState(1);
-
-  const wilaya = WILAYAS.find((w) => w.nameAr === city) || WILAYAS[15];
-  const totalPrice = price * quantity + (wilaya?.shippingFee || 0);
+  const {
+    city,
+    setCity,
+    deliveryType,
+    setDeliveryType,
+    quantity,
+    setQuantity,
+    shippingFee,
+    totalPrice,
+    loading
+  } = useShipping({ clientId, price });
   const sizeAndColor = [selectedSize, selectedColorName].filter(Boolean).join(' - ');
 
   useEffect(() => {
@@ -122,7 +129,13 @@ export function RitaOrderForm({
         </div>
         <div className="flex justify-between items-center text-xs text-slate-400 mb-3 pb-2.5 border-b border-gold-900/20">
           <span>تكلفة الشحن ({city}):</span>
-          <span className="text-emerald-450 font-extrabold">{wilaya?.shippingFee.toLocaleString('ar-DZ')} دج</span>
+          <span className="text-emerald-450 font-extrabold">
+            {loading ? (
+              <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              `${shippingFee.toLocaleString('ar-DZ')} دج`
+            )}
+          </span>
         </div>
         <div className="flex justify-between items-center text-white font-black">
           <span className="text-sm">السعر الإجمالي:</span>
@@ -138,6 +151,7 @@ export function RitaOrderForm({
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="size" value={sizeAndColor} />
         <input type="hidden" name="city" value={city} />
+        <input type="hidden" name="delivery_type" value={deliveryType} />
 
         {state.error && (
           <div className="p-3.5 bg-red-950/50 border border-red-900/40 text-red-300 text-xs rounded-2xl flex items-start gap-2">
@@ -184,6 +198,37 @@ export function RitaOrderForm({
               <option key={w.id} value={w.nameAr}>{w.code} - {w.nameAr}</option>
             ))}
           </select>
+        </div>
+
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-slate-350 mb-1.5 flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5 text-[#cf9b32] shrink-0" />
+            <span>نوع التوصيل <span className="text-red-500">*</span></span>
+          </label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setDeliveryType('home')}
+              className={`py-3 px-4 rounded-2xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'home'
+                  ? 'border-[#cf9b32] bg-[#cf9b32] text-slate-950 font-black'
+                  : 'border-slate-850 bg-[#1e1d24] text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <span>توصيل للمنزل</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeliveryType('stopdesk')}
+              className={`py-3 px-4 rounded-2xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'stopdesk'
+                  ? 'border-[#cf9b32] bg-[#cf9b32] text-slate-950 font-black'
+                  : 'border-slate-850 bg-[#1e1d24] text-slate-300 hover:border-slate-700'
+              }`}
+            >
+              <span>استلام من المكتب</span>
+            </button>
+          </div>
         </div>
 
         <SubmitButton />

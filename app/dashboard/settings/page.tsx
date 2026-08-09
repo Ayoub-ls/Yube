@@ -1,6 +1,7 @@
 import { createClient } from '../../../lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { SettingsForm } from './SettingsForm';
+import { ShippingSettingsForm } from './ShippingSettingsForm';
 import { PasswordForm } from './PasswordForm';
 
 export default async function DashboardSettingsPage() {
@@ -39,6 +40,7 @@ export default async function DashboardSettingsPage() {
       </div>
 
       <SettingsForm client={client} />
+      <ShippingSettingsForm client={client} />
       <PasswordForm />
     </div>
   );

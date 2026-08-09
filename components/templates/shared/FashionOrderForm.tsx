@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { ShoppingBag, User, Phone, MapPin, AlertCircle, Check } from 'lucide-react';
 import { submitOrder, type OrderState } from '../../../app/[clientSlug]/[pageSlug]/actions';
 import { WILAYAS } from '../../../lib/wilayas';
+import { useShipping } from '../../../lib/shipping/use-shipping';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 
 interface FashionOrderFormProps {
@@ -44,11 +45,17 @@ export function FashionOrderForm({
   selectedColorName, selectedSize, sizes, colors, onSizeChange, onColorChange, primaryColor
 }: FashionOrderFormProps) {
   const [state, formAction] = useFormState(submitOrder, initialState);
-  const [city, setCity] = useState(WILAYAS[15]?.nameAr || 'الجزائر');
-  const [quantity, setQuantity] = useState(1);
-
-  const wilaya = WILAYAS.find((w) => w.nameAr === city) || WILAYAS[15];
-  const totalPrice = price * quantity + (wilaya?.shippingFee || 0);
+  const {
+    city,
+    setCity,
+    deliveryType,
+    setDeliveryType,
+    quantity,
+    setQuantity,
+    shippingFee,
+    totalPrice,
+    loading
+  } = useShipping({ clientId, price });
   const sizeAndColor = [selectedSize, selectedColorName].filter(Boolean).join(' - ');
 
   useEffect(() => {
@@ -157,7 +164,13 @@ export function FashionOrderForm({
         </div>
         <div className="flex justify-between items-center text-xs text-gray-500 mb-3 pb-2.5 border-b border-[#EAE6E1]">
           <span>تكلفة الشحن ({city}):</span>
-          <span className="text-emerald-600 font-bold">{wilaya?.shippingFee.toLocaleString('ar-DZ')} دج</span>
+          <span className="text-emerald-600 font-bold">
+            {loading ? (
+              <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              `${shippingFee.toLocaleString('ar-DZ')} دج`
+            )}
+          </span>
         </div>
         <div className="flex justify-between items-center text-gray-900 font-bold">
           <span className="text-sm">السعر الإجمالي:</span>
@@ -173,6 +186,7 @@ export function FashionOrderForm({
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="size" value={sizeAndColor} />
         <input type="hidden" name="city" value={city} />
+        <input type="hidden" name="delivery_type" value={deliveryType} />
 
         {state.error && (
           <div className="p-3.5 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl flex items-start gap-2">
@@ -223,6 +237,35 @@ export function FashionOrderForm({
             <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400">
               <MapPin className="w-4 h-4" />
             </div>
+          </div>
+        </div>
+
+        {/* Delivery Type Option */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-gray-500 mb-1">نوع التوصيل <span className="text-red-500">*</span></label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setDeliveryType('home')}
+              className={`py-3 px-4 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'home'
+                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 font-black'
+                  : 'border-slate-200 bg-white text-gray-600 hover:bg-[#FAF8F5]'
+              }`}
+            >
+              <span>توصيل للمنزل</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeliveryType('stopdesk')}
+              className={`py-3 px-4 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'stopdesk'
+                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 font-black'
+                  : 'border-slate-200 bg-white text-gray-600 hover:bg-[#FAF8F5]'
+              }`}
+            >
+              <span>استلام من المكتب</span>
+            </button>
           </div>
         </div>
 

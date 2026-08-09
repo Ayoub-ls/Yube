@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { submitOrder, type OrderState } from '../../../app/[clientSlug]/[pageSlug]/actions';
 import { WILAYAS } from '../../../lib/wilayas';
+import { useShipping } from '../../../lib/shipping/use-shipping';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 
 interface ChelqaOrderFormProps {
@@ -28,12 +29,18 @@ function SubmitButton() {
 
 export function ChelqaOrderForm({ pageId, clientId, pageSlug, productName, price, sizes }: ChelqaOrderFormProps) {
   const [state, formAction] = useFormState(submitOrder, initialState);
-  const [city, setCity] = useState(WILAYAS[15]?.nameAr || 'الجزائر');
+  const {
+    city,
+    setCity,
+    deliveryType,
+    setDeliveryType,
+    quantity,
+    setQuantity,
+    shippingFee,
+    totalPrice,
+    loading
+  } = useShipping({ clientId, price });
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [quantity, setQuantity] = useState(1);
-
-  const wilaya = WILAYAS.find((w) => w.nameAr === city) || WILAYAS[15];
-  const totalPrice = price * quantity + (wilaya?.shippingFee || 0);
   const sizeText = selectedSizes.map((s) => `${s}`).join(' + ');
 
   const handleSizeClick = (size: string) => {
@@ -108,6 +115,7 @@ export function ChelqaOrderForm({ pageId, clientId, pageSlug, productName, price
           <input type="hidden" name="city" value={city} />
           <input type="hidden" name="quantity" value={quantity} />
           <input type="hidden" name="size" value={sizeText} />
+          <input type="hidden" name="delivery_type" value={deliveryType} />
 
           {state.error && (
             <div style={{ background: '#fee', color: '#c00', padding: '10px', borderRadius: '10px', marginBottom: '12px', fontSize: '13px' }}>
@@ -134,6 +142,28 @@ export function ChelqaOrderForm({ pageId, clientId, pageSlug, productName, price
                   <option key={w.id} value={w.nameAr}>{w.code} - {w.nameAr}</option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>نوع التوصيل <span className="req">*</span></label>
+              <div className="form-sizes" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <button
+                  type="button"
+                  className={`form-size-btn ${deliveryType === 'home' ? 'active' : ''}`}
+                  onClick={() => setDeliveryType('home')}
+                >
+                  توصيل للمنزل
+                </button>
+                <button
+                  type="button"
+                  className={`form-size-btn ${deliveryType === 'stopdesk' ? 'active' : ''}`}
+                  onClick={() => setDeliveryType('stopdesk')}
+                >
+                  استلام من المكتب
+                </button>
+              </div>
             </div>
           </div>
 
@@ -172,7 +202,13 @@ export function ChelqaOrderForm({ pageId, clientId, pageSlug, productName, price
             </div>
             <div className="summary-row">
               <span>سعر التوصيل ({city})</span>
-              <span>{wilaya?.shippingFee.toLocaleString('ar-DZ')} دج</span>
+              <span>
+                {loading ? (
+                  <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  `${shippingFee.toLocaleString('ar-DZ')} دج`
+                )}
+              </span>
             </div>
             <div className="summary-row">
               <span>الكمية</span>

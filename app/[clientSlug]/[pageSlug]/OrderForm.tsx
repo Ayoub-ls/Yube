@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { submitOrder, type OrderState } from './actions';
 import { WILAYAS } from '../../../lib/wilayas';
+import { useShipping } from '../../../lib/shipping/use-shipping';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 import { ShoppingCart, CheckCircle, Truck, Phone } from 'lucide-react';
 
@@ -41,11 +42,17 @@ function SubmitButton({ primaryColor }: { primaryColor: string }) {
 
 export function OrderForm({ pageId, clientId, pageSlug, productName, price, primaryColor }: OrderFormProps) {
   const [state, formAction] = useFormState(submitOrder, initialState);
-  const [city, setCity] = useState(WILAYAS[15]?.nameAr || 'الجزائر');
-  const [quantity, setQuantity] = useState(1);
-
-  const wilaya = WILAYAS.find((w) => w.nameAr === city) || WILAYAS[15];
-  const totalPrice = price * quantity + (wilaya?.shippingFee || 0);
+  const {
+    city,
+    setCity,
+    deliveryType,
+    setDeliveryType,
+    quantity,
+    setQuantity,
+    shippingFee,
+    totalPrice,
+    loading
+  } = useShipping({ clientId, price });
 
   // Order submit = InitiateCheckout, not Purchase. Purchase only fires
   // later, when the store owner actually marks the order "delivered" in
@@ -186,6 +193,36 @@ export function OrderForm({ pageId, clientId, pageSlug, productName, price, prim
           </div>
         </div>
 
+        {/* Delivery Type Option */}
+        <div className="space-y-1.5">
+          <label className="block text-xs font-bold text-gray-700 mb-1">نوع التوصيل</label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setDeliveryType('home')}
+              className={`py-3 px-4 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'home'
+                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 font-black'
+                  : 'border-slate-200 bg-white text-gray-600 hover:bg-slate-50'
+              }`}
+            >
+              <span>توصيل للمنزل</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeliveryType('stopdesk')}
+              className={`py-3 px-4 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                deliveryType === 'stopdesk'
+                  ? 'border-emerald-500 bg-emerald-50/50 text-emerald-700 font-black'
+                  : 'border-slate-200 bg-white text-gray-600 hover:bg-slate-50'
+              }`}
+            >
+              <span>استلام من المكتب</span>
+            </button>
+          </div>
+          <input type="hidden" name="delivery_type" value={deliveryType} />
+        </div>
+
         <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 space-y-2 text-xs text-gray-600">
           <div className="flex justify-between">
             <span>سعر المنتج:</span>
@@ -193,7 +230,13 @@ export function OrderForm({ pageId, clientId, pageSlug, productName, price, prim
           </div>
           <div className="flex justify-between">
             <span>سعر التوصيل ({city}):</span>
-            <span className="font-bold text-gray-800">{wilaya?.shippingFee.toLocaleString('ar-DZ')} دج</span>
+            <span className="font-bold text-gray-800">
+              {loading ? (
+                <span className="inline-block w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                `${shippingFee.toLocaleString('ar-DZ')} دج`
+              )}
+            </span>
           </div>
           <div className="border-t border-slate-200 my-2 pt-2 flex justify-between font-bold text-sm" style={{ color: primaryColor }}>
             <span>السعر الإجمالي عند الاستلام:</span>

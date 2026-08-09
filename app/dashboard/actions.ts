@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { generateUniquePageSlug } from '../../lib/data';
 import { checkPlanAllowsNewPage } from '../../lib/plans';
 import { revalidatePath } from 'next/cache';
+import { WILAYAS } from '../../lib/wilayas';
 import { TEMPLATES } from '@/components/builder/templateCatalog';
 
 export async function createLandingPage(prevState: any, formData: FormData) {
@@ -376,3 +377,68 @@ export async function changePassword(prevState: any, formData: FormData) {
 
   return { success: true };
 }
+
+export async function updateClientShippingConfig(prevState: any, formData: FormData) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/auth/login');
+
+  const courier = formData.get('courier') as string;
+  const fromWilayaRaw = formData.get('from_wilaya') as string;
+  const homeFeeRaw = formData.get('home_fee') as string;
+  const stopdeskFeeRaw = formData.get('stopdesk_fee') as string;
+
+  const fromWilaya = parseInt(fromWilayaRaw, 10) || 16;
+  const homeFee = parseInt(homeFeeRaw, 10) || 600;
+  const stopdeskFee = parseInt(stopdeskFeeRaw, 10) || 400;
+
+  // Extract custom wilaya fees
+  const wilayaFees: Record<string, { home: number; stopdesk: number }> = {};
+  for (const w of WILAYAS) {
+    const homeRaw = formData.get(`wilaya_home_${w.code}`) as string;
+    const stopdeskRaw = formData.get(`wilaya_stopdesk_${w.code}`) as string;
+
+    const hasHome = homeRaw !== null && homeRaw.trim() !== '';
+    const hasStopdesk = stopdeskRaw !== null && stopdeskRaw.trim() !== '';
+
+    if (hasHome || hasStopdesk) {
+      wilayaFees[w.code] = {
+        home: hasHome ? (parseInt(homeRaw, 10) || 0) : w.shippingFee,
+        stopdesk: hasStopdesk ? (parseInt(stopdeskRaw, 10) || 0) : Math.max(300, w.shippingFee - 200),
+      };
+    }
+  }
+
+  const shippingConfig = {
+    courier,
+    from_wilaya: fromWilaya,
+    home_fee: homeFee,
+    stopdesk_fee: stopdeskFee,
+    yalidine_api_id: (formData.get('yalidine_api_id') as string || '').trim(),
+    yalidine_api_token: (formData.get('yalidine_api_token') as string || '').trim(),
+    zrexpress_token: (formData.get('zrexpress_token') as string || '').trim(),
+    zrexpress_key: (formData.get('zrexpress_key') as string || '').trim(),
+    maystro_api_key: (formData.get('maystro_api_key') as string || '').trim(),
+    noest_api_token: (formData.get('noest_api_token') as string || '').trim(),
+    noest_guid: (formData.get('noest_guid') as string || '').trim(),
+    ecotrack_token: (formData.get('ecotrack_token') as string || '').trim(),
+    ecotrack_base_url: (formData.get('ecotrack_base_url') as string || '').trim(),
+    wilaya_fees: wilayaFees,
+  };
+
+  const { error } = await supabase
+    .from('clients')
+    .update({
+      shipping_config: shippingConfig
+    })
+    .eq('user_id', user.id);
+
+  if (error) {
+    console.error('Error updating shipping config:', error);
+    return { error: 'فشل حفظ إعدادات الشحن: ' + error.message };
+  }
+
+  revalidatePath('/dashboard/settings');
+  return { success: true };
+}
+
