@@ -123,12 +123,12 @@ export const SupportMenu: React.FC<SupportMenuProps> = ({
 
         {/* Main Title & Subtitle matching Frosted Glass design */}
         <div className="mt-2 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-1 flex items-center justify-center gap-2">
+          <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-slate-900 mb-1 flex items-center justify-center gap-2">
             <span>كيف يمكننا مساعدتك؟</span>
-            <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow shrink-0" />
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 animate-spin-slow shrink-0" />
           </h1>
-          <p className="text-slate-500 flex items-center justify-center text-base md:text-lg font-medium">
-            فريق <span><img src="/logo-full.png" className='w-[100px]' alt="Yube" /></span> جاهز لمساعدتك.
+          <p className="text-slate-500 flex items-center justify-center text-xs sm:text-base md:text-lg font-medium gap-1">
+            فريق <img src="/logo-full.png" className="w-[70px] sm:w-[90px] inline-block align-middle" alt="Yube" /> جاهز لمساعدتك.
           </p>
         </div>
 

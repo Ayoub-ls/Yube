@@ -473,9 +473,9 @@ const CRMDashboard: React.FC<CRMDashboardProps> = ({
     <div className="min-h-screen bg-slate-50/60 text-slate-900 pb-12 font-sans selection:bg-emerald-100">
       {/* Top Navbar */}
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200/90 shadow-2xs">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 md:py-0 md:h-14 flex flex-col md:flex-row md:items-center justify-between gap-3">
           {/* Brand Logo & Top Nav */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between md:justify-start gap-6 w-full md:w-auto">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 bg-slate-950 rounded-lg flex items-center justify-center text-white shadow-xs">
                 <div className="w-4 h-4 border-2 border-white rounded-xs"></div>
@@ -499,32 +499,34 @@ const CRMDashboard: React.FC<CRMDashboardProps> = ({
           </div>
 
           {/* Quick Actions & User Profile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
             <button
               onClick={handleCreateMockOrder}
-              className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5"
+              className="px-3 py-2 md:py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center justify-center gap-1.5 flex-1 md:flex-none"
             >
               <Plus className="w-3.5 h-3.5 text-emerald-400" />
               <span>محاكاة طلب جديد</span>
             </button>
 
-            <button
-              onClick={() => {
-                setFilters({ ...filters, status: 'call_later' });
-              }}
-              className="p-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 transition-colors relative"
-              title="التذكيرات والمتابعات المعلقة"
-            >
-              <Bell className="w-4 h-4" />
-              {statsSummary.pendingFollowUps > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">
-                  {statsSummary.pendingFollowUps}
-                </span>
-              )}
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setFilters({ ...filters, status: 'call_later' });
+                }}
+                className="p-2 md:p-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 transition-colors relative"
+                title="التذكيرات والمتابعات المعلقة"
+              >
+                <Bell className="w-4 h-4" />
+                {statsSummary.pendingFollowUps > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">
+                    {statsSummary.pendingFollowUps}
+                  </span>
+                )}
+              </button>
 
-            <div className="w-7 h-7 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-700">
-              ي
+              <div className="w-7 h-7 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-700 shrink-0">
+                ي
+              </div>
             </div>
           </div>
         </div>
@@ -548,6 +550,8 @@ const CRMDashboard: React.FC<CRMDashboardProps> = ({
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             totalFilteredCount={filteredOrders.length}
+            cities={uniqueCities}
+            products={uniqueProducts}
           />
         </section>
 

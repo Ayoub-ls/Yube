@@ -66,7 +66,7 @@ export const SupportCard: React.FC<SupportCardProps> = ({
           onSelect(option);
         }
       }}
-      className="group relative flex flex-col justify-between p-6 rounded-[32px] bg-slate-50/90 border border-slate-200/60 hover:border-blue-200 hover:bg-blue-50/50 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer overflow-hidden"
+      className="group relative flex flex-col justify-between p-4 sm:p-6 rounded-2xl sm:rounded-[32px] bg-slate-50/90 border border-slate-200/60 hover:border-blue-200 hover:bg-blue-50/50 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer overflow-hidden"
     >
       {/* Background soft ambient blur accent */}
       <div className="absolute -top-10 -right-10 w-28 h-28 bg-blue-500/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />

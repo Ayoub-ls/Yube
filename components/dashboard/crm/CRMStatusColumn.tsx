@@ -125,7 +125,7 @@ const CRMStatusColumn: React.FC<CRMStatusColumnProps> = ({
     <div
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      className={`flex flex-col w-80 min-w-[320px] max-w-[340px] bg-slate-100/70 rounded-2xl border border-slate-200/80 overflow-hidden shadow-2xs ${config.accentBorder}`}
+      className={`flex flex-col w-[85vw] sm:w-80 min-w-[280px] sm:min-w-[320px] max-w-[340px] bg-slate-100/70 rounded-2xl border border-slate-200/80 overflow-hidden shadow-2xs ${config.accentBorder}`}
     >
       {/* Column Header */}
       <div className={`p-3.5 border-b flex items-center justify-between ${config.headerBg}`}>

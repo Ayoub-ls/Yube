@@ -192,7 +192,13 @@ const CRMOrderCard: React.FC<CRMOrderCardProps> = ({
         <div className="flex items-center justify-between mt-1 text-xs text-slate-500">
           <div className="flex items-center gap-1 font-mono tracking-wider">
             <Phone className="w-3.5 h-3.5 text-slate-400" />
-            <span>{order.phone}</span>
+            <a
+              href={`tel:${order.phone}`}
+              onClick={(e) => e.stopPropagation()}
+              className="hover:underline hover:text-blue-600 transition-colors"
+            >
+              {order.phone}
+            </a>
             <button
               onClick={handleCopyPhone}
               className="p-1 hover:text-slate-900 transition-colors rounded"
@@ -255,15 +261,15 @@ const CRMOrderCard: React.FC<CRMOrderCardProps> = ({
             </span>
           </div>
 
-          <span className="text-slate-400 text-[10px]">
+          <span className="text-slate-400 text-[10px] truncate max-w-[80px]" title={order.landingPage}>
             {order.landingPage}
           </span>
         </div>
       </div>
 
       {/* Footer: Date & Quick Actions */}
-      <div className="flex items-center justify-between pt-1 border-t border-slate-100">
-        <div className="flex items-center gap-1 text-[11px] text-slate-400">
+      <div className="flex items-center justify-between pt-1.5 border-t border-slate-100">
+        <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-400">
           <Clock className="w-3 h-3 text-slate-400" />
           <span>{formatTime(order.creationDate)}</span>
           {order.callAttempts > 0 && (
@@ -274,20 +280,20 @@ const CRMOrderCard: React.FC<CRMOrderCardProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2 sm:gap-1">
           <button
             onClick={handleCall}
-            className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
+            className="p-2 sm:p-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
             title="اتصال سريع بالعميل"
           >
-            <Phone className="w-3.5 h-3.5" />
+            <Phone className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
           </button>
           <button
             onClick={handleWhatsApp}
-            className="p-1.5 rounded-lg bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-colors"
+            className="p-2 sm:p-1.5 rounded-lg bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 transition-colors"
             title="إرسال رسالة WhatsApp"
           >
-            <MessageSquare className="w-3.5 h-3.5" />
+            <MessageSquare className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
           </button>
 
           {order.status !== 'confirmed' && order.status !== 'delivered' && (
@@ -296,17 +302,17 @@ const CRMOrderCard: React.FC<CRMOrderCardProps> = ({
                 e.stopPropagation();
                 if (onQuickStatusChange) onQuickStatusChange(order.id, 'confirmed');
               }}
-              className="px-2 py-1 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-[11px] font-semibold transition-colors flex items-center gap-1 shadow-xs"
+              className="px-3 py-2 sm:px-2 sm:py-1 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-xs sm:text-[11px] font-semibold transition-colors flex items-center gap-1 shadow-xs"
               title="تأكيد الطلب فوراً"
             >
-              <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-3 sm:h-3 text-emerald-400" />
               <span>تأكيد</span>
             </button>
           )}
 
           <button
             onClick={() => onSelectOrder(order)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            className="p-2 sm:p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>

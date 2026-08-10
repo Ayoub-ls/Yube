@@ -72,8 +72,8 @@ const CRMReminderModal: React.FC<CRMReminderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-      <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-xl border border-slate-200 animate-in fade-in zoom-in duration-150 space-y-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/40 backdrop-blur-xs">
+      <div className="bg-white rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-xl border border-slate-200 animate-in fade-in zoom-in duration-150 space-y-4 sm:space-y-5">
         {/* Modal Header */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2">
@@ -81,8 +81,8 @@ const CRMReminderModal: React.FC<CRMReminderModalProps> = ({
               <Bell className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">جدولة تذكير بالاتصال</h3>
-              <p className="text-xs text-slate-500">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">جدولة تذكير بالاتصال</h3>
+              <p className="text-[11px] sm:text-xs text-slate-500">
                 للطلب <span className="font-mono font-bold text-slate-900">{order.orderNumber}</span> - {order.customerName}
               </p>
             </div>
@@ -96,29 +96,29 @@ const CRMReminderModal: React.FC<CRMReminderModalProps> = ({
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSave} className="space-y-4">
+        <form onSubmit={handleSave} className="space-y-3 sm:space-y-4">
           {/* Quick Preset Buttons */}
           <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1.5">اختيار سريع للوقت:</label>
-            <div className="grid grid-cols-3 gap-2">
+            <label className="text-[11px] sm:text-xs font-bold text-slate-700 block mb-1.5">اختيار سريع للوقت:</label>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               <button
                 type="button"
                 onClick={() => handleQuickPreset('2hours')}
-                className="py-1.5 px-2 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-colors text-center"
+                className="py-1.5 px-1 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-[10px] sm:text-xs font-semibold text-slate-700 transition-colors text-center truncate"
               >
                 بعد ساعتين
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickPreset('tomorrow')}
-                className="py-1.5 px-2 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-colors text-center"
+                className="py-1.5 px-1 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-[10px] sm:text-xs font-semibold text-slate-700 transition-colors text-center truncate"
               >
                 غداً 10:00 ص
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickPreset('3days')}
-                className="py-1.5 px-2 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-colors text-center"
+                className="py-1.5 px-1 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 rounded-xl text-[10px] sm:text-xs font-semibold text-slate-700 transition-colors text-center truncate"
               >
                 بعد 3 أيام
               </button>

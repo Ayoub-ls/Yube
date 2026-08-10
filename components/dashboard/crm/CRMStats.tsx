@@ -128,18 +128,20 @@ const CRMStats: React.FC<CRMStatsProps> = ({ stats, onFilterStatus }) => {
             <div
               key={idx}
               onClick={card.onClick}
-              className={`p-3.5 rounded-2xl bg-white border ${card.borderColor
+              className={`p-3 sm:p-3.5 rounded-2xl bg-white border ${card.borderColor
                 } shadow-xs transition-all duration-200 ${card.onClick ? 'cursor-pointer hover:shadow-md hover:-translate-y-0.5' : ''
                 } ${card.highlight ? 'ring-1 ring-amber-400/30' : ''}`}
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-slate-500 line-clamp-1">{card.title}</span>
-                <div className={`p-1.5 rounded-xl ${card.color}`}>
-                  <Icon className="w-3.5 h-3.5" />
+              <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                <span className="text-[10px] sm:text-xs font-medium text-slate-500 line-clamp-1">{card.title}</span>
+                <div className={`p-1 sm:p-1.5 rounded-xl ${card.color} shrink-0`}>
+                  <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </div>
               </div>
-              <div className="text-lg font-bold text-slate-900 tracking-tight">{card.value}</div>
-              <div className="text-[10px] text-slate-400 mt-0.5 line-clamp-1">{card.subtext}</div>
+              <div className="text-sm xs:text-base sm:text-lg font-bold text-slate-900 tracking-tight truncate" title={card.value}>
+                {card.value}
+              </div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5 line-clamp-1">{card.subtext}</div>
             </div>
           );
         })}

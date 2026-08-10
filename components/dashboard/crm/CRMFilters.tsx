@@ -168,75 +168,83 @@ const CRMFilters: React.FC<CRMFiltersProps> = ({
         </div>
 
         {/* Select Dropdowns */}
-        <div className="flex items-center flex-wrap gap-2 w-full lg:w-auto">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 w-full lg:w-auto">
           {/* City Filter */}
-          <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700">
-            <MapPin className="w-3.5 h-3.5 text-slate-400" />
-            <select
-              value={filters.city}
-              onChange={handleCityChange}
-              className="bg-transparent focus:outline-none font-medium cursor-pointer"
-            >
-              {(cities || ALGERIAN_WILAYAS).map((w) => (
-                <option key={w} value={w}>
-                  {w === 'الكل' ? 'كل الولايات' : w}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center justify-between sm:justify-start gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 sm:py-1.5 text-xs text-slate-700 w-full sm:w-auto">
+            <div className="flex items-center gap-1 min-w-0 flex-1">
+              <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <select
+                value={filters.city}
+                onChange={handleCityChange}
+                className="bg-transparent focus:outline-none font-medium cursor-pointer w-full text-right"
+              >
+                {(cities || ALGERIAN_WILAYAS).map((w) => (
+                  <option key={w} value={w}>
+                    {w === 'الكل' ? 'كل الولايات' : w}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Product Filter */}
-          <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700">
-            <ShoppingBag className="w-3.5 h-3.5 text-slate-400" />
-            <select
-              value={filters.product}
-              onChange={handleProductChange}
-              className="bg-transparent focus:outline-none font-medium cursor-pointer max-w-[130px] truncate"
-            >
-              {(products || PRODUCT_LIST).map((p) => (
-                <option key={p} value={p}>
-                  {p === 'الكل' ? 'كل المنتجات' : p}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center justify-between sm:justify-start gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 sm:py-1.5 text-xs text-slate-700 w-full sm:w-auto">
+            <div className="flex items-center gap-1 min-w-0 flex-1">
+              <ShoppingBag className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <select
+                value={filters.product}
+                onChange={handleProductChange}
+                className="bg-transparent focus:outline-none font-medium cursor-pointer w-full text-right truncate"
+              >
+                {(products || PRODUCT_LIST).map((p) => (
+                  <option key={p} value={p}>
+                    {p === 'الكل' ? 'كل المنتجات' : p}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Date Filter */}
-          <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700">
-            <Calendar className="w-3.5 h-3.5 text-slate-400" />
-            <select
-              value={filters.dateRange}
-              onChange={handleDateChange}
-              className="bg-transparent focus:outline-none font-medium cursor-pointer"
-            >
-              <option value="all">كل الأوقات</option>
-              <option value="today">اليوم</option>
-              <option value="yesterday">الأمس</option>
-              <option value="week">هذا الأسبوع</option>
-              <option value="month">هذا الشهر</option>
-            </select>
+          <div className="flex items-center justify-between sm:justify-start gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 sm:py-1.5 text-xs text-slate-700 w-full sm:w-auto">
+            <div className="flex items-center gap-1 min-w-0 flex-1">
+              <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <select
+                value={filters.dateRange}
+                onChange={handleDateChange}
+                className="bg-transparent focus:outline-none font-medium cursor-pointer w-full text-right"
+              >
+                <option value="all">كل الأوقات</option>
+                <option value="today">اليوم</option>
+                <option value="yesterday">الأمس</option>
+                <option value="week">هذا الأسبوع</option>
+                <option value="month">هذا الشهر</option>
+              </select>
+            </div>
           </div>
 
           {/* Sort Filter */}
-          <div className="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700">
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-            <select
-              value={filters.sortBy}
-              onChange={handleSortChange}
-              className="bg-transparent focus:outline-none font-medium cursor-pointer"
-            >
-              <option value="newest">الأحدث أولاً</option>
-              <option value="oldest">الأقدم أولاً</option>
-              <option value="highest_price">الأعلى سعراً</option>
-              <option value="lowest_price">الأقل سعراً</option>
-            </select>
+          <div className="flex items-center justify-between sm:justify-start gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 sm:py-1.5 text-xs text-slate-700 w-full sm:w-auto">
+            <div className="flex items-center gap-1 min-w-0 flex-1">
+              <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <select
+                value={filters.sortBy}
+                onChange={handleSortChange}
+                className="bg-transparent focus:outline-none font-medium cursor-pointer w-full text-right"
+              >
+                <option value="newest">الأحدث أولاً</option>
+                <option value="oldest">الأقدم أولاً</option>
+                <option value="highest_price">الأعلى سعراً</option>
+                <option value="lowest_price">الأقل سعراً</option>
+              </select>
+            </div>
           </div>
 
           {/* Reset Filters */}
           {hasActiveFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold px-2.5 py-1.5 rounded-xl bg-rose-50 border border-rose-200 transition-colors"
+              className="flex items-center justify-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold px-2.5 py-2 sm:py-1.5 rounded-xl bg-rose-50 border border-rose-200 transition-colors col-span-2 sm:col-span-1 w-full sm:w-auto"
             >
               <X className="w-3.5 h-3.5" />
               <span>إلغاء الفلاتر</span>

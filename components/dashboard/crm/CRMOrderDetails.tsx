@@ -128,29 +128,29 @@ const CRMOrderDetails: React.FC<CRMOrderDetailsProps> = ({
         </div>
 
         {/* Action Buttons Bar */}
-        <div className="p-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
-          <div className="flex items-center gap-2">
+        <div className="p-3 sm:p-4 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               onClick={handleCall}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+              className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs"
             >
               <Phone className="w-4 h-4" />
               <span>اتصال بالمشتري</span>
             </button>
             <button
               onClick={handleWhatsApp}
-              className="px-3.5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+              className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs"
             >
               <MessageSquare className="w-4 h-4" />
               <span>واتساب</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 w-full sm:w-auto custom-scrollbar">
             {order.status !== 'confirmed' && (
               <button
                 onClick={() => onUpdateStatus(order.id, 'confirmed')}
-                className="px-3 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold transition-colors flex items-center gap-1"
+                className="shrink-0 px-3 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-bold transition-colors flex items-center gap-1"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>تأكيد الطلب</span>
@@ -160,7 +160,7 @@ const CRMOrderDetails: React.FC<CRMOrderDetailsProps> = ({
             {order.status !== 'cancelled' && (
               <button
                 onClick={() => onUpdateStatus(order.id, 'cancelled')}
-                className="px-3 py-2 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 border border-rose-500/40 text-xs font-bold transition-colors flex items-center gap-1"
+                className="shrink-0 px-3 py-2 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 border border-rose-500/40 text-xs font-bold transition-colors flex items-center gap-1"
               >
                 <XCircle className="w-4 h-4" />
                 <span>إلغاء</span>
@@ -170,7 +170,7 @@ const CRMOrderDetails: React.FC<CRMOrderDetailsProps> = ({
             {order.status !== 'delivered' && (
               <button
                 onClick={() => onUpdateStatus(order.id, 'delivered')}
-                className="px-3 py-2 rounded-xl bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 border border-blue-500/40 text-xs font-bold transition-colors flex items-center gap-1"
+                className="shrink-0 px-3 py-2 rounded-xl bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 border border-blue-500/40 text-xs font-bold transition-colors flex items-center gap-1"
               >
                 <Truck className="w-4 h-4" />
                 <span>تم التوصيل</span>
@@ -179,7 +179,7 @@ const CRMOrderDetails: React.FC<CRMOrderDetailsProps> = ({
 
             <button
               onClick={() => onOpenReminderModal(order)}
-              className="p-2 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border border-purple-500/40 transition-colors"
+              className="shrink-0 p-2 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border border-purple-500/40 transition-colors"
               title="جدولة تذكير"
             >
               <Bell className="w-4 h-4" />
