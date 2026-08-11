@@ -6,6 +6,11 @@ import { GA4_ID } from '../lib/analytics';
 export const metadata: Metadata = {
   title: 'Yube - Algerian COD Landing Page Builder',
   description: 'منصة إنشاء صفحات الهبوط لمنتجات التجارة الإلكترونية والدفع عند الاستلام',
+  icons: {
+    icon: '/apple-icon.png',
+    shortcut: '/apple-icon.png',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
