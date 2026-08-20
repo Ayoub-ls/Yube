@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '../../lib/supabase/server';
+import { createAdminClient } from '../../lib/supabase/admin';
 import { redirect } from 'next/navigation';
 import { checkIsAdmin } from '../../lib/data';
 import { revalidatePath } from 'next/cache';
@@ -114,4 +115,82 @@ export async function toggleClientStatus(clientId: string, newStatus: 'active' |
     .eq('id', clientId);
 
   revalidatePath('/admin');
+}
+
+export async function activateSubscription(clientId: string) {
+  const supabase = await requireAdmin();
+
+  // Fetch the latest subscription
+  const { data: subscription, error: fetchErr } = await supabase
+    .from('subscriptions')
+    .select('*')
+    .eq('client_id', clientId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (fetchErr) {
+    console.error('Error fetching subscription:', fetchErr);
+    return { error: 'فشل جلب تفاصيل الاشتراك: ' + fetchErr.message };
+  }
+
+  const startedAt = new Date().toISOString();
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 30);
+  const expiresAtStr = expiresAt.toISOString();
+
+  const adminSupabase = createAdminClient();
+
+  if (subscription) {
+    const { error: updateErr } = await adminSupabase
+      .from('subscriptions')
+      .update({
+        status: 'active',
+        started_at: startedAt,
+        expires_at: expiresAtStr,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', subscription.id);
+
+    if (updateErr) {
+      console.error('Error updating subscription:', updateErr);
+      return { error: 'فشل تفعيل الاشتراك: ' + updateErr.message };
+    }
+  } else {
+    // If no subscription exists (e.g. legacy clients), insert one
+    const { error: insertErr } = await adminSupabase
+      .from('subscriptions')
+      .insert({
+        client_id: clientId,
+        plan: 'intro',
+        amount: 1,
+        currency: 'USD',
+        status: 'active',
+        started_at: startedAt,
+        expires_at: expiresAtStr,
+      });
+
+    if (insertErr) {
+      console.error('Error inserting subscription:', insertErr);
+      return { error: 'فشل إنشاء الاشتراك: ' + insertErr.message };
+    }
+  }
+
+  // Sync client plan details
+  const { error: clientErr } = await adminSupabase
+    .from('clients')
+    .update({
+      plan: subscription?.plan || 'intro',
+      plan_expires_at: expiresAtStr,
+    })
+    .eq('id', clientId);
+
+  if (clientErr) {
+    console.error('Error syncing client plan:', clientErr);
+    return { error: 'فشل مزامنة بيانات العميل: ' + clientErr.message };
+  }
+
+  revalidatePath('/admin');
+  revalidatePath('/admin/subscriptions');
+  return { success: true };
 }

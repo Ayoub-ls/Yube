@@ -11,13 +11,14 @@ export interface PlanConfig {
 }
 
 export const PLANS: Record<string, PlanConfig> = {
-  trial: { id: 'trial', label: 'تجريبي', priceDA: 0, maxPages: 1, available: true },
-  basic: { id: 'basic', label: 'أساسي', priceDA: 3000, maxPages: 5, available: true },
-  pro: { id: 'pro', label: 'احترافي', priceDA: 5000, maxPages: null, available: true },
+  trial: { id: 'trial', label: 'تجريبي', priceDA: 200, maxPages: 1, available: true },
+  introductory: { id: 'introductory', label: 'العرض التعريفي ($1)', priceDA: 200, maxPages: 3, available: true },
+  basic: { id: 'basic', label: 'أساسي', priceDA: 3000, maxPages: 3, available: true },
+  pro: { id: 'pro', label: 'احترافي', priceDA: 4500, maxPages: null, available: true },
   agency: { id: 'agency', label: 'وكالة', priceDA: 15000, maxPages: null, available: false },
 };
 
-export const TRIAL_DAYS = 14;
+export const TRIAL_DAYS = 30;
 
 export function getPlanConfig(planId: string): PlanConfig {
   return PLANS[planId] || PLANS.trial;

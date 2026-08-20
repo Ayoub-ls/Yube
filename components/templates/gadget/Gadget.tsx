@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { OrderForm } from "../shared/OrderForm";
+import { SocialProofVideo } from "../shared/SocialProofVideo";
 import type { TemplateProps } from '../types';
 
 
@@ -13,7 +14,9 @@ const DEFAULT_IMAGES = [
   "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"  // Sport vehicle console
 ];
 
-export default function Gadget({ page, client }: TemplateProps) {
+export default function Gadget({ page, client, theme }: TemplateProps) {
+  const themePrimary = theme?.primary || '#f59e0b';
+  const themeAccent = theme?.accent || '#f59e0b';
   // Safe default props fallback
   const productName = page?.product_name || "حامل الأكواب الحراري للسيارة الذكي (2 في 1)";
   const headline = page?.page_config?.headline || "تكنولوجيا التبريد والتسخين الفائق للسيارات | Technologie Thermique Automobile";
@@ -53,7 +56,11 @@ export default function Gadget({ page, client }: TemplateProps) {
     : reviews;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-white selection:text-black pb-28" dir="rtl">
+    <div
+      className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-white selection:text-black pb-28"
+      dir="rtl"
+      style={{ '--t-primary': themePrimary, '--t-accent': themeAccent } as React.CSSProperties}
+    >
 
       {/* Top Announcement Bar */}
       <div className="bg-[#111111] border-b border-white/10 py-2.5 px-4 text-center text-xs md:text-sm font-semibold tracking-wide text-zinc-300 flex items-center justify-center gap-2">
@@ -113,12 +120,12 @@ export default function Gadget({ page, client }: TemplateProps) {
               {/* Thermal Mode Active Ambient Light Overlay */}
               <div className={`absolute inset-0 opacity-20 pointer-events-none transition-all duration-700 bg-gradient-to-tr ${thermalMode === 'cool'
                 ? 'from-sky-900 via-transparent to-cyan-950'
-                : 'from-red-900 via-transparent to-amber-950'
+                : 'from-red-900 via-transparent to-[color-mix(in_srgb,var(--t-accent)_20%,black)]'
                 }`} />
 
               {/* Badges Overlay */}
               <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
-                <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-zinc-800 text-xs text-amber-400 font-bold tracking-wide">
+                <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-zinc-800 text-xs text-[var(--t-accent)] font-bold tracking-wide">
                   ⭐ 4.9 / 5 (1,480+ تقييم)
                 </span>
                 <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-zinc-800 text-xs text-zinc-300 font-mono">
@@ -195,7 +202,7 @@ export default function Gadget({ page, client }: TemplateProps) {
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
                   className={`relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border transition-all ${activeImageIndex === idx
-                    ? 'border-amber-400 ring-2 ring-amber-400/20 scale-105'
+                    ? 'border-[var(--t-accent)] ring-2 ring-[var(--t-accent)]/20 scale-105'
                     : 'border-zinc-800 opacity-60 hover:opacity-100'
                     }`}
                 >
@@ -210,8 +217,8 @@ export default function Gadget({ page, client }: TemplateProps) {
           <div className="lg:col-span-5 space-y-6">
 
             {/* Tagline */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-semibold text-amber-400">
-              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-semibold text-[var(--t-accent)]">
+              <span className="w-2 h-2 rounded-full bg-[var(--t-accent)]"></span>
               <span>تكنولوجيا ألمانية متطورة للسيارات</span>
             </div>
 
@@ -313,7 +320,7 @@ export default function Gadget({ page, client }: TemplateProps) {
 
             {/* Feature 3 */}
             <div className="p-6 rounded-3xl bg-zinc-950 border border-zinc-900 hover:border-zinc-800 transition-all space-y-3">
-              <div className="h-12 w-12 rounded-2xl bg-amber-950/60 border border-amber-800/40 flex items-center justify-center text-amber-400">
+              <div className="h-12 w-12 rounded-2xl bg-[color-mix(in_srgb,var(--t-accent)_20%,black)]/60 border border-[color-mix(in_srgb,var(--t-accent)_60%,black)]/40 flex items-center justify-center text-[var(--t-accent)]">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
@@ -376,8 +383,12 @@ export default function Gadget({ page, client }: TemplateProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {page.social_proof.map((sp, idx) => (
                 <div key={idx} className="rounded-2xl bg-zinc-950 border border-zinc-900 overflow-hidden">
-                  {sp.url && (
-                    <img src={sp.url} alt={`تجربة عميل ${idx + 1}`} className="w-full h-48 object-cover" />
+                  {sp.type === 'video' && sp.url ? (
+                    <SocialProofVideo src={sp.url} className="h-48" fill />
+                  ) : (
+                    sp.url && (
+                      <img src={sp.url} alt={`تجربة عميل ${idx + 1}`} className="w-full h-48 object-cover" />
+                    )
                   )}
                   {sp.caption && (
                     <p className="p-4 text-xs text-zinc-300 font-sans">{sp.caption}</p>
@@ -417,7 +428,7 @@ export default function Gadget({ page, client }: TemplateProps) {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-3xl font-black text-white">4.9</span>
-                <div className="flex text-amber-400 text-lg">★★★★★</div>
+                <div className="flex text-[var(--t-accent)] text-lg">★★★★★</div>
                 <span className="text-xs text-zinc-400">({reviews?.length} تقييمات موثقة)</span>
               </div>
               <h2 className="text-xl md:text-2xl font-black text-white">
@@ -454,7 +465,7 @@ export default function Gadget({ page, client }: TemplateProps) {
               <div key={idx} className="p-6 rounded-3xl bg-zinc-950 border border-zinc-900 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-amber-400 text-sm">
+                    <div className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-[var(--t-accent)] text-sm">
                       {rev.name ? rev.name.charAt(0) : "Z"}
                     </div>
                     <div>
@@ -462,7 +473,7 @@ export default function Gadget({ page, client }: TemplateProps) {
                       <span className="text-xs text-zinc-400 block">{rev.location || "الجزائر"}</span>
                     </div>
                   </div>
-                  <div className="text-amber-400 text-sm">
+                  <div className="text-[var(--t-accent)] text-sm">
                     {"★".repeat(rev.rating || 5)}
                   </div>
                 </div>
@@ -520,7 +531,7 @@ export default function Gadget({ page, client }: TemplateProps) {
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-black/95 border-t border-zinc-900 p-3 backdrop-blur-lg flex items-center justify-between gap-3 shadow-2xl">
         <div className="flex flex-col">
           <span className="text-xs text-zinc-400 font-sans">السعر الاجمالي</span>
-          <span className="text-lg font-black text-amber-400 font-mono">
+          <span className="text-lg font-black text-[var(--t-accent)] font-mono">
             {formatPrice(price)}
           </span>
         </div>

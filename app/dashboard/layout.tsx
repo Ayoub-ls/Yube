@@ -1,4 +1,5 @@
 import { createClient } from '../../lib/supabase/server';
+import { createAdminClient } from '../../lib/supabase/admin';
 import { redirect } from 'next/navigation';
 import { logout } from '../auth/actions';
 import Link from 'next/link';
@@ -6,20 +7,63 @@ import Image from 'next/image';
 import Script from 'next/script';
 import { User, LogOut, LayoutGrid, FileText, ShoppingCart, Settings, Users } from 'lucide-react';
 import SupportBubble from '@/components/support/SupportBubble';
+import { NotificationBell } from '@/components/dashboard/notifications/NotificationBell';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/auth/login');
 
-  // Fetched here (not just in settings) so the client's own pixel can be
-  // initialized on every dashboard page — needed for the Purchase event
-  // fired from OrderRow.tsx when an order is marked "delivered".
+  // Fetch client details to check active status and load pixel ID
   const { data: client } = await supabase
     .from('clients')
-    .select('pixel_id')
+    .select('id, pixel_id, is_admin')
     .eq('user_id', user.id)
     .maybeSingle();
+
+  // Gating check: redirect to payment page if user is not admin and does not have active subscription
+  if (!client) {
+    redirect('/payment');
+  } else if (!client.is_admin) {
+    // Fetch latest subscription from subscriptions table
+    const { data: subscription } = await supabase
+      .from('subscriptions')
+      .select('*')
+      .eq('client_id', client.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!subscription) {
+      redirect('/payment');
+    }
+
+    let status = subscription.status;
+    const isExpired = subscription.expires_at
+      ? new Date(subscription.expires_at).getTime() < Date.now()
+      : true;
+
+    if (status === 'active' && isExpired) {
+      // Update subscription status to expired in the DB
+      const adminSupabase = createAdminClient();
+      await adminSupabase
+        .from('subscriptions')
+        .update({ status: 'expired', updated_at: new Date().toISOString() })
+        .eq('id', subscription.id);
+
+      // Keep clients table plan & status in sync
+      await adminSupabase
+        .from('clients')
+        .update({ plan: 'expired', plan_expires_at: subscription.expires_at })
+        .eq('id', client.id);
+
+      status = 'expired';
+    }
+
+    if (status === 'pending_payment' || status === 'expired') {
+      redirect('/payment');
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans" dir="rtl">
@@ -46,6 +90,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
 
           <div className="flex items-center gap-4">
+            <NotificationBell clientId={client.id} />
+
             <div className="hidden sm:flex items-center gap-2 text-xs text-slate-600 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100">
               <User className="w-3.5 h-3.5 text-slate-400" />
               <span className="font-medium">{user.email}</span>

@@ -84,7 +84,11 @@ export const initialWizardData: WizardData = {
   originalPrice: '',
   description: '',
   images: [],
-  colorTheme: 'green',
+  // Left blank on purpose — the color step now shows presets specific
+  // to whichever template was picked in step 2, so there's no single
+  // sensible default here. ColorThemeStep auto-selects that template's
+  // first preset the moment it mounts.
+  colorTheme: '',
   socialProof: [],
   reviews: [],
   whatsapp: '',
@@ -96,7 +100,11 @@ export const initialWizardData: WizardData = {
 
 import { THEME_COLORS } from '../../lib/themeColors';
 
-// Kept under the original name (COLOR_THEMES) and shape (.hex) so the
-// existing wizard step components don't all need touching — this is
-// just a thin re-export of the single shared color source now.
+// Kept under the original name (COLOR_THEMES) and shape (.hex) so any
+// existing code that still imports this generic list keeps working.
+// The wizard's color step no longer uses this directly — see
+// getPresetsForTemplate below for the per-template presets it uses now.
 export const COLOR_THEMES = THEME_COLORS.map((c) => ({ id: c.id, label: c.label, hex: c.primary }));
+
+export { getPresetsForTemplate, getThemeColor, TEMPLATE_COLOR_PRESETS } from '../../lib/themeColors';
+export type { ThemeColor } from '../../lib/themeColors';

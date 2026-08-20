@@ -28,8 +28,14 @@ import {
 import type { TemplateProps } from '../types';
 import { FashionOrderForm } from "../shared/FashionOrderForm";
 import { VoiceNotePlayer } from "../shared/VoiceNotePlayer";
+import { SocialProofVideo } from "../shared/SocialProofVideo";
 
-export default function LuxuryFashion({ page, client }: TemplateProps) {
+export default function LuxuryFashion({ page, client, theme }: TemplateProps) {
+  // Color theme: driven by the client's chosen ThemeColor (see
+  // lib/themeColors.ts). Falls back to this template's original gold/ink
+  // palette if no theme was ever set, so nothing breaks for old pages.
+  const themePrimary = theme?.primary || '#0B0B0B';
+  const themeAccent = theme?.accent || '#C5A059';
   // Safe fallbacks for prop structures
   const productName = page?.product_name || "فستان السهرة الفاخر - Collection Signature";
   const price = page?.price;
@@ -96,7 +102,10 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
     : null;
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#0B0B0B] font-sans selection:bg-[#C5A059] selection:text-white dir-rtl text-right overflow-x-hidden">
+    <div
+      className="min-h-screen bg-[#FDFBF7] text-[var(--t-primary)] font-sans selection:bg-[var(--t-accent)] selection:text-white dir-rtl text-right overflow-x-hidden"
+      style={{ '--t-primary': themePrimary, '--t-accent': themeAccent } as React.CSSProperties}
+    >
       {/* 1. EDITORIAL HEADER & BRAND BAR */}
       <header className="sticky top-0 z-40 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#EAE6DF]/80 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -106,10 +115,10 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               HAUTE COUTURE
             </span>
             <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-serif tracking-wider text-[#0B0B0B] font-medium uppercase">
+              <span className="text-xl md:text-2xl font-serif tracking-wider text-[var(--t-primary)] font-medium uppercase">
                 {businessName}
               </span>
-              <span className="text-[10px] text-[#C5A059] tracking-[0.25em] font-mono">
+              <span className="text-[10px] text-[var(--t-accent)] tracking-[0.25em] font-mono">
                 PARIS & ALGIERS
               </span>
             </div>
@@ -117,17 +126,17 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
 
           {/* Center: Delivery badge */}
           <div className="hidden md:flex items-center space-x-2 space-x-reverse text-xs text-[#5A554E] bg-[#F5F0EB] px-4 py-1.5 rounded-full border border-[#E8E1D7]">
-            <Truck className="w-3.5 h-3.5 text-[#C5A059]" />
+            <Truck className="w-3.5 h-3.5 text-[var(--t-accent)]" />
             <span>توصيل سريع و مجاني إلى 58 ولاية • Livraison 58 Wilayas</span>
           </div>
 
           {/* Left side: Quick CTA button */}
           <button
             onClick={scrollToOrderForm}
-            className="group relative inline-flex items-center space-x-2 space-x-reverse px-5 py-2.5 rounded-full bg-[#0B0B0B] text-[#FDFBF7] text-xs font-medium tracking-wider hover:bg-[#2C2C2A] transition-all duration-300 shadow-sm"
+            className="group relative inline-flex items-center space-x-2 space-x-reverse px-5 py-2.5 rounded-full bg-[var(--t-primary)] text-[#FDFBF7] text-xs font-medium tracking-wider hover:bg-[#2C2C2A] transition-all duration-300 shadow-sm"
           >
             <span>طلب سريع</span>
-            <ShoppingBag className="w-3.5 h-3.5 text-[#C5A059] transition-transform group-hover:scale-110" />
+            <ShoppingBag className="w-3.5 h-3.5 text-[var(--t-accent)] transition-transform group-hover:scale-110" />
           </button>
         </div>
       </header>
@@ -135,7 +144,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
       {/* 2. EDITORIAL HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-8 pb-16 overflow-hidden border-b border-[#EAE6DF]">
         {/* Ambient Subtle Gradient & Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.04] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(var(--t-accent)_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.04] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -147,14 +156,14 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               className="lg:col-span-6 space-y-8 z-10"
             >
               <div className="inline-flex items-center space-x-2 space-x-reverse px-3.5 py-1 rounded-full bg-[#F5F0EB] border border-[#E3DACD]">
-                <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+                <Sparkles className="w-3.5 h-3.5 text-[var(--t-accent)]" />
                 <span className="text-xs font-mono tracking-widest text-[#5A554E] uppercase">
                   {headline}
                 </span>
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#0B0B0B] leading-[1.1] tracking-tight font-light">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[var(--t-primary)] leading-[1.1] tracking-tight font-light">
                   {productName}
                 </h1>
                 <p className="text-lg md:text-xl text-[#5A554E] font-serif italic max-w-xl leading-relaxed">
@@ -164,7 +173,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
 
               {/* Price Display */}
               <div className="flex items-baseline space-x-4 space-x-reverse pt-2">
-                <span className="text-3xl md:text-4xl font-serif text-[#0B0B0B] font-normal tracking-tight">
+                <span className="text-3xl md:text-4xl font-serif text-[var(--t-primary)] font-normal tracking-tight">
                   {formatPrice(price)}
                 </span>
                 {originalPrice && discountPercentage && discountPercentage > 50 && (
@@ -173,7 +182,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   </span>
                 )}
                 {discountPercentage && (
-                  <span className="inline-flex items-center text-xs font-mono px-3 py-1 rounded-full bg-[#0B0B0B] text-[#C5A059] border border-[#C5A059]/30">
+                  <span className="inline-flex items-center text-xs font-mono px-3 py-1 rounded-full bg-[var(--t-primary)] text-[var(--t-accent)] border border-[var(--t-accent)]/30">
                     <BadgePercent className="w-3 h-3 ml-1" />
                     وفر {discountPercentage}%
                   </span>
@@ -183,11 +192,11 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               {/* Key Features Quick Icons */}
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#EAE6DF]/80 text-xs text-[#5A554E]">
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <Award className="w-4 h-4 text-[#C5A059]" />
+                  <Award className="w-4 h-4 text-[var(--t-accent)]" />
                   <span>حرير وقماش إيطالي ممتاز 100%</span>
                 </div>
                 <div className="flex items-center space-x-2 space-x-reverse">
-                  <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
+                  <ShieldCheck className="w-4 h-4 text-[var(--t-accent)]" />
                   <span>دفع بعد القياس والمعاينة</span>
                 </div>
               </div>
@@ -196,14 +205,14 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
                 <button
                   onClick={scrollToOrderForm}
-                  className="px-8 py-4 rounded-full bg-[#0B0B0B] text-[#FDFBF7] text-sm font-medium tracking-widest uppercase hover:bg-[#2C2C2A] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 space-x-reverse group"
+                  className="px-8 py-4 rounded-full bg-[var(--t-primary)] text-[#FDFBF7] text-sm font-medium tracking-widest uppercase hover:bg-[#2C2C2A] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 space-x-reverse group"
                 >
                   <span>اقتني الفخامة الآن • Commander</span>
-                  <ArrowDown className="w-4 h-4 text-[#C5A059] group-hover:translate-y-1 transition-transform" />
+                  <ArrowDown className="w-4 h-4 text-[var(--t-accent)] group-hover:translate-y-1 transition-transform" />
                 </button>
                 <a
                   href="#gallery"
-                  className="px-6 py-4 rounded-full bg-transparent border border-[#0B0B0B]/20 text-[#0B0B0B] text-sm font-medium tracking-wider hover:bg-[#0B0B0B]/5 transition-all text-center"
+                  className="px-6 py-4 rounded-full bg-transparent border border-[var(--t-primary)]/20 text-[var(--t-primary)] text-sm font-medium tracking-wider hover:bg-[var(--t-primary)]/5 transition-all text-center"
                 >
                   استعراض الصور • Galerie
                 </a>
@@ -223,11 +232,11 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   alt={productName}
                   className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0B]/40 via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--t-primary)]/40 via-transparent to-transparent opacity-80" />
 
                 {/* Magazine Overlay Badge */}
                 <div className="absolute bottom-6 right-6 left-6 flex justify-between items-end text-white text-xs">
-                  <div className="bg-[#0B0B0B]/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
+                  <div className="bg-[var(--t-primary)]/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
                     <p className="font-serif italic text-sm text-[#E6D7C3]">
                       "Édition Limitée"
                     </p>
@@ -256,7 +265,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             <span className="text-xs font-mono tracking-[0.3em] uppercase text-[#8C8275]">
               LOOKBOOK & DETAILS
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif text-[#0B0B0B]">
+            <h2 className="text-3xl md:text-5xl font-serif text-[var(--t-primary)]">
               معرض الصور الفاخرة
             </h2>
             <p className="text-sm text-[#5A554E] italic font-serif">
@@ -289,7 +298,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                     prev === 0 ? images.length - 1 : prev - 1
                   )
                 }
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#FDFBF7]/80 hover:bg-[#FDFBF7] text-[#0B0B0B] transition-all shadow-md"
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#FDFBF7]/80 hover:bg-[#FDFBF7] text-[var(--t-primary)] transition-all shadow-md"
                 aria-label="Previous image"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -301,13 +310,13 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                     prev === images.length - 1 ? 0 : prev + 1
                   )
                 }
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#FDFBF7]/80 hover:bg-[#FDFBF7] text-[#0B0B0B] transition-all shadow-md"
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#FDFBF7]/80 hover:bg-[#FDFBF7] text-[var(--t-primary)] transition-all shadow-md"
                 aria-label="Next image"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="absolute top-4 right-4 bg-[#0B0B0B]/70 text-white text-xs font-mono px-3 py-1 rounded-full backdrop-blur-sm">
+              <div className="absolute top-4 right-4 bg-[var(--t-primary)]/70 text-white text-xs font-mono px-3 py-1 rounded-full backdrop-blur-sm">
                 {selectedImage + 1} / {images.length}
               </div>
             </div>
@@ -319,7 +328,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
                   className={`relative aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all duration-300 text-right ${selectedImage === idx
-                    ? "border-[#0B0B0B] ring-2 ring-[#C5A059]/50 scale-[1.02]"
+                    ? "border-[var(--t-primary)] ring-2 ring-[var(--t-accent)]/50 scale-[1.02]"
                     : "border-transparent opacity-70 hover:opacity-100"
                     }`}
                 >
@@ -330,7 +339,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   />
                   <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors" />
                   {selectedImage === idx && (
-                    <div className="absolute bottom-2 right-2 bg-[#0B0B0B] text-[#C5A059] p-1 rounded-full">
+                    <div className="absolute bottom-2 right-2 bg-[var(--t-primary)] text-[var(--t-accent)] p-1 rounded-full">
                       <Check className="w-3 h-3" />
                     </div>
                   )}
@@ -345,7 +354,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
       <section className="relative py-32 bg-fixed bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url(${images[2] || images[0]})` }}>
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
         <div className="relative max-w-4xl mx-auto px-4 text-center text-white space-y-6">
-          <span className="text-xs font-mono tracking-[0.5em] uppercase text-[#C5A059]">
+          <span className="text-xs font-mono tracking-[0.5em] uppercase text-[var(--t-accent)]">
             CAMPAIGN 2026
           </span>
           <h2 className="text-4xl md:text-6xl font-serif leading-tight">
@@ -364,14 +373,14 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             <span className="text-xs font-mono tracking-[0.3em] text-[#8C8275] uppercase">
               AVIS CLIENTS VERIFIÉS
             </span>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#0B0B0B]">
+            <h2 className="text-3xl md:text-4xl font-serif text-[var(--t-primary)]">
               آراء زبائننا الكرام
             </h2>
-            <div className="flex items-center justify-center space-x-1 space-x-reverse text-[#C5A059] pt-2">
+            <div className="flex items-center justify-center space-x-1 space-x-reverse text-[var(--t-accent)] pt-2">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-5 h-5 fill-current" />
               ))}
-              <span className="text-xs font-mono text-[#0B0B0B] mr-2">(5.0 / 5)</span>
+              <span className="text-xs font-mono text-[var(--t-primary)] mr-2">(5.0 / 5)</span>
             </div>
           </div>
 
@@ -383,12 +392,12 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex text-[#C5A059]">
+                    <div className="flex text-[var(--t-accent)]">
                       {[...Array(rev.rating || 5)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-current" />
                       ))}
                     </div>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#0B0B0B] text-[#C5A059]">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--t-primary)] text-[var(--t-accent)]">
                       مشتري مؤكد
                     </span>
                   </div>
@@ -398,7 +407,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                 </div>
 
                 <div className="pt-4 border-t border-[#E0D8CE] flex items-center justify-between text-xs">
-                  <span className="font-serif font-bold text-[#0B0B0B]">
+                  <span className="font-serif font-bold text-[var(--t-primary)]">
                     {rev.name}
                   </span>
                   <span className="text-[#8C8275] font-mono">
@@ -418,7 +427,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             <span className="text-xs font-mono tracking-[0.3em] text-[#8C8275] uppercase">
               TÉMOIGNAGES & MÉDIAS
             </span>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#0B0B0B]">
+            <h2 className="text-3xl md:text-4xl font-serif text-[var(--t-primary)]">
               تجارب حية ومعاينات مصورة
             </h2>
           </div>
@@ -441,21 +450,12 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
                   )}
 
                   {item.type === "video" && item.url && (
-                    <div className="relative aspect-square overflow-hidden bg-black flex items-center justify-center">
-                      <img
-                        src={item.url}
-                        alt="Video preview"
-                        className="w-full h-full object-cover opacity-80"
-                      />
-                      <div className="absolute p-4 rounded-full bg-[#0B0B0B]/80 text-[#C5A059] border border-[#C5A059]/40 cursor-pointer hover:scale-110 transition-transform">
-                        <Play className="w-6 h-6 fill-current ml-0.5" />
-                      </div>
-                    </div>
+                    <SocialProofVideo src={item.url} className="aspect-square" fill />
                   )}
 
                   {item?.type === "audio" && (
-                    <div className="p-6 bg-[#0B0B0B] text-white flex-1 flex flex-col justify-between space-y-4">
-                      <div className="flex items-center space-x-3 space-x-reverse text-[#C5A059]">
+                    <div className="p-6 bg-[var(--t-primary)] text-white flex-1 flex flex-col justify-between space-y-4">
+                      <div className="flex items-center space-x-3 space-x-reverse text-[var(--t-accent)]">
                         <Volume2 className="w-5 h-5 animate-pulse" />
                         <span className="text-xs font-mono">تسجيل صوتي لزبونة</span>
                       </div>
@@ -488,8 +488,8 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EAE6DF] space-y-3">
-              <Truck className="w-6 h-6 text-[#C5A059]" />
-              <h3 className="font-serif font-semibold text-lg text-[#0B0B0B]">
+              <Truck className="w-6 h-6 text-[var(--t-accent)]" />
+              <h3 className="font-serif font-semibold text-lg text-[var(--t-primary)]">
                 توصيل سريع لـ 58 ولاية
               </h3>
               <p className="text-xs text-[#5A554E] leading-relaxed">
@@ -498,8 +498,8 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EAE6DF] space-y-3">
-              <ShieldCheck className="w-6 h-6 text-[#C5A059]" />
-              <h3 className="font-serif font-semibold text-lg text-[#0B0B0B]">
+              <ShieldCheck className="w-6 h-6 text-[var(--t-accent)]" />
+              <h3 className="font-serif font-semibold text-lg text-[var(--t-primary)]">
                 معاينة وقيم قبل الدفع
               </h3>
               <p className="text-xs text-[#5A554E] leading-relaxed">
@@ -508,8 +508,8 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EAE6DF] space-y-3">
-              <Award className="w-6 h-6 text-[#C5A059]" />
-              <h3 className="font-serif font-semibold text-lg text-[#0B0B0B]">
+              <Award className="w-6 h-6 text-[var(--t-accent)]" />
+              <h3 className="font-serif font-semibold text-lg text-[var(--t-primary)]">
                 خامات أوروبية عالية الجودة
               </h3>
               <p className="text-xs text-[#5A554E] leading-relaxed">
@@ -518,8 +518,8 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#EAE6DF] space-y-3">
-              <RotateCcw className="w-6 h-6 text-[#C5A059]" />
-              <h3 className="font-serif font-semibold text-lg text-[#0B0B0B]">
+              <RotateCcw className="w-6 h-6 text-[var(--t-accent)]" />
+              <h3 className="font-serif font-semibold text-lg text-[var(--t-primary)]">
                 ضمان الاستبدال
               </h3>
               <p className="text-xs text-[#5A554E] leading-relaxed">
@@ -531,10 +531,10 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
       </section>
 
       {/* 11. FINAL LUXURY CTA & ORDER FORM PLACEHOLDER INSERTION POINT */}
-      <section ref={orderFormRef} className="py-24 bg-[#0B0B0B] text-white relative">
+      <section ref={orderFormRef} className="py-24 bg-[var(--t-primary)] text-white relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12">
-            <span className="text-xs font-mono uppercase tracking-[0.4em] text-[#C5A059]">
+            <span className="text-xs font-mono uppercase tracking-[0.4em] text-[var(--t-accent)]">
               COMMANDE EXCLUSIVE
             </span>
             <h2 className="text-3xl md:text-5xl font-serif text-white font-light">
@@ -547,7 +547,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
 
           {/* HERE IS THE REUSABLE ORDER FORM PLACEHOLDER */}
           {/* FashionOrderForm goes here */}
-          <div className="bg-[#FDFBF7] text-[#0B0B0B] p-6 md:p-10 rounded-3xl shadow-2xl border border-[#C5A059]/40">
+          <div className="bg-[#FDFBF7] text-[var(--t-primary)] p-6 md:p-10 rounded-3xl shadow-2xl border border-[var(--t-accent)]/40">
             <FashionOrderForm
               pageId={page.id}
               clientId={client.id}
@@ -572,7 +572,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
       </section>
 
       {/* MOBILE STICKY FLOATING ORDER BAR */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#0B0B0B]/95 backdrop-blur-md border-t border-[#2C2C2A] flex items-center justify-between">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 p-4 bg-[var(--t-primary)]/95 backdrop-blur-md border-t border-[#2C2C2A] flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-xs text-[#8C8275]">السعر النهائي</span>
           <span className="text-lg font-serif font-semibold text-white">
@@ -581,7 +581,7 @@ export default function LuxuryFashion({ page, client }: TemplateProps) {
         </div>
         <button
           onClick={scrollToOrderForm}
-          className="px-6 py-3 rounded-full bg-[#C5A059] text-[#0B0B0B] text-xs font-medium tracking-wider uppercase font-sans hover:bg-white transition-colors shadow-lg"
+          className="px-6 py-3 rounded-full bg-[var(--t-accent)] text-[var(--t-primary)] text-xs font-medium tracking-wider uppercase font-sans hover:bg-white transition-colors shadow-lg"
         >
           اطلب الآن • Commander
         </button>

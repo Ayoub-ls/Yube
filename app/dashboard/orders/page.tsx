@@ -3,7 +3,11 @@ import { redirect } from 'next/navigation';
 import { OrderRow } from './OrderRow';
 import { ShoppingCart } from 'lucide-react';
 
-export default async function DashboardOrdersPage() {
+export default async function DashboardOrdersPage({
+  searchParams,
+}: {
+  searchParams?: { order?: string };
+}) {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/auth/login');
@@ -23,6 +27,7 @@ export default async function DashboardOrdersPage() {
     .order('created_at', { ascending: false });
 
   const orderList = orders || [];
+  const highlightOrderId = searchParams?.order;
   const totalRevenue = orderList
     .filter((o) => o.status === 'delivered')
     .reduce((sum, o) => sum + (o.quantity || 1), 0);
@@ -56,7 +61,7 @@ export default async function DashboardOrdersPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {orderList.map((order) => (
-                  <OrderRow key={order.id} order={order} />
+                  <OrderRow key={order.id} order={order} highlighted={order.id === highlightOrderId} />
                 ))}
               </tbody>
             </table>

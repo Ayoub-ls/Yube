@@ -442,3 +442,47 @@ export async function updateClientShippingConfig(prevState: any, formData: FormD
   return { success: true };
 }
 
+// --- Notifications ---------------------------------------------------
+// Both actions are scoped to the calling user's own client_id before
+// touching the notifications table — RLS enforces the same boundary
+// (see supabase/migrations/20260819120000_notifications.sql), this just
+// avoids a round-trip RLS would reject anyway, matching the existing
+// updateOrderStatus pattern above.
+
+export async function markNotificationRead(notificationId: string) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data: client } = await supabase
+    .from('clients')
+    .select('id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (!client) return;
+
+  await supabase
+    .from('notifications')
+    .update({ is_read: true })
+    .eq('id', notificationId)
+    .eq('client_id', client.id);
+}
+
+export async function markAllNotificationsRead() {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data: client } = await supabase
+    .from('clients')
+    .select('id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (!client) return;
+
+  await supabase
+    .from('notifications')
+    .update({ is_read: true })
+    .eq('client_id', client.id)
+    .eq('is_read', false);
+}

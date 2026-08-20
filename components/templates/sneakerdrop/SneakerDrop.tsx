@@ -25,13 +25,15 @@ import {
   ArrowDown
 } from 'lucide-react';
 import { FashionOrderForm } from '../shared/FashionOrderForm';
+import { SocialProofVideo } from '../shared/SocialProofVideo';
 import { TemplateProps } from '../types';
 
 
 
-export default function SneakerDrop({ page, client }: TemplateProps) {
+export default function SneakerDrop({ page, client, theme }: TemplateProps) {
   // Config fallbacks
-  const primaryColor = page.page_config?.primaryColor || '#ccff00';
+  const primaryColor = page.page_config?.primaryColor || theme?.primary || '#ccff00';
+  const themeAccent = theme?.accent || '#ccff00';
   const defaultSizes = ['40', '41', '42', '43', '44', '45'];
   const sizes = page.page_config?.sizes?.length ? page.page_config.sizes : defaultSizes;
 
@@ -104,7 +106,10 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
   const discountPercent = calculateDiscount();
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-lime-400 selection:text-black pb-24 dir-rtl">
+    <div
+      className="min-h-screen bg-black text-zinc-100 font-sans antialiased selection:bg-[var(--t-accent)] selection:text-black pb-24 dir-rtl"
+      style={{ '--t-accent': themeAccent } as React.CSSProperties}
+    >
       {/* 1. HYPE TICKER TOP BANNER */}
       <div
         className="overflow-hidden whitespace-nowrap py-2.5 text-xs font-black tracking-widest uppercase text-black"
@@ -130,7 +135,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
-              className="h-10 w-10 rounded-xl flex items-center justify-center font-black text-black text-xl tracking-tighter shadow-lg shadow-lime-500/10"
+              className="h-10 w-10 rounded-xl flex items-center justify-center font-black text-black text-xl tracking-tighter shadow-lg shadow-[var(--t-accent)]/10"
               style={{ backgroundColor: primaryColor }}
             >
               SNKRS
@@ -262,7 +267,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
                     className={`relative rounded-2xl overflow-hidden border-2 aspect-square bg-zinc-900 transition-all ${selectedImageIndex === idx
-                      ? 'border-lime-400 scale-105 shadow-lg shadow-lime-500/20'
+                      ? 'border-[var(--t-accent)] scale-105 shadow-lg shadow-[var(--t-accent)]/20'
                       : 'border-zinc-800 opacity-60 hover:opacity-100 hover:border-zinc-700'
                       }`}
                   >
@@ -280,7 +285,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                 <span className="text-[10px] text-zinc-400 block font-mono">58 ولاية خلال 24-48h</span>
               </div>
               <div className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-3 text-center space-y-1">
-                <ShieldCheck className="h-5 w-5 mx-auto text-lime-400" />
+                <ShieldCheck className="h-5 w-5 mx-auto text-[var(--t-accent)]" />
                 <span className="text-xs font-bold block text-white">معاينة قبل الدفع</span>
                 <span className="text-[10px] text-zinc-400 block font-mono">افحص المنتج بنفسك</span>
               </div>
@@ -300,7 +305,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5 text-lime-400" />
+                  <Sparkles className="h-3.5 w-3.5 text-[var(--t-accent)]" />
                   {page.page_config?.headline || 'إصدار حصري محدود • LIMITED DROP'}
                 </span>
                 <span className="text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded-full">
@@ -322,7 +327,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
 
               {/* Rating badge */}
               <div className="flex items-center gap-2 pt-1">
-                <div className="flex items-center text-amber-400">
+                <div className="flex items-center text-[var(--t-accent)]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-current" />
                   ))}
@@ -339,7 +344,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                   <span className="text-xs text-zinc-400 block font-mono">سعر الإطلاق الحصري:</span>
                   <div className="flex items-baseline gap-3">
                     <span className="text-3xl md:text-4xl font-black font-mono text-white tracking-tight">
-                      {page.price.toLocaleString()} <span className="text-lime-400 text-xl font-bold">د.ج</span>
+                      {page.price.toLocaleString()} <span className="text-[var(--t-accent)] text-xl font-bold">د.ج</span>
                     </span>
 
                     {page.original_price && page.original_price > (page.price * 2) && (
@@ -364,7 +369,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                   <Truck className="h-3.5 w-3.5 text-emerald-400" />
                   الدفع عند الاستلام بعد المعاينة
                 </span>
-                <span className="text-lime-400 font-mono font-bold">شحن لـ 58 ولاية</span>
+                <span className="text-[var(--t-accent)] font-mono font-bold">شحن لـ 58 ولاية</span>
               </div>
             </div>
 
@@ -385,12 +390,12 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                       key={idx}
                       onClick={() => setSelectedColor(colorName)}
                       className={`px-3 py-2.5 rounded-2xl border text-xs font-bold text-right transition-all flex items-center justify-between ${isSelected
-                        ? 'border-lime-400 bg-zinc-900 text-white shadow-md'
+                        ? 'border-[var(--t-accent)] bg-zinc-900 text-white shadow-md'
                         : 'border-zinc-800 bg-zinc-950/60 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
                         }`}
                     >
                       <span className="truncate">{colorName}</span>
-                      {isSelected && <Check className="h-4 w-4 text-lime-400 shrink-0" />}
+                      {isSelected && <Check className="h-4 w-4 text-[var(--t-accent)] shrink-0" />}
                     </button>
                   );
                 })}
@@ -401,7 +406,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  <Ruler className="h-4 w-4 text-lime-400" />
+                  <Ruler className="h-4 w-4 text-[var(--t-accent)]" />
                   <span>المقاس / Pointure (EU)</span>
                 </span>
               </div>
@@ -415,7 +420,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                       key={sizeVal}
                       onClick={() => setSelectedSize(sizeVal)}
                       className={`h-12 rounded-2xl border font-mono font-black text-sm transition-all flex flex-col items-center justify-center relative ${isSelected
-                        ? 'border-lime-400 text-black shadow-lg scale-105'
+                        ? 'border-[var(--t-accent)] text-black shadow-lg scale-105'
                         : 'border-zinc-800 bg-zinc-950 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900'
                         }`}
                       style={{
@@ -517,15 +522,15 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
               <h3 className="text-xl font-black text-white">التوصيل إلى 58 ولاية جزائرية</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                  <span className="text-xs text-lime-400 font-bold font-mono">العاصمة والولايات المجاورة</span>
+                  <span className="text-xs text-[var(--t-accent)] font-bold font-mono">العاصمة والولايات المجاورة</span>
                   <span className="text-sm font-bold block text-white">خلال 24 ساعة فقط</span>
                 </div>
                 <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                  <span className="text-xs text-lime-400 font-bold font-mono">باقي الولايات الشمالية والشرق والغرب</span>
+                  <span className="text-xs text-[var(--t-accent)] font-bold font-mono">باقي الولايات الشمالية والشرق والغرب</span>
                   <span className="text-sm font-bold block text-white">خلال 48 ساعة</span>
                 </div>
                 <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-1">
-                  <span className="text-xs text-lime-400 font-bold font-mono">ولايات الجنوب الكبير</span>
+                  <span className="text-xs text-[var(--t-accent)] font-bold font-mono">ولايات الجنوب الكبير</span>
                   <span className="text-sm font-bold block text-white">من 3 إلى 4 أيام</span>
                 </div>
               </div>
@@ -537,7 +542,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
         {page.social_proof?.length > 0 && (
           <section className="mt-20 md:mt-28 space-y-8">
             <div className="text-center space-y-2">
-              <span className="text-xs font-mono font-bold uppercase text-lime-400">
+              <span className="text-xs font-mono font-bold uppercase text-[var(--t-accent)]">
                 #SNKRS_ALGERIA
               </span>
               <h2 className="text-2xl md:text-4xl font-black uppercase text-white">
@@ -560,11 +565,15 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                     </div>
                   )}
 
+                  {item.type === 'video' && item.url && (
+                    <SocialProofVideo src={item.url} className="rounded-2xl" />
+                  )}
+
                   {item.type === 'audio' && (
                     <div className="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 space-y-3">
                       <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
                         <span className="flex items-center gap-1.5">
-                          <Volume2 className="h-4 w-4 text-lime-400" />
+                          <Volume2 className="h-4 w-4 text-[var(--t-accent)]" />
                           تسجيل صوتي للزبون
                         </span>
                         <span>0:24</span>
@@ -574,7 +583,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                         onClick={() => setIsPlayingAudio(isPlayingAudio === index ? null : index)}
                         className="w-full py-2.5 rounded-xl bg-zinc-800 text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-zinc-700"
                       >
-                        <Play className="h-4 w-4 fill-current text-lime-400" />
+                        <Play className="h-4 w-4 fill-current text-[var(--t-accent)]" />
                         <span>{isPlayingAudio === index ? 'إيقاف الصوتي' : 'استماع لشهادة الزبون'}</span>
                       </button>
                     </div>
@@ -598,7 +607,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
               آراء الزبائن والتقييمات
             </h2>
             <div className="flex items-center justify-center gap-2">
-              <div className="flex text-amber-400">
+              <div className="flex text-[var(--t-accent)]">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
@@ -629,7 +638,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                       </span>
                     )}
                   </div>
-                  <div className="flex text-amber-400 text-xs">
+                  <div className="flex text-[var(--t-accent)] text-xs">
                     {[...Array(rev.rating || 5)].map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 fill-current" />
                     ))}
@@ -704,7 +713,7 @@ export default function SneakerDrop({ page, client }: TemplateProps) {
                 <div className="text-right font-mono">
                   <span className="text-[10px] text-zinc-500 block">السعر:</span>
                   <span className="text-base md:text-lg font-black text-white">
-                    {page.price.toLocaleString()} <span className="text-lime-400 text-xs">د.ج</span>
+                    {page.price.toLocaleString()} <span className="text-[var(--t-accent)] text-xs">د.ج</span>
                   </span>
                 </div>
 

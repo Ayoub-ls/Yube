@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Sparkles, Zap, ShieldCheck, Truck, Award, BadgeDollarSign, Star, Ruler, X } from 'lucide-react';
 import { getOptimizedImageUrl } from '../../../lib/upload';
 import { VoiceNotePlayer } from '../shared/VoiceNotePlayer';
+import { SocialProofVideo } from '../shared/SocialProofVideo';
 import { PairDZOrderModal } from './PairDZOrderModal';
 import './pairdz.css';
 import type { TemplateProps } from '../types';
@@ -14,6 +15,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
   const images = page.product_images.length > 0 ? page.product_images : [''];
   const sizes = page.page_config?.sizes || DEFAULT_SIZES;
   const audioProofs = page.social_proof.filter((p) => p.type === 'audio' && p.url);
+  const videoProofs = page.social_proof.filter((p) => p.type === 'video' && p.url);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [sizeQuantities, setSizeQuantities] = useState<Record<string, number>>({});
@@ -48,17 +50,23 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
   };
 
   return (
-    <div className="pairdz-theme min-h-screen flex flex-col bg-slate-50">
+    <div
+      className="pairdz-theme min-h-screen flex flex-col bg-slate-50"
+      style={{
+        ['--t-primary' as any]: theme?.primary || '#006233',
+        ['--t-accent' as any]: theme?.accent || '#D4AF37',
+      }}
+    >
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-3xl">🇩🇿</span>
             <div>
-              <h1 className="text-lg font-extrabold text-algeria-green leading-none">{client.business_name}</h1>
+              <h1 className="text-lg font-extrabold text-[var(--t-primary)] leading-none">{client.business_name}</h1>
               <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Premium Kids Wear</span>
             </div>
           </div>
-          <div className="hidden sm:flex items-center gap-2 bg-emerald-50 text-algeria-green px-3 py-1.5 rounded-full text-xs font-bold border border-emerald-100">
+          <div className="hidden sm:flex items-center gap-2 bg-emerald-50 text-[var(--t-primary)] px-3 py-1.5 rounded-full text-xs font-bold border border-emerald-100">
             <ShieldCheck className="w-4 h-4" />
             <span>دفع عند الاستلام في 58 ولاية</span>
           </div>
@@ -70,7 +78,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
           {/* Gallery */}
           <div className="lg:col-span-7 space-y-4">
             <div className="relative bg-white border border-slate-100 rounded-3xl overflow-hidden aspect-square pairdz-custom-shadow group">
-              <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm text-algeria-gold text-xs font-extrabold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1 border border-slate-100">
+              <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm text-[var(--t-accent)] text-xs font-extrabold px-3 py-1.5 rounded-full shadow-md flex items-center gap-1 border border-slate-100">
                 <Star className="w-3.5 h-3.5 fill-current" />
                 <span>جودة ممتازة</span>
               </div>
@@ -93,7 +101,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
                     key={index}
                     onClick={() => setActiveIndex(index)}
                     className={`relative bg-white rounded-2xl overflow-hidden aspect-[4/3] transition-all duration-200 ${
-                      index === activeIndex ? 'border-2 border-algeria-green shadow-sm' : 'border border-slate-200 hover:border-slate-300'
+                      index === activeIndex ? 'border-2 border-[var(--t-primary)] shadow-sm' : 'border border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -121,7 +129,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
 
             <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-between text-right">
               <div className="space-y-1">
-                <span className="text-3xl font-black text-algeria-green flex items-baseline gap-1" dir="ltr">
+                <span className="text-3xl font-black text-[var(--t-primary)] flex items-baseline gap-1" dir="ltr">
                   <span className="text-sm font-bold text-slate-500 mr-1">د.ج</span>
                   <span>{totalPrice.toLocaleString('ar-DZ')}</span>
                 </span>
@@ -135,7 +143,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
                   <label className="font-bold text-slate-700 text-sm">اختر المقاسات والكمية:</label>
                   <button
                     onClick={() => setIsSizeChartOpen(true)}
-                    className="text-xs font-bold text-algeria-green hover:underline focus:outline-none"
+                    className="text-xs font-bold text-[var(--t-primary)] hover:underline focus:outline-none"
                   >
                     جدول المقاسات
                   </button>
@@ -148,7 +156,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
                       <div
                         key={size}
                         className={`rounded-2xl p-3 flex flex-col items-center justify-center transition-all ${
-                          hasQty ? 'border-2 border-algeria-green bg-emerald-50 text-algeria-green' : 'border border-slate-200 bg-white text-slate-700'
+                          hasQty ? 'border-2 border-[var(--t-primary)] bg-emerald-50 text-[var(--t-primary)]' : 'border border-slate-200 bg-white text-slate-700'
                         }`}
                       >
                         <span className="font-bold text-lg leading-none">{size}</span>
@@ -178,7 +186,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
 
             <button
               onClick={handleOpenOrderModal}
-              className="w-full bg-algeria-green hover:bg-emerald-800 text-white py-5 rounded-3xl font-extrabold text-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 border-b-4 border-emerald-950 active:scale-[0.98] focus:outline-none"
+              className="w-full bg-[var(--t-primary)] hover:bg-emerald-800 text-white py-5 rounded-3xl font-extrabold text-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 border-b-4 border-emerald-950 active:scale-[0.98] focus:outline-none"
             >
               <Zap className="w-6 h-6 fill-amber-300 text-amber-300" />
               <span>اطلب الآن - دفع عند الاستلام</span>
@@ -187,7 +195,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
             {/* Trust badges — generic, defensible policy claims only */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-white px-4 py-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-algeria-green flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-[var(--t-primary)] flex items-center justify-center shrink-0">
                   <Truck className="w-5 h-5" />
                 </div>
                 <div>
@@ -216,7 +224,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
             </div>
 
             {/* Real testimonials — text reviews + real uploaded audio only */}
-            {(page.reviews.length > 0 || audioProofs.length > 0) && (
+            {(page.reviews.length > 0 || audioProofs.length > 0 || videoProofs.length > 0) && (
               <div className="space-y-3">
                 {page.reviews.slice(0, 4).map((r, i) => (
                   <div key={`r-${i}`} className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
@@ -238,6 +246,12 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
                     />
                   </div>
                 ))}
+                {videoProofs.map((proof, i) => (
+                  <div key={`v-${i}`} className="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm">
+                    {proof.caption && <p className="text-xs text-slate-500 italic mb-2">"{proof.caption}"</p>}
+                    <SocialProofVideo src={proof.url} className="rounded-xl" />
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -251,7 +265,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
             className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-l from-algeria-green to-emerald-800 p-5 text-white flex justify-between items-center">
+            <div className="bg-gradient-to-l from-[var(--t-primary)] to-emerald-800 p-5 text-white flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Ruler className="w-5 h-5" />
                 <h3 className="font-extrabold text-lg">جدول المقاسات والأعمار</h3>
@@ -285,7 +299,7 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
                       ['16', '15 - 16 سنة', '170 - 176 سم'],
                     ].map(([size, age, height]) => (
                       <tr key={size} className="hover:bg-slate-50">
-                        <td className="px-4 py-3 font-bold text-algeria-green">{size}</td>
+                        <td className="px-4 py-3 font-bold text-[var(--t-primary)]">{size}</td>
                         <td className="px-4 py-3">{age}</td>
                         <td className="px-4 py-3">{height}</td>
                       </tr>
@@ -321,14 +335,14 @@ export function PairDZTemplate({ page, client, theme }: TemplateProps) {
       <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-100 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] px-3 py-2.5 flex sm:hidden gap-2.5 items-center justify-between">
         <div className="space-y-0.5 shrink-0">
           <span className="text-[9px] xs:text-[10px] text-slate-400 font-bold block leading-none">السعر الإجمالي:</span>
-          <span className="text-lg xs:text-2xl font-black text-algeria-green block">
+          <span className="text-lg xs:text-2xl font-black text-[var(--t-primary)] block">
             {totalPrice.toLocaleString('ar-DZ')}
             <span className="text-[10px] xs:text-xs font-semibold text-slate-500 mr-0.5 xs:mr-1">د.ج</span>
           </span>
         </div>
         <button
           onClick={handleOpenOrderModal}
-          className="flex-1 bg-algeria-green hover:bg-emerald-800 text-white py-3 px-4 rounded-xl xs:py-4 xs:px-6 xs:rounded-2xl font-extrabold text-xs xs:text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
+          className="flex-1 bg-[var(--t-primary)] hover:bg-emerald-800 text-white py-3 px-4 rounded-xl xs:py-4 xs:px-6 xs:rounded-2xl font-extrabold text-xs xs:text-base shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5"
         >
           <Zap className="w-4 h-4 xs:w-4.5 xs:h-4.5 fill-amber-300 text-amber-300" />
           <span>اطلب الآن</span>

@@ -20,7 +20,7 @@ export default function PricingPage() {
               href="/auth/signup"
               className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-[10px] xs:text-xs sm:text-sm font-black px-2.5 py-1.5 xs:px-4.5 xs:py-2.5 rounded-lg xs:rounded-xl transition shadow-md shadow-emerald-500/10 flex items-center gap-1 sm:gap-1.5 shrink-0"
             >
-              <span>ابدأ مجاناً</span>
+              <span>ابدأ الآن بـ 1$</span>
               <ArrowLeft className="w-3 h-3 xs:w-4 xs:h-4" />
             </Link>
           </div>
@@ -30,32 +30,32 @@ export default function PricingPage() {
       <section className="py-12 xs:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 xs:space-y-12">
         <div className="text-center space-y-3">
           <h1 className="text-2xl xs:text-3xl sm:text-4xl font-black text-white">خطط اشتراك مرنة تناسب حجم تجارتك 💳</h1>
-          <p className="text-slate-400 text-xs xs:text-sm max-w-md mx-auto">ابدأ مجاناً بدون التزام، ورقّ حسابك عندما تكبر مبيعاتك!</p>
+          <p className="text-slate-400 text-xs xs:text-sm max-w-md mx-auto">ابدأ بـ 1$ فقط بدون التزام، ورقّ حسابك عندما تكبر مبيعاتك!</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-6 text-right">
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
-            <h3 className="font-bold text-gray-400 text-xs xs:text-sm">التجربة المجانية (Trial)</h3>
+            <h3 className="font-bold text-gray-400 text-xs xs:text-sm">فترة تجريبية (Trial)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">مجاني</span>
-              <span className="text-slate-400 text-[10px] xs:text-xs block">لمدة 14 يوم كاملة</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">1$</span>
+              <span className="text-slate-400 text-[10px] xs:text-xs block">لمدة شهر كامل</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إنشاء صفحة بيع واحدة</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>توصيل 58 ولاية مدمج</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>لوحة تحكم لإدارة الطلبيات</span></li>
             </ul>
-            <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs block cursor-pointer">ابدأ التجربة المجانية</Link>
+            <Link href="/auth/signup" className="w-full text-center py-2 xs:py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs block cursor-pointer">ابدأ الآن بـ 1$</Link>
           </div>
 
           <div className="bg-slate-900/40 border border-slate-900 rounded-3xl p-4.5 xs:p-6 space-y-4 xs:space-y-5">
             <h3 className="font-bold text-gray-400 text-xs xs:text-sm">الخطة الأساسية (Basic)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">80$</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">20$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">
-              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إنشاء حتى 5 صفحات بيع</span></li>
+              <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>إنشاء حتى 3 صفحات بيع</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>مساحة تخزين صور مجانية</span></li>
               <li className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>تأكيدات سريعة وموثوقة</span></li>
             </ul>
@@ -66,7 +66,7 @@ export default function PricingPage() {
             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-slate-950 font-black text-[8px] xs:text-[9px] px-2.5 py-0.5 xs:px-3 xs:py-1 rounded-full uppercase tracking-wider">الأكثر طلباً</span>
             <h3 className="font-bold text-emerald-400 text-xs xs:text-sm">الخطة الاحترافية (Pro)</h3>
             <div className="space-y-1">
-              <span className="text-2xl xs:text-3xl font-black text-white">90$</span>
+              <span className="text-2xl xs:text-3xl font-black text-white">30$</span>
               <span className="text-slate-400 text-[10px] xs:text-xs block">شهرياً</span>
             </div>
             <ul className="space-y-2 xs:space-y-2.5 text-[11px] xs:text-xs text-slate-300">

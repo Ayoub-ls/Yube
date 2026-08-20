@@ -30,6 +30,7 @@ import {
 import { FashionOrderForm } from "../shared/FashionOrderForm";
 import type { TemplateProps } from '../types';
 import { VoiceNotePlayer } from '../shared/VoiceNotePlayer';
+import { SocialProofVideo } from '../shared/SocialProofVideo';
 
 
 
@@ -43,7 +44,9 @@ const DEFAULT_IMAGES = [
 
 
 
-export default function WomansFashion({ page, client }: TemplateProps) {
+export default function WomansFashion({ page, client, theme }: TemplateProps) {
+  const themePrimary = theme?.primary || '#1e293b';
+  const themeAccent = theme?.accent || '#c5a059';
   // Language State: 'ar' (Arabic - Primary) or 'fr' (French - Secondary)
   const [lang, setLang] = useState<'ar' | 'fr'>('ar');
 
@@ -73,7 +76,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
   const price = page?.price || 0;
   const originalPrice = page?.original_price || Math.round(price * 1.35);
   const discountPercent = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 35;
-  const primaryColor = page?.page_config?.primaryColor || '#b48c3a';
+  const primaryColor = page?.page_config?.primaryColor || 'var(--t-accent)';
 
   // Headlines
   const headline = page?.page_config?.headline || (
@@ -100,24 +103,25 @@ export default function WomansFashion({ page, client }: TemplateProps) {
   return (
     <div
       dir={lang === 'ar' ? 'rtl' : 'ltr'}
-      className="min-h-screen bg-[#faf7f2] font-sans text-[#1e293b] selection:bg-[#c5a059]/20 selection:text-[#8a6528]"
+      className="min-h-screen bg-[#faf7f2] font-sans text-[var(--t-primary)] selection:bg-[var(--t-accent)]/20 selection:text-[var(--t-accent)]"
+      style={{ '--t-primary': themePrimary, '--t-accent': themeAccent } as React.CSSProperties}
     >
       {/* 1. TOP ANNOUNCEMENT BAR (Algerian Ecommerce Trust) */}
-      <div className="bg-[#1e293b] px-4 py-2.5 text-center text-xs font-medium text-[#f3e7cb]">
+      <div className="bg-[var(--t-primary)] px-4 py-2.5 text-center text-xs font-medium text-[#f3e7cb]">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="hidden sm:flex items-center gap-2 text-amber-200/90 text-[11px]">
-            <Sparkles className="h-3.5 w-3.5 text-[#c5a059]" />
+            <Sparkles className="h-3.5 w-3.5 text-[var(--t-accent)]" />
             <span>{lang === 'ar' ? 'تشكيلة صيف 2026 الحصرية' : 'Collection Exclusive 2026'}</span>
           </div>
 
           <div className="flex items-center justify-center gap-2 sm:gap-4 w-full sm:w-auto text-center font-semibold text-xs">
             <span className="inline-flex items-center gap-1">
-              <Truck className="h-3.5 w-3.5 text-[#c5a059]" />
+              <Truck className="h-3.5 w-3.5 text-[var(--t-accent)]" />
               {lang === 'ar' ? 'توصيل سريع لـ 58 ولاية' : 'Livraison rapide 58 Wilayas'}
             </span>
-            <span className="text-[#c5a059]/40">•</span>
+            <span className="text-[var(--t-accent)]/40">•</span>
             <span className="inline-flex items-center gap-1">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#c5a059]" />
+              <ShieldCheck className="h-3.5 w-3.5 text-[var(--t-accent)]" />
               {lang === 'ar' ? 'الدفع عند الاستلام بعد المعاينة' : 'Paiement à la livraison'}
             </span>
           </div>
@@ -128,7 +132,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
               type="button"
               onClick={() => setLang('ar')}
               className={`px-2 py-0.5 rounded-full text-[11px] font-bold transition-all ${lang === 'ar'
-                ? 'bg-[#c5a059] text-slate-950 shadow-sm'
+                ? 'bg-[var(--t-accent)] text-slate-950 shadow-sm'
                 : 'text-gray-300 hover:text-white'
                 }`}
             >
@@ -138,7 +142,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
               type="button"
               onClick={() => setLang('fr')}
               className={`px-2 py-0.5 rounded-full text-[11px] font-bold transition-all ${lang === 'fr'
-                ? 'bg-[#c5a059] text-slate-950 shadow-sm'
+                ? 'bg-[var(--t-accent)] text-slate-950 shadow-sm'
                 : 'text-gray-300 hover:text-white'
                 }`}
             >
@@ -153,14 +157,14 @@ export default function WomansFashion({ page, client }: TemplateProps) {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
           {/* Brand Logo & Name */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-[#c5a059] shadow-md shadow-slate-950/10">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--t-primary)] to-[var(--t-primary)] text-[var(--t-accent)] shadow-md shadow-slate-950/10">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#1e293b] block">
+              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[var(--t-primary)] block">
                 {client?.business_name || 'MAISON DE LUXE'}
               </span>
-              <span className="text-[10px] font-semibold tracking-widest text-[#8a6528] uppercase block">
+              <span className="text-[10px] font-semibold tracking-widest text-[var(--t-accent)] uppercase block">
                 {lang === 'ar' ? 'أزياء نسائية فاخرة • الجزائر' : 'Haute Couture Féminine • Algérie'}
               </span>
             </div>
@@ -183,9 +187,9 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             <button
               type="button"
               onClick={scrollToOrderForm}
-              className="hidden sm:inline-flex items-center gap-2 rounded-2xl bg-[#1e293b] px-5 py-2.5 text-xs font-bold text-[#f3e7cb] shadow-lg shadow-slate-900/10 transition-all hover:bg-slate-800 hover:scale-[1.02]"
+              className="hidden sm:inline-flex items-center gap-2 rounded-2xl bg-[var(--t-primary)] px-5 py-2.5 text-xs font-bold text-[#f3e7cb] shadow-lg shadow-slate-900/10 transition-all hover:bg-slate-800 hover:scale-[1.02]"
             >
-              <ShoppingBag className="h-4 w-4 text-[#c5a059]" />
+              <ShoppingBag className="h-4 w-4 text-[var(--t-accent)]" />
               <span>{lang === 'ar' ? 'طلب سريع الآن' : 'Commander Maintenant'}</span>
             </button>
           </div>
@@ -203,7 +207,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             <div className="relative overflow-hidden rounded-3xl bg-white border border-[#e8decb]/80 shadow-xl shadow-amber-950/5 group">
               {/* Offer Badges */}
               <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-                <span className="rounded-full bg-[#1e293b] px-3.5 py-1.5 text-xs font-extrabold text-[#c5a059] shadow-lg backdrop-blur-md border border-[#c5a059]/30">
+                <span className="rounded-full bg-[var(--t-primary)] px-3.5 py-1.5 text-xs font-extrabold text-[var(--t-accent)] shadow-lg backdrop-blur-md border border-[var(--t-accent)]/30">
                   {lang === 'ar' ? 'تشكيلة حصرية 2026' : 'Nouvelle Collection'}
                 </span>
                 {discountPercent > 0 && (
@@ -215,7 +219,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
 
               {/* Free Delivery Tag inside Algeria */}
               <div className="absolute bottom-4 left-4 z-10 rounded-2xl bg-white/90 backdrop-blur-md px-3.5 py-2 text-xs font-bold text-slate-800 border border-gray-200 shadow-md flex items-center gap-1.5">
-                <Truck className="h-4 w-4 text-[#8a6528]" />
+                <Truck className="h-4 w-4 text-[var(--t-accent)]" />
                 <span>{lang === 'ar' ? 'توصيل مجاني بالعاصمة' : 'Livraison Offerte sur Alger'}</span>
               </div>
 
@@ -282,7 +286,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                     type="button"
                     onClick={() => setSelectedImageIndex(idx)}
                     className={`relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border-2 transition-all ${selectedImageIndex === idx
-                      ? 'border-[#1e293b] ring-2 ring-[#c5a059] ring-offset-2'
+                      ? 'border-[var(--t-primary)] ring-2 ring-[var(--t-accent)] ring-offset-2'
                       : 'border-transparent opacity-70 hover:opacity-100'
                       }`}
                   >
@@ -300,8 +304,8 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             <div>
               {/* Category & Rating */}
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#1e293b]/5 px-3 py-1 text-xs font-bold text-[#8a6528]">
-                  <Award className="h-3.5 w-3.5 text-[#c5a059]" />
+                <span className="inline-flex items-center gap-1 rounded-full bg-[var(--t-primary)]/5 px-3 py-1 text-xs font-bold text-[var(--t-accent)]">
+                  <Award className="h-3.5 w-3.5 text-[var(--t-accent)]" />
                   {lang === 'ar' ? 'تشكيلة زارا وميشكي الفاخرة' : 'Inspiration Zara & Meshki'}
                 </span>
 
@@ -317,7 +321,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
               </div>
 
               {/* Title */}
-              <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#1e293b] leading-tight">
+              <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-[var(--t-primary)] leading-tight">
                 {headline}
               </h1>
 
@@ -334,8 +338,8 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                   {lang === 'ar' ? 'السعر الحالي (الدفع عند الاستلام)' : 'Prix Actuel (Paiement à la livraison)'}
                 </span>
                 <div className="flex items-baseline gap-3 mt-1">
-                  <span className="font-serif text-3xl font-black text-[#1e293b]">
-                    {price.toLocaleString('fr-DZ')} <span className="text-base font-sans font-bold text-[#8a6528]">د.ج / DA</span>
+                  <span className="font-serif text-3xl font-black text-[var(--t-primary)]">
+                    {price.toLocaleString('fr-DZ')} <span className="text-base font-sans font-bold text-[var(--t-accent)]">د.ج / DA</span>
                   </span>
                   {originalPrice && originalPrice >= price * 2 ? (
                     <span className="text-sm font-semibold text-gray-400 line-through">
@@ -360,9 +364,9 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             {/* COLOR SELECTION */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-[#1e293b] text-sm">
+                <span className="font-bold text-[var(--t-primary)] text-sm">
                   {lang === 'ar' ? 'اختر اللون:' : 'Choisissez la Couleur:'}{' '}
-                  <span className="text-[#8a6528] font-semibold">{colors[selectedColorIndex]}</span>
+                  <span className="text-[var(--t-accent)] font-semibold">{colors[selectedColorIndex]}</span>
                 </span>
               </div>
 
@@ -375,7 +379,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                       type="button"
                       onClick={() => setSelectedColorIndex(idx)}
                       className={`group relative flex items-center gap-2 rounded-2xl border-2 px-3.5 py-2 text-xs font-bold transition-all ${isSelected
-                        ? 'border-[#1e293b] bg-white text-[#1e293b] shadow-md ring-2 ring-[#c5a059]/40'
+                        ? 'border-[var(--t-primary)] bg-white text-[var(--t-primary)] shadow-md ring-2 ring-[var(--t-accent)]/40'
                         : 'border-gray-200 bg-white/80 text-gray-700 hover:border-gray-300'
                         }`}
                     >
@@ -385,7 +389,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                         )}
                       </span>
                       <span>{col}</span>
-                      {isSelected && <Check className="h-3.5 w-3.5 text-[#8a6528]" />}
+                      {isSelected && <Check className="h-3.5 w-3.5 text-[var(--t-accent)]" />}
                     </button>
                   );
                 })}
@@ -395,9 +399,9 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             {/* SIZE SELECTION & GUIDE */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-[#1e293b] text-sm">
+                <span className="font-bold text-[var(--t-primary)] text-sm">
                   {lang === 'ar' ? 'المقاس المتوفر:' : 'Taille Disponible:'}{' '}
-                  <span className="text-[#8a6528] font-semibold">{selectedSize}</span>
+                  <span className="text-[var(--t-accent)] font-semibold">{selectedSize}</span>
                 </span>
               </div>
 
@@ -410,7 +414,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                       type="button"
                       onClick={() => setSelectedSize(sz)}
                       className={`flex h-11 items-center justify-center rounded-2xl text-xs font-bold transition-all ${isSelected
-                        ? 'bg-[#1e293b] text-[#c5a059] shadow-lg shadow-slate-900/20 ring-2 ring-[#c5a059]'
+                        ? 'bg-[var(--t-primary)] text-[var(--t-accent)] shadow-lg shadow-slate-900/20 ring-2 ring-[var(--t-accent)]'
                         : 'bg-white text-slate-800 border border-gray-200 hover:border-gray-300'
                         }`}
                     >
@@ -426,10 +430,10 @@ export default function WomansFashion({ page, client }: TemplateProps) {
               <button
                 type="button"
                 onClick={scrollToOrderForm}
-                className="w-full relative overflow-hidden rounded-2xl bg-[#1e293b] py-4 px-6 text-center text-sm font-extrabold text-[#f3e7cb] shadow-xl shadow-slate-900/20 transition-all hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] group"
+                className="w-full relative overflow-hidden rounded-2xl bg-[var(--t-primary)] py-4 px-6 text-center text-sm font-extrabold text-[#f3e7cb] shadow-xl shadow-slate-900/20 transition-all hover:bg-slate-800 hover:scale-[1.01] active:scale-[0.99] group"
               >
                 <div className="flex items-center justify-center gap-2">
-                  <ShoppingBag className="h-5 w-5 text-[#c5a059] group-hover:animate-bounce" />
+                  <ShoppingBag className="h-5 w-5 text-[var(--t-accent)] group-hover:animate-bounce" />
                   <span>
                     {lang === 'ar'
                       ? 'اطلب الآن - الدفع عند الاستلام'
@@ -445,9 +449,9 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             {/* TRUST GUARANTEES BADGES */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="flex items-center gap-2.5 rounded-2xl bg-white p-3 border border-gray-100 shadow-sm">
-                <Truck className="h-5 w-5 text-[#8a6528] flex-shrink-0" />
+                <Truck className="h-5 w-5 text-[var(--t-accent)] flex-shrink-0" />
                 <div className="text-xs">
-                  <span className="font-bold text-[#1e293b] block">
+                  <span className="font-bold text-[var(--t-primary)] block">
                     {lang === 'ar' ? '58 ولاية جزائرية' : '58 Wilayas'}
                   </span>
                   <span className="text-[10px] text-gray-500">
@@ -457,9 +461,9 @@ export default function WomansFashion({ page, client }: TemplateProps) {
               </div>
 
               <div className="flex items-center gap-2.5 rounded-2xl bg-white p-3 border border-gray-100 shadow-sm">
-                <ShieldCheck className="h-5 w-5 text-[#8a6528] flex-shrink-0" />
+                <ShieldCheck className="h-5 w-5 text-[var(--t-accent)] flex-shrink-0" />
                 <div className="text-xs">
-                  <span className="font-bold text-[#1e293b] block">
+                  <span className="font-bold text-[var(--t-primary)] block">
                     {lang === 'ar' ? 'الدفع بعد المعاينة' : 'Paiement Sécurisé'}
                   </span>
                   <span className="text-[10px] text-gray-500">
@@ -475,10 +479,10 @@ export default function WomansFashion({ page, client }: TemplateProps) {
         {/* 4. ORDER FORM PLACEHOLDER SECTION */}
         <section id="order-form-section" className="mt-14 sm:mt-20">
           <div className="text-center max-w-xl mx-auto mb-6">
-            <span className="text-xs font-bold tracking-widest text-[#8a6528] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
               {lang === 'ar' ? 'تأكيد الطلب السريع' : 'Confirmation Rapide'}
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1e293b] mt-1">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--t-primary)] mt-1">
               {lang === 'ar' ? 'اختر مقاسك ولونك ثم أكمل طلبك' : 'Choisissez vos options et validez'}
             </h2>
           </div>
@@ -496,14 +500,14 @@ export default function WomansFashion({ page, client }: TemplateProps) {
             selectedSize={selectedSize}
             sizes={sizes}
             onSizeChange={(sz) => setSelectedSize(sz)}
-            primaryColor={primaryColor || '#1e293b'}
+            primaryColor={primaryColor || 'var(--t-primary)'}
           />
         </section>
 
         {/* 7. SOCIAL PROOF & ALGERIAN BUYER AUDIOS/VIDEOS */}
-        <section className="mt-16 sm:mt-24 rounded-3xl bg-gradient-to-br from-[#1e293b] to-[#0f172a] p-6 sm:p-10 text-white shadow-xl">
+        <section className="mt-16 sm:mt-24 rounded-3xl bg-gradient-to-br from-[var(--t-primary)] to-[var(--t-primary)] p-6 sm:p-10 text-white shadow-xl">
           <div className="max-w-xl mx-auto text-center mb-8">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold text-[#c5a059] border border-white/10">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3.5 py-1 text-xs font-bold text-[var(--t-accent)] border border-white/10">
               <Sparkles className="h-3.5 w-3.5" />
               {lang === 'ar' ? 'ثقة ومصداقية 100%' : 'Preuves Sociales & Avis'}
             </span>
@@ -522,8 +526,8 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                   <div className="flex items-center justify-between mb-3 text-xs text-amber-200">
                     <span className="font-bold flex items-center gap-1">
                       {item.type === 'audio' && <Volume2 />}
-                      {item.type === 'image' && <Instagram className="h-4 w-4 text-[#c5a059]" />}
-                      {item.type === 'video' && <Play className="h-4 w-4 text-[#c5a059]" />}
+                      {item.type === 'image' && <Instagram className="h-4 w-4 text-[var(--t-accent)]" />}
+                      {item.type === 'video' && <Play className="h-4 w-4 text-[var(--t-accent)]" />}
                       {item.type.toUpperCase()}
                     </span>
                     <span className="text-[10px] text-gray-300">
@@ -551,14 +555,11 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                   )}
 
                   {item.type === 'video' && item.url && (
-                    <div className="relative aspect-video rounded-xl overflow-hidden mb-3 border border-white/20 group cursor-pointer">
-                      <img src={item.url} alt="Video preview" className="h-full w-full object-cover opacity-80" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="h-12 w-12 rounded-full bg-[#c5a059] text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                          <Play className="h-5 w-5 fill-slate-950 ml-0.5" />
-                        </span>
-                      </div>
-                    </div>
+                    <SocialProofVideo
+                      src={item.url}
+                      className="aspect-video rounded-xl mb-3 border border-white/20"
+                      fill
+                    />
                   )}
 
                   <p className="text-xs text-gray-200 leading-relaxed font-normal">
@@ -578,7 +579,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                 <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
               ))}
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1e293b]">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--t-primary)]">
               {lang === 'ar' ? 'تقييمات العملاء في الجزائر' : 'Avis Clients Vérifiés en Algérie'}
             </h2>
             <p className="mt-1 text-xs text-gray-500">
@@ -595,13 +596,13 @@ export default function WomansFashion({ page, client }: TemplateProps) {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#faf7f2] font-serif font-bold text-[#8a6528]">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#faf7f2] font-serif font-bold text-[var(--t-accent)]">
                         {rev.name.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="font-bold text-sm text-[#1e293b]">{rev.name}</h4>
+                        <h4 className="font-bold text-sm text-[var(--t-primary)]">{rev.name}</h4>
                         <span className="text-[11px] text-gray-400 flex items-center gap-1">
-                          <MapPin className="h-3 w-3 text-[#8a6528]" />
+                          <MapPin className="h-3 w-3 text-[var(--t-accent)]" />
                           {rev.location || (lang === 'ar' ? 'الجزائر' : 'Algérie')}
                         </span>
                       </div>
@@ -634,15 +635,15 @@ export default function WomansFashion({ page, client }: TemplateProps) {
         <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
           <div>
             <span className="block text-[10px] text-gray-500">{selectedSize} • {colors[selectedColorIndex]}</span>
-            <span className="font-serif text-lg font-black text-[#1e293b]">
-              {price.toLocaleString('fr-DZ')} <span className="text-xs font-sans text-[#8a6528]">د.ج</span>
+            <span className="font-serif text-lg font-black text-[var(--t-primary)]">
+              {price.toLocaleString('fr-DZ')} <span className="text-xs font-sans text-[var(--t-accent)]">د.ج</span>
             </span>
           </div>
 
           <button
             type="button"
             onClick={scrollToOrderForm}
-            className="flex-1 rounded-2xl bg-[#1e293b] px-4 py-3 text-center text-xs font-extrabold text-[#f3e7cb] shadow-lg shadow-slate-950/20 active:scale-95 transition-transform"
+            className="flex-1 rounded-2xl bg-[var(--t-primary)] px-4 py-3 text-center text-xs font-extrabold text-[#f3e7cb] shadow-lg shadow-slate-950/20 active:scale-95 transition-transform"
           >
             {lang === 'ar' ? 'اطلب الآن (دفع عند الاستلام)' : 'Commander Maintenant'}
           </button>
@@ -650,7 +651,7 @@ export default function WomansFashion({ page, client }: TemplateProps) {
       </div>
 
       {/* 10. LUXURY FOOTER */}
-      <footer className="mt-20 border-t border-[#e8decb] bg-[#1e293b] text-white py-12 px-4 sm:px-6">
+      <footer className="mt-20 border-t border-[#e8decb] bg-[var(--t-primary)] text-white py-12 px-4 sm:px-6">
         <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
           <div>
             <span className="font-serif text-2xl font-bold tracking-tight text-[#f3e7cb]">
@@ -664,16 +665,16 @@ export default function WomansFashion({ page, client }: TemplateProps) {
           </div>
 
           <div className="space-y-2 text-xs text-gray-300">
-            <h4 className="font-bold text-[#c5a059]">{lang === 'ar' ? 'خدمة العملاء والضمان' : 'Service Client'}</h4>
+            <h4 className="font-bold text-[var(--t-accent)]">{lang === 'ar' ? 'خدمة العملاء والضمان' : 'Service Client'}</h4>
             <p>• {lang === 'ar' ? 'توصيل سريع لجميع الـ 58 ولاية' : 'Livraison rapide 58 Wilayas'}</p>
             <p>• {lang === 'ar' ? 'الدفع نقدًا عند الاستلام' : 'Paiement à la livraison'}</p>
             <p>• {lang === 'ar' ? 'إمكانية معاينة وتجريب المقاس' : 'Essayage à la livraison'}</p>
           </div>
 
           <div className="space-y-2 text-xs text-gray-300">
-            <h4 className="font-bold text-[#c5a059]">{lang === 'ar' ? 'تواصل معنا' : 'Contact'}</h4>
+            <h4 className="font-bold text-[var(--t-accent)]">{lang === 'ar' ? 'تواصل معنا' : 'Contact'}</h4>
             <p className="flex items-center justify-center md:justify-start gap-1 text-amber-100">
-              <PhoneCall className="h-3.5 w-3.5 text-[#c5a059]" />
+              <PhoneCall className="h-3.5 w-3.5 text-[var(--t-accent)]" />
               {page?.whatsapp || '+213 550 00 00 00'}
             </p>
             <p className="text-[11px] text-gray-400">الجزائر العاصمة - Algérie</p>

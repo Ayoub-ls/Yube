@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { trackEvent } from '../../../lib/analytics';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Lock, Mail, Loader2 } from 'lucide-react';
+import { ArrowRight, Lock, Phone, Loader2 } from 'lucide-react';
 
 const initialState = {
   error: '',
@@ -42,7 +42,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if ((state as any)?.success && (state as any)?.destination) {
-      trackEvent('login', { method: 'email' });
+      trackEvent('login', { method: 'phone' });
       router.push((state as any).destination);
     }
   }, [state, router]);
@@ -72,18 +72,18 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* Email Field */}
+            {/* Phone Field */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-300 block">البريد الإلكتروني</label>
+              <label className="text-xs font-bold text-slate-300 block">رقم الهاتف</label>
               <div className="relative">
                 <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-500">
-                  <Mail className="w-4 h-4" />
+                  <Phone className="w-4 h-4" />
                 </div>
                 <input
-                  type="email"
-                  name="email"
+                  type="tel"
+                  name="phone"
                   required
-                  placeholder="name@example.com"
+                  placeholder="مثال: 0555123456"
                   className="w-full pl-3 pr-10 py-3 bg-slate-950/60 border border-slate-800 rounded-2xl text-xs font-medium text-slate-100 placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition text-left font-mono"
                   dir="ltr"
                 />

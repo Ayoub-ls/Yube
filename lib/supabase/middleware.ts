@@ -6,7 +6,12 @@ export async function updateSession(request: NextRequest) {
 
   // Optimize performance: Skip Supabase session checks entirely for public pages,
   // anonymous ad-traffic routes, and assets.
-  const isProtectedPath = path.startsWith('/dashboard') || path.startsWith('/admin') || path.startsWith('/auth');
+  const isProtectedPath =
+    path.startsWith('/dashboard') ||
+    path.startsWith('/admin') ||
+    path.startsWith('/auth') ||
+    path.startsWith('/checkout') ||
+    path.startsWith('/payment');
 
   let response = NextResponse.next({
     request: {
@@ -103,12 +108,109 @@ export async function updateSession(request: NextRequest) {
     return redirectResponse;
   };
 
+  // Redirect /checkout routes to /payment
+  if (path.startsWith('/checkout')) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/payment';
+    return redirectWithCookies(redirectUrl);
+  }
+
   // Protect /dashboard routes
   if (path.startsWith('/dashboard')) {
     if (!user) {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = '/auth/login';
       return redirectWithCookies(redirectUrl);
+    }
+
+    try {
+      const { data: client } = await supabase
+        .from('clients')
+        .select('id, is_admin')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (!client) {
+        const redirectUrl = request.nextUrl.clone();
+        redirectUrl.pathname = '/payment';
+        return redirectWithCookies(redirectUrl);
+      }
+
+      if (!client.is_admin) {
+        const { data: subscription } = await supabase
+          .from('subscriptions')
+          .select('status, expires_at')
+          .eq('client_id', client.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (!subscription) {
+          const redirectUrl = request.nextUrl.clone();
+          redirectUrl.pathname = '/payment';
+          return redirectWithCookies(redirectUrl);
+        }
+
+        const isExpired = subscription.expires_at
+          ? new Date(subscription.expires_at).getTime() < Date.now()
+          : true;
+        const isPending = subscription.status === 'pending_payment';
+
+        if (isExpired || isPending || subscription.status === 'expired') {
+          const redirectUrl = request.nextUrl.clone();
+          redirectUrl.pathname = '/payment';
+          return redirectWithCookies(redirectUrl);
+        }
+      }
+    } catch (e) {
+      console.error('Error in middleware dashboard gate:', e);
+    }
+  }
+
+  // Protect /payment routes (ensure active users don't get stuck here)
+  if (path.startsWith('/payment')) {
+    if (!user) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = '/auth/login';
+      return redirectWithCookies(redirectUrl);
+    }
+
+    try {
+      const { data: client } = await supabase
+        .from('clients')
+        .select('id, is_admin')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (client) {
+        if (client.is_admin) {
+          const redirectUrl = request.nextUrl.clone();
+          redirectUrl.pathname = '/admin';
+          return redirectWithCookies(redirectUrl);
+        }
+
+        const { data: subscription } = await supabase
+          .from('subscriptions')
+          .select('status, expires_at')
+          .eq('client_id', client.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (subscription && subscription.status === 'active') {
+          const isExpired = subscription.expires_at
+            ? new Date(subscription.expires_at).getTime() < Date.now()
+            : false;
+
+          if (!isExpired) {
+            const redirectUrl = request.nextUrl.clone();
+            redirectUrl.pathname = '/dashboard';
+            return redirectWithCookies(redirectUrl);
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Error in middleware payment gate:', e);
     }
   }
 

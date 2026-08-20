@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { checkIsAdmin } from '../../lib/data';
 import { logout } from '../auth/actions';
 import Link from 'next/link';
-import { ShieldAlert, LogOut, LayoutGrid, FileText, Users } from 'lucide-react';
+import { ShieldAlert, LogOut, LayoutGrid, FileText, Users, Send, CreditCard, ShieldCheck } from 'lucide-react';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
@@ -54,6 +54,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/clients" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
             <Users className="w-3.5 h-3.5" />
             <span>العملاء</span>
+          </Link>
+          <Link href="/admin/subscriptions" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>الاشتراكات</span>
+          </Link>
+          <Link href="/admin/payments" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
+            <CreditCard className="w-3.5 h-3.5" />
+            <span>سجلات الدفع</span>
+          </Link>
+          <Link href="/admin/outreach" className="flex items-center gap-1.5 text-xs font-bold px-4 py-3 border-b-2 border-transparent hover:border-slate-200 text-slate-500 hover:text-slate-800 transition shrink-0">
+            <Send className="w-3.5 h-3.5" />
+            <span>Outreach</span>
           </Link>
         </div>
       </header>

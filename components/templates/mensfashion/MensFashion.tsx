@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { FashionOrderForm } from '../shared/FashionOrderForm';
+import { SocialProofVideo } from '../shared/SocialProofVideo';
 import type { TemplateProps } from '../types';
 
 // Fallback luxury high-res menswear images if page.product_images is empty or short
@@ -16,7 +17,9 @@ const FALLBACK_IMAGES = [
 
 
 
-export default function MensFashion({ page, client }: TemplateProps) {
+export default function MensFashion({ page, client, theme }: TemplateProps) {
+  const themePrimary = theme?.primary || '#f59e0b';
+  const themeAccent = theme?.accent || '#f59e0b';
   // Primary language: Arabic ('ar') or French ('fr')
   const [lang, setLang] = useState<'ar' | 'fr'>('ar');
   const isAr = lang === 'ar';
@@ -72,6 +75,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
     <div
       className="min-h-screen bg-zinc-950 font-sans text-zinc-100 antialiased selection:bg-zinc-100 selection:text-zinc-950"
       dir={isAr ? 'rtl' : 'ltr'}
+      style={{ '--t-primary': themePrimary, '--t-accent': themeAccent } as React.CSSProperties}
     >
       {/* LUXURY TOP ANNOUNCEMENT BAR */}
       <div className="bg-zinc-900 border-b border-zinc-800 text-zinc-300 text-xs py-2 px-4">
@@ -173,7 +177,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
                   {isAr ? 'تشكيلة 2026 الحصرية' : 'Collection Luxe 2026'}
                 </span>
                 {page.original_price && page.original_price > page.price && (
-                  <span className="rounded-full bg-amber-500/90 text-zinc-950 font-extrabold px-3 py-1 text-xs tracking-wider shadow-md">
+                  <span className="rounded-full bg-[var(--t-primary)]/90 text-zinc-950 font-extrabold px-3 py-1 text-xs tracking-wider shadow-md">
                     {isAr ? 'خصم خاص' : 'Offre Spéciale'}
                   </span>
                 )}
@@ -236,7 +240,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             {/* Quick Material / Fit Highlights underneath gallery */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-center">
-                <div className="text-amber-400 text-lg mb-1">👔</div>
+                <div className="text-[var(--t-accent)] text-lg mb-1">👔</div>
                 <div className="text-xs font-bold text-zinc-100">
                   {isAr ? 'قصة إيطالية متناسقة' : 'Coupe Italienne'}
                 </div>
@@ -245,7 +249,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
                 </div>
               </div>
               <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-center">
-                <div className="text-amber-400 text-lg mb-1">✨</div>
+                <div className="text-[var(--t-accent)] text-lg mb-1">✨</div>
                 <div className="text-xs font-bold text-zinc-100">
                   {isAr ? 'خامة فاخرة 100%' : 'Tissu Noble 100%'}
                 </div>
@@ -254,7 +258,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
                 </div>
               </div>
               <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 text-center">
-                <div className="text-amber-400 text-lg mb-1">🇩🇿</div>
+                <div className="text-[var(--t-accent)] text-lg mb-1">🇩🇿</div>
                 <div className="text-xs font-bold text-zinc-100">
                   {isAr ? 'توصيل لـ 58 ولاية' : 'Livraison 58 Wilayas'}
                 </div>
@@ -289,7 +293,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
 
               {/* Star Rating & Review count */}
               <div className="flex items-center gap-3 pt-1">
-                <div className="flex items-center text-amber-400 text-sm">
+                <div className="flex items-center text-[var(--t-accent)] text-sm">
                   ★★★★★
                 </div>
                 <span className="text-xs font-bold text-zinc-200">4.9 / 5.0</span>
@@ -337,7 +341,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-semibold text-zinc-200 uppercase tracking-wider">
                 <span>{isAr ? 'اختر اللون:' : 'Choisissez La Couleur:'}</span>
-                <span className="text-amber-400 font-normal">{selectedColor}</span>
+                <span className="text-[var(--t-accent)] font-normal">{selectedColor}</span>
               </div>
               <div className="flex flex-wrap gap-3">
                 {colors.map((col) => {
@@ -359,7 +363,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
                             : col.includes('كحلي') || col.includes('Bleu')
                               ? 'bg-blue-950'
                               : col.includes('بيج') || col.includes('Beige')
-                                ? 'bg-amber-100'
+                                ? 'bg-[color-mix(in_srgb,var(--t-accent)_25%,white)]'
                                 : 'bg-zinc-800'
                           }`}
                       />
@@ -419,14 +423,14 @@ export default function MensFashion({ page, client }: TemplateProps) {
                 selectedSize={selectedSize}
                 sizes={sizes}
                 onSizeChange={setSelectedSize}
-                primaryColor={page.page_config?.primaryColor || 'bg-zinc-900'}
+                primaryColor={page.page_config?.primaryColor || themePrimary}
               />
             </div>
 
             {/* TRUST BADGES UNDER ORDER FORM PLACEHOLDER */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800 text-amber-400 font-bold text-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800 text-[var(--t-accent)] font-bold text-sm">
                   🚚
                 </div>
                 <div className="text-[11px]">
@@ -440,7 +444,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
               </div>
 
               <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800 text-amber-400 font-bold text-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800 text-[var(--t-accent)] font-bold text-sm">
                   💵
                 </div>
                 <div className="text-[11px]">
@@ -462,7 +466,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
       <section id="craftsmanship" className="border-t border-zinc-800 bg-zinc-900/40 py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-            <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+            <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
               {isAr ? 'فن الخياطة الرفيعة' : 'L’Art De La Haute Couture'}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white tracking-tight">
@@ -477,7 +481,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-8 space-y-4 hover:border-zinc-700 transition-all duration-300">
-              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 text-xl font-serif font-bold">
+              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] text-xl font-serif font-bold">
                 01
               </div>
               <h3 className="text-xl font-serif font-bold text-white">
@@ -491,7 +495,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-8 space-y-4 hover:border-zinc-700 transition-all duration-300">
-              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 text-xl font-serif font-bold">
+              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] text-xl font-serif font-bold">
                 02
               </div>
               <h3 className="text-xl font-serif font-bold text-white">
@@ -505,7 +509,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-8 space-y-4 hover:border-zinc-700 transition-all duration-300">
-              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 text-xl font-serif font-bold">
+              <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] text-xl font-serif font-bold">
                 03
               </div>
               <h3 className="text-xl font-serif font-bold text-white">
@@ -526,7 +530,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
         <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-10 space-y-8">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800 pb-6">
             <div>
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
                 {isAr ? 'دليل المقاسات والمواصفات' : 'Guide Des Tailles & Spécifications'}
               </span>
               <h3 className="text-2xl font-serif font-bold text-white mt-1">
@@ -659,19 +663,19 @@ export default function MensFashion({ page, client }: TemplateProps) {
                   <div className="font-bold text-white mb-1">
                     {isAr ? 'الجزائر العاصمة والولايات المجاورة' : 'Alger & Environs'}
                   </div>
-                  <div className="text-amber-400 font-mono">24 - 48 {isAr ? 'ساعة' : 'Heures'}</div>
+                  <div className="text-[var(--t-accent)] font-mono">24 - 48 {isAr ? 'ساعة' : 'Heures'}</div>
                 </div>
                 <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950">
                   <div className="font-bold text-white mb-1">
                     {isAr ? 'باقي الشمال والشرق والغرب' : 'Nord, Est & Ouest'}
                   </div>
-                  <div className="text-amber-400 font-mono">2 - 4 {isAr ? 'أيام' : 'Jours'}</div>
+                  <div className="text-[var(--t-accent)] font-mono">2 - 4 {isAr ? 'أيام' : 'Jours'}</div>
                 </div>
                 <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950">
                   <div className="font-bold text-white mb-1">
                     {isAr ? 'الولايات الجنوبية' : 'Wilayas Du Sud'}
                   </div>
-                  <div className="text-amber-400 font-mono">3 - 6 {isAr ? 'أيام' : 'Jours'}</div>
+                  <div className="text-[var(--t-accent)] font-mono">3 - 6 {isAr ? 'أيام' : 'Jours'}</div>
                 </div>
               </div>
             </div>
@@ -684,7 +688,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
         <section className="border-t border-zinc-800 bg-zinc-950 py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
                 {isAr ? 'تجارب الزبائن الحقيقية' : 'Photos & Témoignages En Direct'}
               </span>
               <h2 className="text-3xl font-serif font-bold text-white">
@@ -698,14 +702,18 @@ export default function MensFashion({ page, client }: TemplateProps) {
                   key={idx}
                   className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/80 p-4 space-y-3"
                 >
-                  {proof.url && (
-                    <div className="aspect-[4/3] overflow-hidden rounded-xl bg-zinc-950">
-                      <img
-                        src={proof.url}
-                        alt={`Social proof ${idx}`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
+                  {proof.type === 'video' ? (
+                    <SocialProofVideo src={proof.url} className="aspect-[4/3] rounded-xl bg-zinc-950" fill />
+                  ) : (
+                    proof.url && (
+                      <div className="aspect-[4/3] overflow-hidden rounded-xl bg-zinc-950">
+                        <img
+                          src={proof.url}
+                          alt={`Social proof ${idx}`}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    )
                   )}
                   {proof.caption && (
                     <p className="text-xs text-zinc-300 italic font-serif">
@@ -724,7 +732,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
-              <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
                 {isAr ? 'مصداقية وثقة' : 'Avis Et Évaluations'}
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white">
@@ -736,7 +744,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             <div className="flex items-center gap-4 bg-zinc-900 p-4 rounded-2xl border border-zinc-800">
               <div className="text-4xl font-extrabold text-white font-mono">4.9</div>
               <div>
-                <div className="text-amber-400 text-sm">★★★★★</div>
+                <div className="text-[var(--t-accent)] text-sm">★★★★★</div>
                 <div className="text-xs text-zinc-400">
                   {isAr ? 'استناداً إلى أكثر من 380 طلب' : 'Basé sur 380+ commandes'}
                 </div>
@@ -753,7 +761,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-zinc-800 text-amber-400 flex items-center justify-center font-bold text-sm">
+                    <div className="h-10 w-10 rounded-full bg-zinc-800 text-[var(--t-accent)] flex items-center justify-center font-bold text-sm">
                       {rev.name ? rev.name.charAt(0) : 'Z'}
                     </div>
                     <div>
@@ -763,7 +771,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
                       )}
                     </div>
                   </div>
-                  <div className="text-amber-400 text-xs">★★★★★</div>
+                  <div className="text-[var(--t-accent)] text-xs">★★★★★</div>
                 </div>
 
                 <p className="text-xs text-zinc-300 leading-relaxed">
@@ -784,7 +792,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
       <section id="guarantee" className="border-t border-zinc-800 bg-zinc-950 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
-            <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
+            <span className="text-xs font-bold tracking-widest text-[var(--t-accent)] uppercase">
               {isAr ? 'خطوات الطلب التلقائية' : 'Processus De Commande Simple'}
             </span>
             <h2 className="text-3xl font-serif font-bold text-white">
@@ -794,7 +802,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="text-center space-y-3">
-              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 font-bold text-xl">
+              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] font-bold text-xl">
                 1
               </div>
               <h3 className="text-base font-bold text-white">
@@ -808,7 +816,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="text-center space-y-3">
-              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 font-bold text-xl">
+              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] font-bold text-xl">
                 2
               </div>
               <h3 className="text-base font-bold text-white">
@@ -822,7 +830,7 @@ export default function MensFashion({ page, client }: TemplateProps) {
             </div>
 
             <div className="text-center space-y-3">
-              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-amber-400 font-bold text-xl">
+              <div className="mx-auto h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[var(--t-accent)] font-bold text-xl">
                 3
               </div>
               <h3 className="text-base font-bold text-white">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTransition } from 'react';
+import { useEffect, useRef, useTransition } from 'react';
 import { updateOrderStatus } from '../actions';
 import { trackEvent, trackPixelEvent } from '../../../lib/analytics';
 
@@ -20,8 +20,19 @@ const STATUS_COLORS: Record<string, string> = {
   cancelled: 'text-red-600 bg-red-50',
 };
 
-export function OrderRow({ order }: { order: any }) {
+export function OrderRow({ order, highlighted = false }: { order: any; highlighted?: boolean }) {
   const [pending, startTransition] = useTransition();
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
+  // Came here from a "عرض الطلب" notification click — scroll it into
+  // view once, on mount. Only ever runs for the one row whose id
+  // matches ?order=, so this can't fight with normal page scrolling.
+  useEffect(() => {
+    if (highlighted && rowRef.current) {
+      rowRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (newStatus: string) => {
     // Purchase only fires here — the moment a store owner confirms an
@@ -50,7 +61,7 @@ export function OrderRow({ order }: { order: any }) {
   };
 
   return (
-    <tr className={pending ? 'opacity-50' : ''}>
+    <tr ref={rowRef} className={`${pending ? 'opacity-50' : ''} ${highlighted ? 'bg-amber-50' : ''}`}>
       <td className="px-4 py-3 font-bold text-slate-800">{order.name}</td>
       <td className="px-4 py-3 font-bold text-green-700" dir="ltr">{order.phone}</td>
       <td className="px-4 py-3 font-bold text-purple-700">{order.size || '—'}</td>

@@ -4,14 +4,33 @@ import { createClient } from '../../lib/supabase/server';
 import { createAdminClient } from '../../lib/supabase/admin';
 import { redirect } from 'next/navigation';
 import { generateUniqueClientSlug, checkIsAdmin } from '../../lib/data';
+import { TRIAL_DAYS } from '../../lib/plans';
+
+function normalizePhone(phone: string): string {
+  let cleaned = phone.replace(/\D/g, '');
+  if (cleaned.startsWith('0') && cleaned.length === 10) {
+    cleaned = '213' + cleaned.substring(1);
+  }
+  if (!cleaned.startsWith('213') && cleaned.length === 9) {
+    cleaned = '213' + cleaned;
+  }
+  return cleaned;
+}
 
 export async function login(prevState: any, formData: FormData) {
-  const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
   const password = formData.get('password') as string;
 
-  if (!email || !password) {
-    return { error: 'يرجى إدخال البريد الإلكتروني وكلمة المرور' };
+  if (!phone || !password) {
+    return { error: 'يرجى إدخال رقم الهاتف وكلمة المرور' };
   }
+
+  const normalized = normalizePhone(phone);
+  if (!normalized || normalized.length < 9) {
+    return { error: 'يرجى إدخال رقم هاتف صحيح' };
+  }
+
+  const email = `${normalized}@yube.dz`;
 
   const supabase = createClient();
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -42,14 +61,21 @@ export async function login(prevState: any, formData: FormData) {
 }
 
 export async function signup(prevState: any, formData: FormData) {
-  const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
   const password = formData.get('password') as string;
   const businessName = formData.get('businessName') as string;
   const whatsapp = formData.get('whatsapp') as string;
 
-  if (!email || !password || !businessName) {
+  if (!phone || !password || !businessName) {
     return { error: 'يرجى ملء جميع الحقول الإلزامية' };
   }
+
+  const normalized = normalizePhone(phone);
+  if (!normalized || normalized.length < 9) {
+    return { error: 'يرجى إدخال رقم هاتف صحيح' };
+  }
+
+  const email = `${normalized}@yube.dz`;
 
   const supabase = createClient();
   const adminSupabase = createAdminClient();
@@ -78,31 +104,37 @@ export async function signup(prevState: any, formData: FormData) {
   // instead of getting a clean auto-suffixed slug.
   const slug = await generateUniqueClientSlug(adminSupabase as any, businessName);
 
-  // 3. Trial plans run for 14 days from signup — stored so the admin
-  // panel can show clients when their trial/plan actually ends.
-  const trialEndsAt = new Date();
-  trialEndsAt.setDate(trialEndsAt.getDate() + 14);
-
-  // 4. Insert into the clients table using the admin client. This
-  // deliberately bypasses RLS: right after signUp(), there is no
-  // session yet if the Supabase project requires email confirmation
-  // (the default), so an RLS-bound insert using auth.uid() = user_id
-  // would fail immediately with "new row violates row-level security
-  // policy" — which is exactly the bug this fixes.
-  const { error: dbError } = await adminSupabase.from('clients').insert({
+  // 3. Client is created as pending_payment. They must complete the $1 payment to activate.
+  const { data: clientData, error: dbError } = await adminSupabase.from('clients').insert({
     user_id: user.id,
     email: user.email,
     business_name: businessName,
     slug,
-    whatsapp: whatsapp || null,
-    plan: 'trial',
-    plan_expires_at: trialEndsAt.toISOString(),
+    whatsapp: whatsapp || phone || null,
+    plan: 'pending_payment',
+    plan_expires_at: null,
     status: 'active',
+  }).select('id').single();
+
+  if (dbError || !clientData) {
+    console.error('Database client insertion error:', dbError);
+    return { error: 'تم إنشاء الحساب ولكن فشل إعداد المتجر: ' + (dbError?.message || 'فشل غير معروف') };
+  }
+
+  // 4. Create the initial pending subscription record
+  const { error: subError } = await adminSupabase.from('subscriptions').insert({
+    client_id: clientData.id,
+    plan: 'intro',
+    amount: 1,
+    currency: 'USD',
+    status: 'pending_payment',
+    started_at: null,
+    expires_at: null,
   });
 
-  if (dbError) {
-    console.error('Database client insertion error:', dbError);
-    return { error: 'تم إنشاء الحساب ولكن فشل إعداد المتجر: ' + dbError.message };
+  if (subError) {
+    console.error('Database subscription insertion error:', subError);
+    return { error: 'تم إنشاء المتجر ولكن فشل إعداد تفاصيل الاشتراك: ' + subError.message };
   }
 
   // If Supabase requires email confirmation, signUp() returns a user but
@@ -121,7 +153,7 @@ export async function signup(prevState: any, formData: FormData) {
   // Supabase project). Same reasoning as login: return success instead
   // of redirecting server-side, so the client can fire the 'sign_up'
   // GA4 event before navigating away.
-  return { success: true, needsEmailConfirmation: false, destination: '/dashboard' };
+  return { success: true, needsEmailConfirmation: false, destination: '/payment' };
 }
 
 export async function logout() {

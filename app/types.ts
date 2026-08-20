@@ -99,3 +99,22 @@ export interface StatsSummary {
   pendingFollowUps: number;
   avgConfirmationTimeMinutes: number;
 }
+
+export type LeadType = 'product_page' | 'dm';
+
+export interface MessageTemplate {
+  id: string;
+  name: string;
+  lead_type: LeadType;
+  message: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OutreachLead {
+  id: string;
+  business_name: string;
+  whatsapp_number: string;
+  lead_type: LeadType;
+  created_at: string;
+}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { VoiceNotePlayer } from '../shared/VoiceNotePlayer';
+import { SocialProofVideo } from '../shared/SocialProofVideo';
 import { ChelqaOrderForm } from './ChelqaOrderForm';
 import { getOptimizedImageUrl } from '../../../lib/upload';
 import './chelqa.css';
@@ -23,6 +24,7 @@ export function ChelqaTemplate({ page, client, theme }: TemplateProps) {
   const sizes: string[] = page.page_config?.sizes || DEFAULT_SIZES;
   const audioProofs = page.social_proof.filter((p) => p.type === 'audio' && p.url);
   const imageProofs = page.social_proof.filter((p) => p.type === 'image' && p.url);
+  const videoProofs = page.social_proof.filter((p) => p.type === 'video' && p.url);
   const whatsappDigits = page.whatsapp ? page.whatsapp.replace(/[^0-9]/g, '') : null;
 
   // Falls back gracefully for pages created before this step existed,
@@ -70,7 +72,22 @@ export function ChelqaTemplate({ page, client, theme }: TemplateProps) {
   };
 
   return (
-    <div className="chelqa-theme">
+    <div
+      className="chelqa-theme"
+      style={{
+        ['--rose-deep' as any]: theme?.primary || '#b05068',
+        ['--gold' as any]: theme?.accent || '#9e7226',
+        ['--rose' as any]: theme?.primary
+          ? `color-mix(in srgb, ${theme.primary} 70%, white)`
+          : '#e8a0b0',
+        ['--rose-soft' as any]: theme?.primary
+          ? `color-mix(in srgb, ${theme.primary} 12%, white)`
+          : '#f9e4ea',
+        ['--gold-light' as any]: theme?.accent
+          ? `color-mix(in srgb, ${theme.accent} 30%, white)`
+          : '#f0d9a8',
+      }}
+    >
       <div className="announce">
         <span>|</span>
         <span>✨ جودة عالية — مريحة وأنيقة</span>
@@ -234,7 +251,7 @@ export function ChelqaTemplate({ page, client, theme }: TemplateProps) {
         {/* TESTIMONIALS — driven by page.reviews (text) and
             page.social_proof (audio voice notes / image screenshots),
             collected via the wizard, instead of hardcoded names/files. */}
-        {(page.reviews.length > 0 || audioProofs.length > 0 || imageProofs.length > 0) && (
+        {(page.reviews.length > 0 || audioProofs.length > 0 || imageProofs.length > 0 || videoProofs.length > 0) && (
           <section className="testimonials" id="reviews">
             <div className="section-header reveal">
               <div className="section-tag">💬 آراء الزبائن</div>
@@ -277,6 +294,16 @@ export function ChelqaTemplate({ page, client, theme }: TemplateProps) {
                     src={getOptimizedImageUrl(proof.url!, 500)}
                     alt="رأي عميل"
                     style={{ width: '100%', height: 'auto', borderRadius: '12px', marginTop: '10px', display: 'block', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
+                  />
+                </div>
+              ))}
+
+              {videoProofs.map((proof, i) => (
+                <div key={`video-${i}`} className={`testimonial-card reveal reveal-delay-${(i % 4) + 1}`}>
+                  {proof.caption && <p className="testimonial-text">"{proof.caption}"</p>}
+                  <SocialProofVideo
+                    src={proof.url}
+                    className="rounded-xl mt-2.5"
                   />
                 </div>
               ))}
