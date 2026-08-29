@@ -82,6 +82,89 @@ export default function MarketingHome() {
         </div>
       </section>
 
+      {/* Video Introduction Section */}
+      <section className="py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+          
+          {/* Right Column: Text & Content (First in RTL layout) */}
+          <div className="md:col-span-7 space-y-6 text-center md:text-right flex flex-col items-center md:items-start order-1">
+            <span className="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 text-[10px] xs:text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-500/20">
+              ⚡ فيديو تدريبي مجاني
+            </span>
+            <h2 className="text-xl xs:text-2xl sm:text-3xl font-black text-white leading-tight">
+              قبل ما تبدأ، خليني نوريلك كيفاش تخدم الـEcommerce Funnel تاعك
+            </h2>
+            <p className="text-slate-400 text-xs xs:text-sm sm:text-base leading-relaxed max-w-2xl">
+              فيديو مجاني نشرح فيه وين تروح الميزانية تاعك، وكيفاش تقدر تحسن النتائج تاعك وتضاعف المبيعات باستخدام استراتيجيات مجربة في السوق الجزائري 🇩🇿
+            </p>
+            
+            {/* Value Highlights */}
+            <ul className="space-y-3 text-right text-slate-300 text-xs xs:text-sm max-w-md mx-auto md:mx-0 md:max-w-none">
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4.5 h-4.5 text-emerald-400 shrink-0 mt-0.5" />
+                <span><strong>تحليل الميزانية:</strong> تفادى الأخطاء الشائعة اللي تضيع دراهم الإعلانات.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4.5 h-4.5 text-emerald-400 shrink-0 mt-0.5" />
+                <span><strong>هيكلة المتجر:</strong> كيفاش تحول الزوار إلى زبائن حقيقيين بسهولة.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Check className="w-4.5 h-4.5 text-emerald-400 shrink-0 mt-0.5" />
+                <span><strong>الربط مع Yube:</strong> استغل السرعة والقوالب باه تضاعف النتائج تاعك.</span>
+              </li>
+            </ul>
+
+            {/* Desktop CTA Button */}
+            <div className="pt-4 hidden md:flex">
+              <Link
+                href="/auth/signup"
+                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs xs:text-sm sm:text-base px-6 py-3 xs:px-8 xs:py-4 rounded-xl xs:rounded-2xl shadow-lg shadow-emerald-500/20 transition transform active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2 w-fit"
+              >
+                <span>جرب Yube بـ 1$</span>
+                <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Left Column: Phone Mockup Video */}
+          <div className="md:col-span-5 flex flex-col items-center gap-6 w-full order-2">
+            <div className="relative w-full max-w-[280px] xs:max-w-[310px] md:max-w-none md:h-[520px] lg:h-[580px] aspect-[9/20] rounded-[2rem] xs:rounded-[2.5rem] border-[8px] sm:border-[10px] border-slate-900 bg-slate-950 shadow-2xl shadow-emerald-500/10 ring-1 ring-slate-800 flex flex-col justify-between overflow-hidden">
+              
+              {/* Dynamic Island / Notch */}
+              <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2 w-18 sm:w-20 h-3.5 sm:h-4 bg-slate-900 rounded-full z-20 flex items-center justify-center">
+                <div className="w-6 sm:w-8 h-1 bg-slate-800 rounded-full"></div>
+                <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-slate-800 rounded-full ml-1 sm:ml-1.5"></div>
+              </div>
+
+              {/* Home Indicator (Apple Style) */}
+              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-1 bg-slate-800/80 rounded-full z-20"></div>
+
+              {/* Video Element */}
+              <div className="w-full h-full rounded-[1.4rem] xs:rounded-[1.9rem] overflow-hidden bg-slate-950 relative">
+                <video
+                  src="/app/CRMcrs.mp4"
+                  controls
+                  preload="metadata"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Mobile CTA Button */}
+            <div className="flex md:hidden w-full justify-center">
+              <Link
+                href="/auth/signup"
+                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs xs:text-sm sm:text-base px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition transform active:scale-95 cursor-pointer flex items-center gap-1.5 w-fit"
+              >
+                <span>جرب Yube بـ 1$</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* How It Works Section */}
       <section id="features" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center space-y-3">

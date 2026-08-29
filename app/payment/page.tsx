@@ -44,19 +44,19 @@ export default async function PaymentPage() {
     }
   }
 
-  const isExpiredState = subscription?.status === 'expired' || 
+  const isExpiredState = subscription?.status === 'expired' ||
     (subscription?.status === 'active' && subscription.expires_at && new Date(subscription.expires_at).getTime() < Date.now());
   const isPendingState = !subscription || subscription.status === 'pending_payment';
 
   // Configurable WhatsApp support number
   const supportWhatsapp = process.env.YUBE_SUPPORT_WHATSAPP || '213555555555';
-  
+
   // Messages and links
   let whatsappMsg = '';
   if (isPendingState) {
     whatsappMsg = 'سلام، سجلت في Yube وحاب نكمل الدفع تاع الشهر الأول بـ $1.';
   } else {
-    whatsappMsg = 'سلام، حاب نجدد اشتراكي في Yube بـ 100$ للشهر.';
+    whatsappMsg = 'سلام، حاب نجدد اشتراكي في Yube بـ 30$ للشهر.';
   }
 
   const encodedMsg = encodeURIComponent(whatsappMsg);
@@ -92,7 +92,7 @@ export default async function PaymentPage() {
       {/* Main Content */}
       <main className="max-w-md w-full mx-auto my-auto py-8 relative z-10">
         <div className="w-full bg-slate-900/60 border border-slate-900 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
-          
+
           {isPendingState ? (
             // PENDING PAYMENT STATE
             <>
@@ -101,11 +101,11 @@ export default async function PaymentPage() {
                   <Sparkles className="w-3.5 h-3.5 animate-pulse" />
                   <span>باقي خطوة وحدة 🚀</span>
                 </div>
-                
+
                 <h1 className="text-2xl font-black text-white leading-tight">
                   سجلنا حسابك بنجاح.
                 </h1>
-                
+
                 <p className="text-xs text-slate-400 leading-relaxed px-2">
                   باش نفعّلو حسابك لمدة شهر كامل بـ $1، راح نتواصلو معاك على WhatsApp باش نكملو الدفع.
                 </p>
@@ -123,7 +123,7 @@ export default async function PaymentPage() {
 
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-400">السعر العادي بعد الشهر الأول</span>
-                  <span className="font-bold text-slate-300">$100 / شهرياً</span>
+                  <span className="font-bold text-slate-300">$30 / شهرياً</span>
                 </div>
               </div>
             </>
@@ -135,11 +135,11 @@ export default async function PaymentPage() {
                   <AlertCircle className="w-3.5 h-3.5" />
                   <span>انتهت الفترة التجريبية تاعك ⚠️</span>
                 </div>
-                
+
                 <h1 className="text-2xl font-black text-white leading-tight">
                   اشتراكك غير نشط حالياً
                 </h1>
-                
+
                 <p className="text-xs text-slate-400 leading-relaxed px-2">
                   إذا حبيت تكمل مع Yube، تواصل معانا على WhatsApp لتجديد الاشتراك بـ $100/month.
                 </p>
