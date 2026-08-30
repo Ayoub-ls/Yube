@@ -212,11 +212,11 @@ export default async function AdminSubscriptionsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className="font-bold text-slate-900 capitalize">
-                          {r.latestSub?.plan === 'intro' ? 'العرض الأول ($1)' : r.plan || 'بدون خطة'}
+                          {r.latestSub?.plan === 'intro' ? 'العرض الأول (240 da)' : r.plan || 'بدون خطة'}
                         </span>
                       </td>
                       <td className="px-6 py-4 font-bold text-slate-900">
-                        {r.latestSub ? `$${Number(r.latestSub.amount)}` : '—'}
+                        {r.latestSub ? (r.latestSub.currency === 'USD' ? `$${Number(r.latestSub.amount)}` : `${Number(r.latestSub.amount)} ${r.latestSub.currency || 'DA'}`) : '—'}
                       </td>
                       <td className="px-6 py-4 text-slate-500">
                         {r.expiresAt ? (

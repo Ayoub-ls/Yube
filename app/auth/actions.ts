@@ -104,7 +104,7 @@ export async function signup(prevState: any, formData: FormData) {
   // instead of getting a clean auto-suffixed slug.
   const slug = await generateUniqueClientSlug(adminSupabase as any, businessName);
 
-  // 3. Client is created as pending_payment. They must complete the $1 payment to activate.
+  // 3. Client is created as pending_payment. They must complete the 240 da payment to activate.
   const { data: clientData, error: dbError } = await adminSupabase.from('clients').insert({
     user_id: user.id,
     email: user.email,
@@ -125,8 +125,8 @@ export async function signup(prevState: any, formData: FormData) {
   const { error: subError } = await adminSupabase.from('subscriptions').insert({
     client_id: clientData.id,
     plan: 'intro',
-    amount: 1,
-    currency: 'USD',
+    amount: 240,
+    currency: 'DA',
     status: 'pending_payment',
     started_at: null,
     expires_at: null,

@@ -11,10 +11,10 @@ export interface PlanConfig {
 }
 
 export const PLANS: Record<string, PlanConfig> = {
-  trial: { id: 'trial', label: 'تجريبي', priceDA: 200, maxPages: 1, available: true },
-  introductory: { id: 'introductory', label: 'العرض التعريفي ($1)', priceDA: 200, maxPages: 3, available: true },
-  basic: { id: 'basic', label: 'أساسي', priceDA: 3000, maxPages: 3, available: true },
-  pro: { id: 'pro', label: 'احترافي', priceDA: 4500, maxPages: null, available: true },
+  trial: { id: 'trial', label: 'تجريبي', priceDA: 240, maxPages: 1, available: true },
+  introductory: { id: 'introductory', label: 'العرض التعريفي (240 da)', priceDA: 240, maxPages: 3, available: true },
+  basic: { id: 'basic', label: 'أساسي', priceDA: 5000, maxPages: 3, available: true },
+  pro: { id: 'pro', label: 'احترافي', priceDA: 7200, maxPages: null, available: true },
   agency: { id: 'agency', label: 'وكالة', priceDA: 15000, maxPages: null, available: false },
 };
 

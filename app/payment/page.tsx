@@ -54,9 +54,9 @@ export default async function PaymentPage() {
   // Messages and links
   let whatsappMsg = '';
   if (isPendingState) {
-    whatsappMsg = 'سلام، سجلت في Yube وحاب نكمل الدفع تاع الشهر الأول بـ $1.';
+    whatsappMsg = 'سلام، سجلت في Yube وحاب نكمل الدفع تاع الشهر الأول بـ 240 da.';
   } else {
-    whatsappMsg = 'سلام، حاب نجدد اشتراكي في Yube بـ 30$ للشهر.';
+    whatsappMsg = 'سلام، حاب نجدد اشتراكي في Yube بـ 7200 da للشهر.';
   }
 
   const encodedMsg = encodeURIComponent(whatsappMsg);
@@ -107,7 +107,7 @@ export default async function PaymentPage() {
                 </h1>
 
                 <p className="text-xs text-slate-400 leading-relaxed px-2">
-                  باش نفعّلو حسابك لمدة شهر كامل بـ $1، راح نتواصلو معاك على WhatsApp باش نكملو الدفع.
+                  باش نفعّلو حسابك لمدة شهر كامل بـ 240 da، راح نتواصلو معاك على WhatsApp باش نكملو الدفع.
                 </p>
               </div>
 
@@ -116,14 +116,14 @@ export default async function PaymentPage() {
                 <div className="flex justify-between items-center pb-3 border-b border-slate-900">
                   <span className="text-xs font-bold text-slate-400">العرض الترحيبي</span>
                   <div className="text-left">
-                    <span className="text-2xl font-black text-emerald-400">$1</span>
+                    <span className="text-2xl font-black text-emerald-400">240 da</span>
                     <span className="text-[10px] text-slate-500 block">الشهر الأول</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-400">السعر العادي بعد الشهر الأول</span>
-                  <span className="font-bold text-slate-300">$30 / شهرياً</span>
+                  <span className="font-bold text-slate-300">7200 da / شهرياً</span>
                 </div>
               </div>
             </>
@@ -141,7 +141,7 @@ export default async function PaymentPage() {
                 </h1>
 
                 <p className="text-xs text-slate-400 leading-relaxed px-2">
-                  إذا حبيت تكمل مع Yube، تواصل معانا على WhatsApp لتجديد الاشتراك بـ $100/month.
+                  إذا حبيت تكمل مع Yube، تواصل معانا على WhatsApp لتجديد الاشتراك بـ 7200 da/month.
                 </p>
               </div>
 
@@ -150,7 +150,7 @@ export default async function PaymentPage() {
                 <div className="flex justify-between items-center pb-3 border-b border-slate-900">
                   <span className="text-xs font-bold text-slate-400">خطة التجديد</span>
                   <div className="text-left">
-                    <span className="text-2xl font-black text-red-400">$100</span>
+                    <span className="text-2xl font-black text-red-400">7200 da</span>
                     <span className="text-[10px] text-slate-500 block">شهرياً (يدوي)</span>
                   </div>
                 </div>

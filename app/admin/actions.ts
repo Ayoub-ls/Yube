@@ -163,8 +163,8 @@ export async function activateSubscription(clientId: string) {
       .insert({
         client_id: clientId,
         plan: 'intro',
-        amount: 1,
-        currency: 'USD',
+        amount: 240,
+        currency: 'DA',
         status: 'active',
         started_at: startedAt,
         expires_at: expiresAtStr,

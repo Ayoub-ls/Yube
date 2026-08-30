@@ -105,13 +105,13 @@ export default function CheckoutResultPage() {
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold text-slate-200">تم تفعيل حسابك بنجاح!</h2>
-                <p className="text-xs text-slate-400">شكراً لك، تم استلام الدفعة بقيمة 1$ وتنشيط وصولك بالكامل.</p>
+                <p className="text-xs text-slate-400">شكراً لك، تم استلام الدفعة بقيمة 240 da وتنشيط وصولك بالكامل.</p>
               </div>
 
               <div className="bg-slate-950/80 border border-slate-900 rounded-2xl p-4 text-xs space-y-2 text-right">
                 <div className="flex justify-between">
                   <span className="text-slate-500">خطة الاشتراك:</span>
-                  <span className="font-bold text-slate-300">العرض التعريفي ($1)</span>
+                  <span className="font-bold text-slate-300">العرض التعريفي (240 da)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">تاريخ انتهاء الصلاحية:</span>

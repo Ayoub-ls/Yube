@@ -39,6 +39,18 @@ function SubmitButton() {
 export default function SignupPage() {
   const [state, formAction] = useFormState(signup as any, initialState);
   const router = useRouter();
+  const courses = [
+    {
+      title: 'دورة إعلانات Facebook',
+      description: 'تعلّم كيف تؤثر مؤشرات CTR وCVR وCR وCAC على ربحية إعلاناتك.',
+      src: '/app/CRMcrs.mp4',
+    },
+    {
+      title: 'دورة صفحات الهبوط',
+      description: 'تعلّم لماذا قد تكون صفحات الهبوط أفضل لتحويل زيارات الإعلانات وكيف تعمل.',
+      src: '/app/CRMcrs2.mp4',
+    },
+  ];
 
   useEffect(() => {
     const s = state as any;
@@ -70,7 +82,7 @@ export default function SignupPage() {
           </div>
 
           {/* Form Card */}
-          <div className="bg-slate-900/40 border border-slate-900/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
+          <div id="signup-form" className="bg-slate-900/40 border border-slate-900/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
             {(state as any)?.needsEmailConfirmation ? (
               <div className="text-center space-y-4 py-4">
                 <div className="flex justify-center">
@@ -194,45 +206,60 @@ export default function SignupPage() {
           </div>
         </div>
 
-        {/* Left Column: Educational video (Desktop side-by-side, Mobile stacked at bottom) */}
-        <div className="md:col-span-6 w-full flex flex-col items-center text-center space-y-5 bg-slate-900/20 border border-slate-900/60 rounded-3xl p-6 sm:p-8 mt-4 md:mt-0">
+        {/* Left Column: Free educational courses */}
+        <section aria-labelledby="free-courses-title" className="md:col-span-6 w-full flex flex-col items-center text-center space-y-5 bg-slate-900/20 border border-slate-900/60 rounded-3xl p-6 sm:p-8 mt-4 md:mt-0">
           <div className="space-y-2 max-w-sm">
             <span className="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20">
-              💡 تعلم التجارة الإلكترونية الصحيحة
+              💡 دورات مجانية
             </span>
-            <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-              قبل ما تبدأ، خليني نوريلك كيفاش يخدم الـEcommerce Funnel
-            </h3>
+            <h3 id="free-courses-title" className="text-sm sm:text-base font-black text-white leading-tight">تعلّم قبل ما تبدأ</h3>
             <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
-              فيديو مجاني باش تفهم وين تروح الميزانية تاعك وكيفاش Yube تقدر تعاونك.
+              شاهد الدروس المجانية، ثم أنشئ حسابك وابدأ تجربتك مع Yube.
             </p>
           </div>
 
-          {/* Smartphone mockup containing the vertical video */}
-          <div className="relative w-full max-w-[210px] xs:max-w-[230px] md:h-[400px] lg:h-[440px] aspect-[9/20] rounded-[2rem] border-[8px] border-slate-900 bg-slate-950 shadow-2xl shadow-emerald-500/10 ring-1 ring-slate-800 flex flex-col justify-between overflow-hidden">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4">
+            {courses.map((course) => (
+              <article key={course.src} className="flex flex-col items-center space-y-3">
+                <div className="space-y-1.5">
+                  <h4 className="text-sm font-black text-white leading-tight">{course.title}</h4>
+                  <p className="min-h-[2.5rem] text-[11px] text-slate-400 leading-relaxed">{course.description}</p>
+                </div>
 
-            {/* Dynamic Island / Notch */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-3 bg-slate-900 rounded-full z-20 flex items-center justify-center">
-              <div className="w-6 h-0.5 bg-slate-800 rounded-full"></div>
-              <div className="w-1.5 h-1.5 bg-slate-800 rounded-full ml-1"></div>
-            </div>
+                {/* Smartphone mockup containing the vertical video */}
+                <div className="relative w-full max-w-[210px] aspect-[9/20] rounded-[2rem] border-[8px] border-slate-900 bg-slate-950 shadow-2xl shadow-emerald-500/10 ring-1 ring-slate-800 flex flex-col justify-between overflow-hidden">
+                  {/* Dynamic Island / Notch */}
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-3 bg-slate-900 rounded-full z-20 flex items-center justify-center">
+                    <div className="w-6 h-0.5 bg-slate-800 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-slate-800 rounded-full ml-1"></div>
+                  </div>
 
-            {/* Home Indicator */}
-            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-18 h-0.5 bg-slate-800/80 rounded-full z-20"></div>
+                  {/* Home Indicator */}
+                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-18 h-0.5 bg-slate-800/80 rounded-full z-20"></div>
 
-            {/* Video Element */}
-            <div className="w-full h-full rounded-[1.4rem] overflow-hidden bg-slate-950 relative">
-              <video
-                src="/app/CRMcrs.mp4"
-                controls
-                preload="metadata"
-                className="w-full h-full object-cover"
-              />
-            </div>
+                  {/* Video Element */}
+                  <div className="w-full h-full rounded-[1.4rem] overflow-hidden bg-slate-950 relative">
+                    <video
+                      src={course.src}
+                      controls
+                      preload="metadata"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                <a
+                  href="#signup-form"
+                  className="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2 text-[11px] font-black text-slate-950 shadow-lg shadow-emerald-500/10 transition hover:bg-emerald-600 active:scale-[0.98]"
+                >
+                  أنشئ حسابك وابدأ مجاناً
+                </a>
+              </article>
+            ))}
           </div>
+        </section>
         </div>
 
       </div>
-    </div>
   );
 }
