@@ -38,6 +38,7 @@ export const TEMPLATES: TemplateDef[] = [
   { id: 'sneakerdrop', name: 'أحذية رياضية', icon: Gem, niches: ['men', 'footwear'] },
   { id: 'gadget', name: 'أدوات إلكترونية', icon: Gem, niches: ['men', 'women'] },
   { id: 'womensbags', name: 'حقائب نسائية', icon: Heart, niches: ['women'] },
+  { id: 'englishlbook', name: 'العاب اطفال', icon: Heart, niches: ['kids'] },
 ];
 
 export function getTemplatesForNiche(nicheId: string): TemplateDef[] {

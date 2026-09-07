@@ -1,6 +1,7 @@
 
 import AbayaFashion from './abayafashion/AbayaFashion';
 import { ChelqaTemplate } from './chelqa/ChelqaTemplate';
+import EnglishBook from './Educationalbook/EnglishBook';
 import Gadget from './gadget/Gadget';
 import LuxuryFashion from './luxaryfashion/LuxuryFashion';
 import MensFashion from './mensfashion/MensFashion';
@@ -42,6 +43,7 @@ export const TEMPLATE_REGISTRY: Record<string, React.ComponentType<TemplateProps
   sneakerdrop: SneakerDrop,
   gadget: Gadget,
   womensbags: WomensBags,
+  englishlbook: EnglishBook
 };
 
 export const DEFAULT_TEMPLATE_ID = 'luxury';

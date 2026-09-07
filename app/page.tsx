@@ -20,6 +20,7 @@ export default function MarketingHome() {
             <a href="#features" className="hover:text-white transition">المميزات</a>
             <a href="#templates" className="hover:text-white transition">القوالب</a>
             <a href="#crm" className="hover:text-white transition">CRM</a>
+            <Link href="/courses" className="hover:text-white transition">الدورات</Link>
             <Link href="/pricing" className="hover:text-white transition">الأسعار</Link>
           </nav>
 
