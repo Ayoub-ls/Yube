@@ -448,9 +448,6 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
     'كتاب صوتي تفاعلي ممتع يجمع بين الرسومات التوضيحية الزاهية، وأساسيات مفردات اللغة الإنجليزية، وأزرار صوتية حسية حقيقية. يضغط طفلك بيده ليستمع فوراً للنطق الإنجليزي الصحيح ويكتسب الكلمات بطلاقة دون الحاجة إلى شاشات الهواتف.';
 
   const price = page.price ?? 9900;
-  const originalPrice = page.original_price ?? 12500;
-  const savings = originalPrice && originalPrice > price ? originalPrice - price : 0;
-  const savingsPct = originalPrice && originalPrice > price ? Math.round((savings / originalPrice) * 100) : 0;
 
   const bundleTitle = page.page_config?.bundleTitle || productName;
   const bundleSubtitle =
@@ -1015,22 +1012,9 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
                       <span className="text-[11px] font-bold text-slate-500 block mb-0.5">السعر الخاص — عرض حصري ومحدود</span>
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--t-primary)] tracking-tight">{price.toLocaleString()} DA</span>
-                        {originalPrice > price && (
-                          <span className="text-xs sm:text-sm text-slate-400 line-through font-semibold">{originalPrice.toLocaleString()} DA</span>
-                        )}
+
                       </div>
                     </div>
-                    {savings > 0 && (
-                      <div className="flex flex-col items-end">
-                        <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                          وفر {savings.toLocaleString()} DA (خصم {savingsPct}%)
-                        </span>
-                        <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                          متوفر في المخزون
-                        </span>
-                      </div>
-                    )}
                   </div>
 
                   <div className="pt-3.5">
@@ -1570,11 +1554,7 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5 flex-wrap">
                 <span className="text-base sm:text-lg font-black text-white leading-none">{price.toLocaleString()} DA</span>
-                {savings > 0 && (
-                  <span className="text-[10px] text-emerald-400 font-bold bg-emerald-950/90 border border-emerald-800/80 px-1.5 py-0.5 rounded leading-none">
-                    توفير {savings.toLocaleString()} DA
-                  </span>
-                )}
+
               </div>
               <div className="flex items-center gap-1 text-[10px] text-slate-300 mt-1">
                 <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
