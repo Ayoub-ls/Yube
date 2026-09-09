@@ -8,6 +8,7 @@ import MensFashion from './mensfashion/MensFashion';
 import { PairDZTemplate } from './pairdz/PairDZTemplate';
 import { RitaTemplate } from './rita/RitaTemplate';
 import SneakerDrop from './sneakerdrop/SneakerDrop';
+import Speaker from './speaker/Speaker';
 import type { TemplateProps } from './types';
 import WomansFashion from './womansfashion/WomansFashion';
 import WomensBags from './womensbags/WomensBags';
@@ -43,6 +44,7 @@ export const TEMPLATE_REGISTRY: Record<string, React.ComponentType<TemplateProps
   sneakerdrop: SneakerDrop,
   gadget: Gadget,
   womensbags: WomensBags,
+  speaker: Speaker,
   englishlbook: EnglishBook
 };
 

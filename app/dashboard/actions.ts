@@ -7,6 +7,7 @@ import { checkPlanAllowsNewPage } from '../../lib/plans';
 import { revalidatePath } from 'next/cache';
 import { WILAYAS } from '../../lib/wilayas';
 import { TEMPLATES } from '@/components/builder/templateCatalog';
+import { getPresetsForTemplate } from '@/lib/themeColors';
 
 export async function createLandingPage(prevState: any, formData: FormData) {
   const supabase = createClient();
@@ -249,9 +250,26 @@ export async function updateLandingPageInfo(prevState: any, formData: FormData) 
   const originalPriceRaw = formData.get('original_price') as string;
   const description = (formData.get('description') as string || '').trim();
   const whatsapp = (formData.get('whatsapp') as string || '').trim();
+  const colorTheme = (formData.get('color_theme') as string || '').trim();
 
   if (!pageId) {
     return { error: 'صفحة غير صالحة' };
+  }
+
+  const { data: currentPage } = await supabase
+    .from('landing_pages')
+    .select('template_id')
+    .eq('id', pageId)
+    .eq('client_id', client.id)
+    .maybeSingle();
+
+  if (!currentPage) {
+    return { error: 'لم يتم العثور على الصفحة أو ليست ملكاً لك' };
+  }
+
+  const validColorThemes = getPresetsForTemplate(currentPage.template_id);
+  if (!validColorThemes.some((theme) => theme.id === colorTheme)) {
+    return { error: 'يرجى اختيار لون صالح لهذا القالب' };
   }
 
   if (!productName) {
@@ -273,6 +291,7 @@ export async function updateLandingPageInfo(prevState: any, formData: FormData) 
       original_price: originalPrice || null,
       description: description || null,
       whatsapp: whatsapp || null,
+      color_theme: colorTheme,
     })
     .eq('id', pageId)
     .eq('client_id', client.id)

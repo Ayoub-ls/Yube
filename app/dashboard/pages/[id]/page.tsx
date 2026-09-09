@@ -20,7 +20,7 @@ export default async function EditLandingPagePage({ params }: { params: { id: st
     // layer, but this gives a clean 404 instead of relying on that alone.
     const { data: page } = await supabase
         .from('landing_pages')
-        .select('id, product_name, price, original_price, description, whatsapp')
+        .select('id, product_name, price, original_price, description, whatsapp, template_id, color_theme')
         .eq('id', params.id)
         .eq('client_id', client.id)
         .maybeSingle();

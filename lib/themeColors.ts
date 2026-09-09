@@ -104,6 +104,13 @@ export const TEMPLATE_COLOR_PRESETS: Record<string, ThemeColor[]> = {
     { id: 'wb-black-tan', label: 'أسود / بيج', primary: '#171717', accent: '#C19A6B' },
     { id: 'wb-burgundy-gold', label: 'بورجوندي / ذهبي', primary: '#5C1A2E', accent: '#C8A96B' },
   ],
+  speaker: [
+    { id: 'wb-pink-ink', label: 'وردي / أسود', primary: '#111111', accent: '#F50057' },
+    { id: 'wb-blue-ink', label: 'أزرق / أسود', primary: '#111827', accent: '#2563EB' },
+    { id: 'wb-green-ink', label: 'أخضر / أسود', primary: '#111827', accent: '#16A34A' },
+    { id: 'wb-orange-ink', label: 'برتقالي / أسود', primary: '#171717', accent: '#F97316' },
+    { id: 'wb-purple-ink', label: 'بنفسجي / أسود', primary: '#18181B', accent: '#7C3AED' },
+  ],
 };
 
 /**

@@ -1389,7 +1389,7 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
           <section className="bg-slate-50/50 py-16 sm:py-20 border-b border-slate-200/80">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
               <div className="text-center max-w-2xl mx-auto space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-black text-[var(--t-primary)]">تجارب الأولياء وأطفالهم</h2>
+                <h2 className="text-2xl sm:text-3xl font-black text-[var(--t-primary)]">  واش قالو اللي شراو علينا من قبل في الجزائر ⭐ (منتجات اخرى)</h2>
                 <p className="text-sm text-slate-600">صور وفيديوهات وتسجيلات صوتية حقيقية شاركها أولياء بعد استلام طلبياتهم</p>
               </div>
 

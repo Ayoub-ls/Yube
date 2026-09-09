@@ -1,9 +1,11 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
+import { useState } from 'react';
 import Link from 'next/link';
 import { updateLandingPageInfo } from '@/app/dashboard/actions';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
+import { getPresetsForTemplate } from '@/lib/themeColors';
 
 const initialState = { error: undefined as string | undefined };
 
@@ -14,6 +16,8 @@ interface PageData {
   original_price: number | null;
   description: string | null;
   whatsapp: string | null;
+  template_id: string;
+  color_theme: string | null;
 }
 
 function SaveButton() {
@@ -31,6 +35,11 @@ function SaveButton() {
 
 export function EditPageForm({ page }: { page: PageData }) {
   const [state, formAction] = useFormState(updateLandingPageInfo, initialState);
+  const colorThemes = getPresetsForTemplate(page.template_id);
+  const initialColorTheme = colorThemes.some((theme) => theme.id === page.color_theme)
+    ? page.color_theme
+    : colorThemes[0]?.id || '';
+  const [selectedColorTheme, setSelectedColorTheme] = useState(initialColorTheme);
 
   return (
     <div className="max-w-xl mx-auto space-y-4">
@@ -117,6 +126,28 @@ export function EditPageForm({ page }: { page: PageData }) {
             className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-left focus:outline-none focus:border-emerald-400"
           />
         </div>
+
+        <fieldset className="space-y-2 pt-1">
+          <legend className="text-xs font-bold text-slate-700">لون الصفحة</legend>
+          <p className="text-[11px] text-slate-400">اختر التركيبة اللونية التي تظهر في صفحة المنتج.</p>
+          <div className="grid grid-cols-2 gap-2">
+            {colorThemes.map((theme) => (
+              <label key={theme.id} className="cursor-pointer">
+                <input type="radio" name="color_theme" value={theme.id} checked={selectedColorTheme === theme.id} onChange={() => setSelectedColorTheme(theme.id)} className="peer sr-only" />
+                <span className="block overflow-hidden rounded-xl border-2 border-slate-100 transition peer-checked:border-slate-900 peer-checked:ring-2 peer-checked:ring-slate-200">
+                  <span className="flex h-12">
+                    <span className="flex flex-[3] items-center justify-center text-[10px] font-bold" style={{ backgroundColor: theme.primary, color: theme.accent }}>{theme.label}</span>
+                    <span className="flex-1" style={{ backgroundColor: theme.accent }} />
+                  </span>
+                  <span className="flex items-center justify-center gap-1.5 bg-white px-2 py-1.5 text-[10px] font-bold text-slate-600">
+                    {selectedColorTheme === theme.id && <Check className="h-3 w-3 text-emerald-500" />}
+                    {theme.label}
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
 
         <SaveButton />
       </form>
