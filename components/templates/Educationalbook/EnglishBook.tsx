@@ -809,7 +809,7 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             <button
               onClick={scrollToOrderForm}
-              className="bg-[var(--t-primary)] hover:brightness-110 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-black tracking-wide transition-all shadow-sm flex items-center gap-1 cursor-pointer min-h-[36px] sm:min-h-[38px]"
+              className="bg-red-600 hover:brightness-110 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-black tracking-wide transition-all shadow-sm flex items-center gap-1 cursor-pointer min-h-[36px] sm:min-h-[38px]"
             >
               <span>اطلب الآن</span>
               <ArrowLeft className="w-3.5 h-3.5 hidden sm:inline" />
@@ -1564,7 +1564,7 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
             <button
               type="button"
               onClick={scrollToOrderForm}
-              className="bg-[var(--t-accent)] hover:brightness-110 text-white text-xs sm:text-sm font-black px-5 py-2.5 rounded-xl shadow-lg flex items-center justify-center gap-1.5 transition-transform active:scale-95 cursor-pointer shrink-0 min-h-[44px]"
+              className="bg-red-600 hover:brightness-110 text-white text-xs sm:text-sm font-black px-5 py-2.5 rounded-xl shadow-lg flex items-center justify-center gap-1.5 transition-transform active:scale-95 cursor-pointer shrink-0 min-h-[44px]"
             >
               <span>اطلب الآن</span>
               <ArrowLeft className="w-4 h-4" />
