@@ -122,56 +122,10 @@ export function KidsOrderForm({
             {/* Recap card */}
             <div className="lg:col-span-5 space-y-3.5">
                 <div className="p-5 rounded-[1.75rem] border-2 border-[#EAE6E1] bg-white shadow-sm">
-                    <div className="flex items-center justify-between mb-3">
-                        <span
-                            className="text-white text-[11px] font-black px-2.5 py-1 rounded-full flex items-center gap-1"
-                            style={{ backgroundColor: primaryColor }}
-                        >
-                            <Sparkles className="w-3 h-3" />
-                            مثالي لطفلك
-                        </span>
-                        <span className="text-emerald-600 text-xs font-bold flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                            متوفر في المخزون
-                        </span>
-                    </div>
-                    <h3 className="font-black text-lg sm:text-xl text-gray-900 tracking-tight">{productName}</h3>
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                        منتج مصمم خصيصاً ليكون آمناً وممتعاً وسهل الاستخدام لطفلك.
-                    </p>
                     <div className="py-3.5 my-3 border-y border-[#EAE6E1]">
                         <div className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight leading-none">
                             {price.toLocaleString('ar-DZ')} دج
                         </div>
-                    </div>
-                    <div className="space-y-2 text-xs text-gray-600">
-                        <div className="flex items-center gap-2">
-                            <Check className="w-4 h-4 shrink-0" style={{ color: primaryColor }} />
-                            <span>جودة عالية وآمنة على الأطفال</span>
-                        </div>
-                        <div className="flex items-center gap-2 pt-1.5 border-t border-[#EAE6E1]">
-                            <Check className="w-4 h-4 shrink-0" style={{ color: primaryColor }} />
-                            <span>تصميم ملون وجذاب يحبه الأطفال</span>
-                        </div>
-                        <div className="flex items-center gap-2 pt-1.5 border-t border-[#EAE6E1]">
-                            <Check className="w-4 h-4 shrink-0" style={{ color: primaryColor }} />
-                            <span>سهل الاستخدام ومناسب لجميع الأعمار</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="p-3 bg-white border border-[#EAE6E1] rounded-2xl grid grid-cols-3 gap-1 text-center shadow-sm">
-                    <div className="flex flex-col items-center justify-center p-1">
-                        <Truck className="w-4 h-4 mb-1" style={{ color: primaryColor }} />
-                        <span className="text-[11px] font-bold text-gray-900 leading-tight">توصيل 58 ولاية</span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center p-1 border-r border-[#EAE6E1]">
-                        <ShieldCheck className="w-4 h-4 text-emerald-500 mb-1" />
-                        <span className="text-[11px] font-bold text-gray-900 leading-tight">الدفع عند الاستلام</span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center p-1 border-r border-[#EAE6E1]">
-                        <PackageCheck className="w-4 h-4 text-amber-500 mb-1" />
-                        <span className="text-[11px] font-bold text-gray-900 leading-tight">معاينة قبل الدفع</span>
                     </div>
                 </div>
             </div>
@@ -318,8 +272,8 @@ export function KidsOrderForm({
                                 type="button"
                                 onClick={() => setDeliveryType('home')}
                                 className={`p-3.5 rounded-xl border-2 text-right transition-all flex items-center gap-3 cursor-pointer min-h-[56px] ${deliveryType === 'home'
-                                        ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-100'
-                                        : 'border-slate-200 hover:border-slate-300 bg-white'
+                                    ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-100'
+                                    : 'border-slate-200 hover:border-slate-300 bg-white'
                                     }`}
                             >
                                 <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${deliveryType === 'home' ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-600'}`}>
@@ -342,8 +296,8 @@ export function KidsOrderForm({
                                 type="button"
                                 onClick={() => setDeliveryType('stopdesk')}
                                 className={`p-3.5 rounded-xl border-2 text-right transition-all flex items-center gap-3 cursor-pointer min-h-[56px] ${deliveryType === 'stopdesk'
-                                        ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-100'
-                                        : 'border-slate-200 hover:border-slate-300 bg-white'
+                                    ? 'border-emerald-500 bg-emerald-50/50 ring-2 ring-emerald-100'
+                                    : 'border-slate-200 hover:border-slate-300 bg-white'
                                     }`}
                             >
                                 <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${deliveryType === 'stopdesk' ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-600'}`}>

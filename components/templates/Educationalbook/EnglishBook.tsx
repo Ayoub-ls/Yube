@@ -34,6 +34,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { KidsOrderForm } from '../shared/KidsOrderForm';
+import explanationImage from './images/img1.png';
 
 /* ------------------------------------------------------------------------ *
  *  STATIC REFERENCE DATA (not product-specific — kept inline so the whole
@@ -751,9 +752,7 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
   };
 
   const navLinks = [
-    { label: 'كيف يعمل الكتاب', href: '#how-it-works' },
-    { label: 'محتوى الكلمات', href: '#whats-inside' },
-    { label: 'لماذا يفضله الأولياء', href: '#benefits' },
+    { label: 'شرح الكتاب', href: '#product-explanation' },
     { label: 'الأسئلة الشائعة', href: '#faq' },
   ];
 
@@ -1052,282 +1051,16 @@ export default function EnglishBook({ page, client, theme }: TemplateProps) {
           </div>
         </section>
 
-        {/* ====================== WHY INTERACTIVE LEARNING ==================== */}
-        <section id="why-different" className="bg-white py-16 sm:py-24 border-b border-slate-200/80">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="text-[11px] font-bold text-[var(--t-primary)] bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-full inline-block mb-3">
-                التعلم التفاعلي مقابل التلقين الصامت
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--t-primary)] tracking-tight">
-                يتعلم الأطفال الكلمات بشكل أسرع عندما يرون، يستمعون، ويتفاعلون
-              </h2>
-              <p className="mt-3.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                نادراً ما يتعلم الصغار لغة جديدة عبر التلقين الجاف أو المشاهدة السلبية لمقاطع الفيديو السريعة. بل يتعلمون بالتفاعل واللمس: لمس الشيء، سماع صوته، وترديده بفرح.
-              </p>
-            </div>
-
-            <div className="mt-12 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[
-                { icon: Eye, step: 'مشاهدة الرسمة والكلمة', description: 'يرى الطفل رسماً كرتونياً واضحاً وجذاباً مع كتابة الكلمة بالإنجليزية، مما يبني تمييزاً بصرياً فورياً لشكل الشيء واسمه.' },
-                { icon: Headphones, step: 'الاستماع للنطق الصحيح', description: 'الضغط على الزر الحسي يُصدر صوتاً إنجليزياً نقياً بنبرة واضحة تساعد الطفل على التقاط مخارج الحروف بدقة.' },
-                { icon: Sparkles, step: 'ربط الصوت بالصورة في الذهن', description: 'ربط الصوت المسموع مباشرة بالصورة الملونة يرسخ المفردات في الذاكرة طويلة المدى دون الحاجة لترجمة معقدة.' },
-                { icon: RotateCcw, step: 'التكرار والترديد بكل حرية', description: 'لأن الكتاب مصمم ليكون ذاتي التشغيل، يستطيع الطفل الضغط والتكرار والترديد عشرات المرات بحماس ودون ملل.' },
-              ].map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <div key={idx} className="bg-slate-50/70 border border-slate-200/90 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-300 hover:shadow-sm transition-all">
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-center text-[var(--t-accent)] mb-5">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <h3 className="text-sm sm:text-base font-black text-[var(--t-primary)] mb-2.5">{item.step}</h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.description}</p>
-                    </div>
-                    <div className="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-[11px] font-bold text-slate-400">
-                      <span>الخطوة {idx + 1}</span>
-                      <span className="font-mono">0{idx + 1}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-12 sm:mt-16 bg-slate-50 border border-slate-200/80 rounded-2xl p-6 sm:p-8 max-w-4xl mx-auto">
-              <div className="text-center mb-6 sm:mb-8">
-                <span className="text-[11px] font-bold text-slate-500 block mb-1">مقارنة واقعية وعملية</span>
-                <h3 className="text-base sm:text-xl font-black text-[var(--t-primary)]">مقارنة طرق ممارسة الإنجليزية للأطفال في المنزل</h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
-                <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200/90 space-y-4">
-                  <div className="font-bold text-slate-800 text-xs sm:text-sm flex items-center gap-2.5 pb-3 border-b border-slate-100">
-                    <span className="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold">✕</span>
-                    <span>الشاشات والكتب الصامتة العادية</span>
-                  </div>
-                  <ul className="space-y-3 text-slate-600 text-xs sm:text-sm">
-                    <li className="flex items-start gap-2.5">
-                      <X className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-                      <span>الكتب الورقية العادية صامتة تماماً وتتطلب من الوالدين نطق كل كلمة.</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <X className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-                      <span>شاشات الهواتف تسبب إجهاداً للعين وتشتت تركيز الطفل بالمؤثرات السريعة.</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <X className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-                      <span>المشاهدة السلبية للفيديوهات تفتقر للتفاعل الحركي والضغط بالأصابع.</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-white p-5 sm:p-6 rounded-xl border-2 border-[var(--t-accent)] shadow-sm space-y-4 relative">
-                  <div className="font-black text-[var(--t-accent)] text-xs sm:text-sm flex items-center gap-2.5 pb-3 border-b border-red-100">
-                    <Check className="w-5 h-5 text-[var(--t-accent)]" />
-                    <span>{productName}</span>
-                  </div>
-                  <ul className="space-y-3 text-slate-800 text-xs sm:text-sm">
-                    <li className="flex items-start gap-2.5">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span><strong>يضغط الطفل ويستمع:</strong> نطق إنجليزي فوري بصوت واضح ونقي.</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span><strong>100% بدون شاشات:</strong> صفحات كرتونية سميكة مع أزرار حسية ملموسة.</span>
-                    </li>
-                    <li className="flex items-start gap-2.5">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span><strong>تعلم ذاتي مستقل:</strong> يتصفح الطفل ويستمع بمفرده ويبني ثقته بنفسه.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ============================= HOW IT WORKS ========================= */}
-        <section id="how-it-works" className="bg-slate-50/50 py-16 sm:py-24 border-b border-slate-200/80">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="text-[11px] font-bold text-[var(--t-primary)] bg-white border border-slate-200 px-3.5 py-1.5 rounded-full inline-block mb-3 shadow-2xs">
-                بسيط وتفاعلي وسهل
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--t-primary)] tracking-tight">كيف يعمل الكتاب الصوتي في 4 خطوات بسيطة</h2>
-              <p className="mt-3.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                مصمم خصيصاً لأيدي الأطفال الصغار. بدون تعليمات معقدة، بدون شاشات أو ربط بلوتوث، وبدون كلمات سر. فقط اختر الصورة، اضغط على الزر، واستمع للنطق السليم.
-              </p>
-            </div>
-
-            <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {howItWorksSteps.map((step: any, idx: number) => {
-                const Icon = stepIcons[idx] || Volume2;
-                return (
-                  <div key={step.stepNumber} className="bg-white border border-slate-200/90 rounded-2xl p-6 relative flex flex-col justify-between hover:border-slate-300 hover:shadow-sm transition-all">
-                    <div>
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 text-[var(--t-accent)] font-black flex items-center justify-center text-sm font-mono">
-                          {step.stepNumber}
-                        </div>
-                        <div className="w-10 h-10 rounded-xl bg-[var(--t-primary)] text-white flex items-center justify-center shadow-xs">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                      </div>
-                      <h3 className="text-base font-black text-[var(--t-primary)] mb-2">{step.title}</h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{step.description}</p>
-                    </div>
-                    <div className="mt-6 pt-3.5 border-t border-slate-100 text-[11px] font-bold text-slate-400">الخطوة {idx + 1} من {howItWorksSteps.length}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ============================= WHAT'S INSIDE ======================== */}
-        {currentCategory && (
-          <section id="whats-inside" className="bg-white py-16 sm:py-24 border-b border-slate-200/80">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-              <div className="max-w-3xl mx-auto text-center">
-                <span className="text-[11px] font-bold text-[var(--t-primary)] bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-full inline-block mb-3 shadow-2xs">
-                  المنهج والمواضيع التعليمية
-                </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--t-primary)] tracking-tight">ما هي الكلمات والموضوعات الموجودة في الكتاب؟</h2>
-                <p className="mt-3.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                  ينظم الكتاب أكثر من 470 كلمة وصوتاً في مواضيع يومية مألوفة، مما يمنح الطفل أساساً عملياً يبني ثقته للتحدث والتعبير باللغة الإنجليزية.
-                </p>
-              </div>
-
-              <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2">
-                {vocabularyCategories.map((cat) => {
-                  const isSelected = cat.id === selectedCategoryId;
-                  return (
-                    <button
-                      key={cat.id}
-                      type="button"
-                      onClick={() => setSelectedCategoryId(cat.id)}
-                      className={`px-4 py-2.5 text-xs font-bold transition-all rounded-full cursor-pointer ${isSelected ? 'bg-[var(--t-primary)] text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                        }`}
-                    >
-                      {cat.arabic || cat.title}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="mt-8 sm:mt-10 bg-slate-50/70 border border-slate-200/90 rounded-2xl p-6 lg:p-8 shadow-xs">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-5">
-                    <div className="relative rounded-xl overflow-hidden bg-white border border-slate-200 shadow-md">
-                      <img
-                        src={images[1] || images[0]}
-                        alt="الصفحات الداخلية لكتاب الكلمات الإنجليزية التفاعلي"
-                        className="w-full h-auto aspect-4/3 object-cover"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="p-3.5 bg-white border-t border-slate-100 text-xs text-slate-600">
-                        <span className="font-bold text-[var(--t-primary)]">صفحات مصورة ملونة:</span> رسومات كرتونية واضحة تجمع المفاهيم المترابطة معاً في سياق ممتع.
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="lg:col-span-7">
-                    <div className="flex items-center gap-2 text-[var(--t-accent)] text-xs font-bold">
-                      <Sparkles className="w-4 h-4" />
-                      <span>موضوع تعليمي مختار</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-[var(--t-primary)] mt-1">{currentCategory.arabic || currentCategory.title}</h3>
-                    <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">{currentCategory.description}</p>
-
-                    <div className="mt-6">
-                      <div className="text-[11px] font-bold text-slate-500 mb-3 flex items-center justify-between">
-                        <span>نماذج كلمات تفاعلية:</span>
-                        <span className="text-[var(--t-accent)] flex items-center gap-1 font-bold text-xs">
-                          <Volume2 className="w-3.5 h-3.5" /> اضغط لسماع النطق
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                        {currentCategory.sampleWords.map((item) => {
-                          const isPlaying = playingWord === item.word;
-                          return (
-                            <button
-                              key={item.word}
-                              type="button"
-                              onClick={() => handleTestSound(item.word)}
-                              className={`p-3 sm:p-3.5 rounded-xl border text-right transition-all flex flex-col justify-between cursor-pointer ${isPlaying ? 'bg-red-50 border-[var(--t-accent)] ring-2 ring-red-200 shadow-xs' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-2xs'
-                                }`}
-                            >
-                              <div className="flex items-center justify-between gap-1.5">
-                                <span className="font-black text-[var(--t-primary)] text-xs sm:text-sm tracking-wide" dir="ltr">
-                                  {item.word} / {item.arabic}
-                                </span>
-                                <Volume2 className={`w-3.5 h-3.5 shrink-0 ${isPlaying ? 'text-[var(--t-accent)] animate-pulse' : 'text-slate-400'}`} />
-                              </div>
-                              <div className="mt-1.5 flex items-center justify-between text-xs text-slate-500 font-mono">
-                                <span>{item.phonetic}</span>
-                                <span className="text-[10px] font-sans font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">{item.category}</span>
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="mt-6 p-4 bg-emerald-50/70 border border-emerald-200/80 rounded-xl flex items-start gap-3 text-xs sm:text-sm text-emerald-950">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>ترتبط الكلمات مباشرة بالأزرار الصوتية حتى يربط الطفل ما يراه في الصفحة بما يسمعه فوراً عبر مكبر الصوت.</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* ============================= WHY PARENTS BUY ====================== */}
-        <section id="benefits" className="bg-slate-50/50 py-16 sm:py-24 border-b border-slate-200/80">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="text-[11px] font-bold text-[var(--t-primary)] bg-white border border-slate-200 px-3.5 py-1.5 rounded-full inline-block mb-3 shadow-2xs">
-                مصمم بعناية للأولياء والأطفال
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--t-primary)] tracking-tight">لماذا يفضل الأولياء هذا الكتاب الصوتي؟</h2>
-              <p className="mt-3.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                فوائد عملية تجعل ممارسة اللغة الإنجليزية أهدأ، وأكثر متعة، وبدون شاشات إلكترونية على الإطلاق.
-              </p>
-            </div>
-
-            <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-              <div className="lg:col-span-5 order-2 lg:order-1">
-                <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-md">
-                  <div className="aspect-4/3 overflow-hidden rounded-xl bg-slate-100 border border-slate-200/80">
-                    <img src={images[2] || images[0]} alt="طفل يستكشف كتاب الكلمات الإنجليزية التفاعلي بمفرده" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                  </div>
-                  <div className="pt-4 sm:pt-5">
-                    <div className="text-[11px] font-bold text-[var(--t-accent)]">نشاط تعليمي بديل للشاشات</div>
-                    <div className="text-sm sm:text-base font-black text-[var(--t-primary)] mt-1">تفاعل حقيقي باليد والذهن دون إجهاد العين بالشاشات</div>
-                    <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
-                      مثالي لأوقات اللعب الهادئة في البيت، أو خلال السفر والرحلات في السيارة دون الحاجة لتشغيل الهاتف.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7 order-1 lg:order-2 space-y-3.5">
-                {whyParentsBuy.map((benefit: any, idx: number) => {
-                  const Icon = benefitIcons[idx] || Sparkles;
-                  return (
-                    <div key={idx} className="flex items-start gap-4 p-4 sm:p-4.5 bg-white border border-slate-200/90 rounded-2xl hover:border-slate-300 hover:shadow-xs transition-all">
-                      <div className="w-11 h-11 rounded-xl bg-[var(--t-primary)] text-white flex items-center justify-center shrink-0 shadow-xs">
-                        <Icon className="w-5 h-5 text-[var(--t-accent)]" />
-                      </div>
-                      <div>
-                        <h3 className="text-xs sm:text-sm font-black text-[var(--t-primary)]">{benefit.title}</h3>
-                        <p className="mt-1 text-xs sm:text-sm text-slate-600 leading-relaxed">{benefit.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+        {/* ========================= PRODUCT EXPLANATION ===================== */}
+        <section id="product-explanation" className="bg-slate-50/50 py-12 sm:py-20 border-b border-slate-200/80">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+            <img
+              src={explanationImage.src}
+              width={explanationImage.width}
+              height={explanationImage.height}
+              alt="شرح تفاعلي لمحتوى الكتاب وطريقة استعماله"
+              className="w-full h-auto rounded-2xl shadow-sm"
+            />
           </div>
         </section>
 
