@@ -5,6 +5,9 @@ import { ShoppingBag } from 'lucide-react';
 
 import type { TemplateProps } from '../types';
 import { OrderForm } from '../shared/OrderForm';
+import problemSolutionImage from './speakerland1_cleaned-min.jpg';
+import solutionKitImage from './speakerland2_cleaned-min.jpeg';
+import howItWorksImage from './speakerlanding_cleaned-min.jpeg';
 
 // Format price in Algerian Dinars (DZD / دج)
 function formatAlgerianPrice(price: number): string {
@@ -324,70 +327,23 @@ export default function Speaker({ page, client, theme }: TemplateProps) {
           id="problem-solution-section"
           className="bg-white rounded-3xl p-5 sm:p-7 border border-slate-100 shadow-sm space-y-6"
         >
-          <div className="text-center max-w-xl mx-auto space-y-1.5">
-            <span className="text-xs font-black text-rose-600 bg-rose-50 border border-rose-200/70 px-3 py-1 rounded-full">
-              المشكلة اليومية
-            </span>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 pt-1">
-              الغبرة تدخل لسبيكر تلفونك كل يوم 👀
-            </h2>
-            <p className="text-slate-600 text-xs sm:text-sm">
-              مع الاستعمال اليومي في الجيب والساكوشة، فتحات السماعة تتراكم فيها الأوساخ بدون ما تنتبه.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-            <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 flex flex-col gap-2">
-              <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-sm">
-                ⚠️
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm">تراكم الأوساخ</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                الغبرة والوبر يسدّو الفتحات الصغيرة ويفسدو مظهر التلفون من برا.
-              </p>
-            </div>
-
-            <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 flex flex-col gap-2">
-              <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-sm">
-                ❌
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm">أدوات خطيرة</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                التنظيف بإبرة، عود سنان أو أدوات حادة ممكن يثقب شبكة السماعة لداخل.
-              </p>
-            </div>
-
-            <div className="bg-[var(--speaker-accent-faint)]/60 border border-[var(--speaker-accent-soft)] rounded-2xl p-4 flex flex-col gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[var(--speaker-accent-soft)] text-[var(--speaker-primary)] flex items-center justify-center font-bold text-sm">
-                ✨
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm">الحل المخصص</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                كيت مصمم خصيصاً بأدوات ناعمة وشرائط لاصقة تنحي الغبرة بأمان تام.
-              </p>
-            </div>
-          </div>
+          <img
+            src={problemSolutionImage.src}
+            alt="مشكلة اتساخ سبيكر الهاتف والحل"
+            width={problemSolutionImage.width}
+            height={problemSolutionImage.height}
+            className="w-full h-auto rounded-2xl"
+          />
 
           {/* Solution Kit Features */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 sm:p-5">
-            <div className="font-bold text-slate-800 text-xs sm:text-sm mb-3">
-              واش فيه هذا الكيت؟
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-700">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--speaker-accent)] shrink-0" />
-                <span>فرشاة تنظيف ناعمة للسطح</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--speaker-accent)] shrink-0" />
-                <span>أداة رفيعة للفتحات الضيقة ومخارج الصوت</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--speaker-accent)] shrink-0" />
-                <span>شرائط لاصقة مخصصة لامتصاص ذرات الغبار</span>
-              </div>
-            </div>
-          </div>
+          <img
+            src={solutionKitImage.src}
+            alt="مميزات كيت تنظيف السبيكر"
+            width={solutionKitImage.width}
+            height={solutionKitImage.height}
+            className="w-full h-auto rounded-2xl"
+          />
         </section>
 
         {/* ==================================================
@@ -406,43 +362,13 @@ export default function Speaker({ page, client, theme }: TemplateProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-[var(--speaker-accent)] text-white font-black flex items-center justify-center text-sm mb-3 shadow-xs">
-                01
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm mb-1">
-                حط أداة التنظيف
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                ضع شريط الامتصاص اللاصق أو رأس الفرشاة على فتحات السبيكر
-              </p>
-            </div>
-
-            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-[var(--speaker-accent)] text-white font-black flex items-center justify-center text-sm mb-3 shadow-xs">
-                02
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm mb-1">
-                نظّف بلطف
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                مرّر الأداة بخفة لجمع الغبار والأوساخ العالقة بدون أي ضغط قوي
-              </p>
-            </div>
-
-            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 text-center flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-[var(--speaker-accent)] text-white font-black flex items-center justify-center text-sm mb-3 shadow-xs">
-                03
-              </div>
-              <h3 className="font-bold text-slate-900 text-sm mb-1">
-                شوف الفرق ✨
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                انزع الشريط واستمتع بفتحات نظيفة ونقية بدون أي خدوش
-              </p>
-            </div>
-          </div>
+          <img
+            src={howItWorksImage.src}
+            alt="طريقة استعمال كيت تنظيف السبيكر"
+            width={howItWorksImage.width}
+            height={howItWorksImage.height}
+            className="w-full h-auto rounded-2xl"
+          />
         </section>
 
         {/* ==================================================
